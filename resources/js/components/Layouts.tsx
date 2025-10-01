@@ -115,11 +115,11 @@ export default function Layout({ children }: PropsWithChildren) {
                 <div className="mx-auto max-w-6xl px-6 py-8">
                     <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
                         <p className="text-sm font-light text-gray-500">
-                            © 2025 Your Name. All rights reserved.
+                            © 2025 syaafiudinm. All rights reserved.
                         </p>
                         <div className="flex space-x-6">
                             <a
-                                href="https://github.com"
+                                href="https://github.com/syaafiudinm"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-gray-500 transition hover:text-gray-900"
@@ -129,7 +129,7 @@ export default function Layout({ children }: PropsWithChildren) {
                                 </span>
                             </a>
                             <a
-                                href="https://linkedin.com"
+                                href="https://www.linkedin.com/in/andi-syafiudin-musafir-a3b85a287/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-gray-500 transition hover:text-gray-900"
@@ -139,13 +139,13 @@ export default function Layout({ children }: PropsWithChildren) {
                                 </span>
                             </a>
                             <a
-                                href="https://twitter.com"
+                                href="https://instagram.com/syaafiudinm"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-gray-500 transition hover:text-gray-900"
                             >
                                 <span className="text-sm font-light">
-                                    Twitter
+                                    Instagram
                                 </span>
                             </a>
                         </div>
