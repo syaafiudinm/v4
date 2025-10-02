@@ -44,6 +44,12 @@ class ProjectController extends Controller
             ->with('success', 'Project created successfully');
     }
 
+    public function edit(Project $project){
+        return Inertia::render('Admin/Projects/Form', [
+            'project' => $project
+        ]);
+    }
+
     public function update(Request $request, Project $project)
     {
         $validated = $request->validate([
