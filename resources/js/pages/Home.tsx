@@ -32,7 +32,7 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
             <div>
                 {/* Hero Section */}
                 <section className="py-20 md:py-32">
-                    <h1 className="mb-6 text-4xl font-light leading-tight md:text-7xl">
+                    <h1 className="mb-6 text-4xl leading-tight font-light md:text-7xl">
                         {displayedText}
                     </h1>
                     <p className="mb-8 max-w-2xl text-xl font-light text-gray-600 md:text-2xl">
@@ -98,7 +98,7 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                     <div className="mb-12 flex items-center justify-between">
                         <h2 className="text-3xl font-light">Recent Posts</h2>
                         <Link
-                            href="/post"
+                            href="/posts"
                             className="text-sm font-light transition hover:text-gray-600"
                         >
                             View all
@@ -109,7 +109,7 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                         {recentPosts?.slice(0, 3).map((post) => (
                             <Link
                                 key={post.id}
-                                href={`/blog/${post.slug}`}
+                                href={`/post/${post.slug}`}
                                 className="group block border-b border-gray-100 pb-8 last:border-0"
                             >
                                 <p className="mb-2 text-xs font-light text-gray-500">

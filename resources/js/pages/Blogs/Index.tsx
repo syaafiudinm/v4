@@ -32,7 +32,7 @@ export default function BlogIndex({ posts }: Props) {
                     {posts.data.map((post) => (
                         <Link
                             key={post.id}
-                            href={`/blog/${post.slug}`}
+                            href={`/post/${post.slug}`}
                             className="group"
                         >
                             {/* Featured Image */}

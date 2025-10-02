@@ -82,7 +82,7 @@ export default function PostForm({ post }: Props) {
                                             generateSlug(e.target.value),
                                         );
                                 }}
-                                className="w-full rounded-lg border border-gray-300 px-4 py-2 transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-900"
+                                className="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900 transition focus:border-transparent focus:ring-2 focus:ring-gray-900 focus:outline-none"
                                 placeholder="Enter post title"
                             />
                             {errors.title && (
@@ -103,7 +103,7 @@ export default function PostForm({ post }: Props) {
                                 onChange={(e) =>
                                     setData('slug', e.target.value)
                                 }
-                                className="w-full rounded-lg border border-gray-300 px-4 py-2 font-mono text-sm transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-900"
+                                className="w-full rounded-lg border border-gray-300 px-4 py-2 font-mono text-sm text-gray-900 transition focus:border-transparent focus:ring-2 focus:ring-gray-900 focus:outline-none"
                                 placeholder="post-url-slug"
                             />
                             {errors.slug && (
@@ -124,7 +124,7 @@ export default function PostForm({ post }: Props) {
                                     setData('excerpt', e.target.value)
                                 }
                                 rows={3}
-                                className="w-full resize-none rounded-lg border border-gray-300 px-4 py-2 transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-900"
+                                className="w-full resize-none rounded-lg border border-gray-300 px-4 py-2 text-gray-900 transition focus:border-transparent focus:ring-2 focus:ring-gray-900 focus:outline-none"
                                 placeholder="Brief description of your post"
                             />
                             {errors.excerpt && (
@@ -145,7 +145,7 @@ export default function PostForm({ post }: Props) {
                                     setData('content', e.target.value)
                                 }
                                 rows={16}
-                                className="w-full resize-none rounded-lg border border-gray-300 px-4 py-2 font-mono text-sm transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-900"
+                                className="w-full resize-none rounded-lg border border-gray-300 px-4 py-2 font-mono text-sm text-gray-900 transition focus:border-transparent focus:ring-2 focus:ring-gray-900 focus:outline-none"
                                 placeholder="Write your post content here (supports HTML)"
                             />
                             {errors.content && (
@@ -166,7 +166,7 @@ export default function PostForm({ post }: Props) {
                                 onChange={(e) =>
                                     setData('featured_image', e.target.value)
                                 }
-                                className="w-full rounded-lg border border-gray-300 px-4 py-2 transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-900"
+                                className="w-full rounded-lg border border-gray-300 px-4 py-2 transition focus:border-transparent focus:ring-2 focus:ring-gray-900 focus:outline-none"
                                 placeholder="https://example.com/image.jpg"
                             />
                             {errors.featured_image && (
@@ -200,7 +200,7 @@ export default function PostForm({ post }: Props) {
                                 onChange={(e) =>
                                     setData('published_at', e.target.value)
                                 }
-                                className="w-full rounded-lg border border-gray-300 px-4 py-2 transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-900"
+                                className="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900 transition focus:border-transparent focus:ring-2 focus:ring-gray-900 focus:outline-none"
                             />
                             <p className="mt-1 text-xs text-gray-500">
                                 Leave empty to save as draft

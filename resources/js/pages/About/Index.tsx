@@ -1,7 +1,63 @@
 import Layout from '@/components/Layouts';
-import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
+import {
+    Briefcase,
+    Github,
+    GraduationCap,
+    Instagram,
+    Linkedin,
+    Mail,
+    Twitter,
+} from 'lucide-react';
+
+interface Experience {
+    company: string;
+    position: string;
+    period: string;
+    description: string;
+}
+
+interface Education {
+    school: string;
+    degree: string;
+    field: string;
+    period: string;
+    description?: string;
+}
 
 export default function About() {
+    const experiences: Experience[] = [
+        {
+            company: 'Freelancer',
+            position: 'Full Stack Developer',
+            period: '2024 - Present',
+            description:
+                'Worked on various projects, including web applications. Learnt new technologies and frameworks.',
+        },
+        {
+            company: 'OKIF FT-UH',
+            position: 'Chairman Of HMIF FT-UH',
+            period: '2024 - 2025',
+            description:
+                'Planning and executing educational and social programs for students. Organizing and leading student activities.',
+        },
+    ];
+
+    const education: Education[] = [
+        {
+            school: 'Hasanuddin University',
+            degree: 'Bachelor of Computer Science',
+            field: 'Computer Science',
+            period: '2022 - now',
+            description:
+                'Focused on software engineering, data structures, and web development. Learnt about algorithms, design patterns, and database management.',
+        },
+        {
+            school: 'SMAN 3 Bone',
+            degree: 'High School Diploma',
+            field: 'Science',
+            period: '2019 - 2022',
+        },
+    ];
     return (
         <Layout>
             <div className="max-w-4xl">
@@ -10,7 +66,7 @@ export default function About() {
                         About Me
                     </h1>
 
-                    <div className="space-y-6 font-light leading-relaxed text-gray-700">
+                    <div className="space-y-6 leading-relaxed font-light text-gray-700">
                         <p className="text-xl">
                             Hi, I'm a passionate developer who loves creating
                             beautiful and functional web experiences.
@@ -26,11 +82,83 @@ export default function About() {
 
                         <p>
                             I enjoy working with technologies like Laravel,
-                            React, TypeScript, and Tailwind CSS. When I'm not
+                            React, NextJS, and Tailwind CSS. When I'm not
                             coding, you can find me exploring new technologies,
                             contributing to open source, or sharing my knowledge
                             through blog posts.
                         </p>
+                    </div>
+                </div>
+
+                {/* Experience Section */}
+                <div className="mb-12 border-t border-gray-200 pt-12">
+                    <h2 className="mb-8 flex items-center space-x-2 text-2xl font-light">
+                        <Briefcase className="h-6 w-6" />
+                        <span>Experience</span>
+                    </h2>
+
+                    <div className="space-y-8">
+                        {experiences.map((exp, index) => (
+                            <div
+                                key={index}
+                                className="relative border-l-2 border-gray-200 pl-8"
+                            >
+                                <div className="absolute top-0 -left-2 h-4 w-4 rounded-full bg-gray-900"></div>
+                                <div>
+                                    <div className="mb-2 flex flex-col md:flex-row md:items-center md:justify-between">
+                                        <h3 className="text-lg font-light text-gray-900">
+                                            {exp.position}
+                                        </h3>
+                                        <span className="text-sm font-light text-gray-500">
+                                            {exp.period}
+                                        </span>
+                                    </div>
+                                    <p className="mb-2 font-light text-gray-600">
+                                        {exp.company}
+                                    </p>
+                                    <p className="leading-relaxed font-light text-gray-700">
+                                        {exp.description}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Education Section */}
+                <div className="mb-12 border-t border-gray-200 pt-12">
+                    <h2 className="mb-8 flex items-center space-x-2 text-2xl font-light">
+                        <GraduationCap className="h-6 w-6" />
+                        <span>Education</span>
+                    </h2>
+
+                    <div className="space-y-8">
+                        {education.map((edu, index) => (
+                            <div
+                                key={index}
+                                className="relative border-l-2 border-gray-200 pl-8"
+                            >
+                                <div className="absolute top-0 -left-2 h-4 w-4 rounded-full bg-gray-900"></div>
+                                <div>
+                                    <div className="mb-2 flex flex-col md:flex-row md:items-center md:justify-between">
+                                        <h3 className="text-lg font-light text-gray-900">
+                                            {edu.degree} in {edu.field}
+                                        </h3>
+                                        <span className="text-sm font-light text-gray-500">
+                                            {edu.period}
+                                        </span>
+                                    </div>
+                                    <p className="mb-2 font-light text-gray-600">
+                                        {edu.school}
+                                    </p>
+                                    {edu.description && (
+                                        <p className="leading-relaxed font-light text-gray-700">
+                                            {edu.description}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
@@ -41,13 +169,17 @@ export default function About() {
                         {[
                             'Laravel',
                             'React',
-                            'TypeScript',
-                            'Tailwind CSS',
-                            'Inertia.js',
+                            'NextJS',
+                            'Golang',
+                            'Inertia',
+                            'Tailwind',
+                            'Bootstrap',
                             'MySQL',
+                            'PostgreSQL',
+                            'Supabase',
+                            'Firebase',
                             'Git',
-                            'REST APIs',
-                            'Node.js',
+                            'Docker',
                         ].map((skill) => (
                             <div
                                 key={skill}
@@ -64,14 +196,14 @@ export default function About() {
 
                     <div className="flex flex-wrap gap-6">
                         <a
-                            href="mailto:your@email.com"
+                            href="mailto:altafpasallo12@gmail.com"
                             className="flex items-center space-x-2 font-light text-gray-600 transition hover:text-gray-900"
                         >
                             <Mail className="h-5 w-5" />
-                            <span>your@email.com</span>
+                            <span>altafpasallo12@gmail.com</span>
                         </a>
                         <a
-                            href="https://github.com/yourusername"
+                            href="https://github.com/syaafiudinm"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center space-x-2 font-light text-gray-600 transition hover:text-gray-900"
@@ -80,7 +212,7 @@ export default function About() {
                             <span>GitHub</span>
                         </a>
                         <a
-                            href="https://linkedin.com/in/yourusername"
+                            href="https://www.linkedin.com/in/andi-syafiudin-musafir-a3b85a287/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center space-x-2 font-light text-gray-600 transition hover:text-gray-900"
@@ -89,13 +221,13 @@ export default function About() {
                             <span>LinkedIn</span>
                         </a>
                         <a
-                            href="https://twitter.com/yourusername"
+                            href="https://instagram.com/syaafiudinm"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center space-x-2 font-light text-gray-600 transition hover:text-gray-900"
                         >
-                            <Twitter className="h-5 w-5" />
-                            <span>Twitter</span>
+                            <Instagram className="h-5 w-5" />
+                            <span>Instagram</span>
                         </a>
                     </div>
                 </div>
