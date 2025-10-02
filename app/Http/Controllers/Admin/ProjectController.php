@@ -35,7 +35,10 @@ class ProjectController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('projects', 'public');
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/projects'), $filename);
+            $validated['image'] = 'uploads/projects/' . $filename;
         }
 
         Project::create($validated);
@@ -63,11 +66,14 @@ class ProjectController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            // Delete old image
-            if ($project->image) {
-                Storage::disk('public')->delete($project->image);
+            if ($project->image && file_exists(public_path($project->image))) {
+                unlink(public_path($project->image));
             }
-            $validated['image'] = $request->file('image')->store('projects', 'public');
+            
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/projects'), $filename);
+            $validated['image'] = 'uploads/projects/' . $filename;
         }
 
         $project->update($validated);
@@ -78,11 +84,9 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
-        // Delete image when deleting project
-        if ($project->image) {
-            Storage::disk('public')->delete($project->image);
+        if ($project->image && file_exists(public_path($project->image))) {
+            unlink(public_path($project->image));
         }
-        
         $project->delete();
 
         return redirect()->route('admin.projects.index')

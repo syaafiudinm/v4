@@ -53,12 +53,12 @@ export default function ProjectsIndex({ projects }: Props) {
                                 {/* Project Image */}
                                 <div className="group relative aspect-video bg-gray-100">
                                     <img
-                                        src={`/storage/${project.image}`}
+                                        src={`/${project.image}`}
                                         alt={project.title}
                                         className="h-full w-full object-cover"
                                     />
                                     {project.featured && (
-                                        <div className="absolute right-3 top-3">
+                                        <div className="absolute top-3 right-3">
                                             <span className="inline-flex items-center space-x-1 rounded-full bg-yellow-100 px-2 py-1 text-xs font-light text-yellow-800">
                                                 <Star className="h-3 w-3 fill-current" />
                                                 <span>Featured</span>

@@ -67,7 +67,7 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                             <div key={project.id} className="group">
                                 <div className="mb-4 aspect-video overflow-hidden bg-gray-100">
                                     <img
-                                        src={`/storage/${project.image}`}
+                                        src={`/${project.image}`}
                                         alt={project.title}
                                         className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                                     />

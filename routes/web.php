@@ -19,7 +19,7 @@ Route::get('/posts', [PostController::class, 'index'])->name('blog.index');
 Route::get('/post/{slug}', [PostController::class, 'show'])->name('blog.show');
 Route::post('/post/{post}/like', [PostController::class, 'like'])->name('blog.like');
 Route::post('/post/{post}/comment', [PostController::class, 'comment'])->name('blog.comment');
-Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
+Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
 Route::get('/about', function () {
     return Inertia::render('About/Index');
 })->name('about');
