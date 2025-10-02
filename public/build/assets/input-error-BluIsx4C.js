@@ -1,0 +1,1 @@
+import{j as n}from"./app-1B141v5-.js";import{c as o}from"./app-logo-icon-D066B-Ng.js";function m({message:r,className:t="",...e}){return r?n.jsx("p",{...e,className:o("text-sm text-red-600 dark:text-red-400",t),children:r}):null}export{m as I};
