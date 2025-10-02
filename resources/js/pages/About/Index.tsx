@@ -6,7 +6,6 @@ import {
     Instagram,
     Linkedin,
     Mail,
-    Twitter,
 } from 'lucide-react';
 
 interface Experience {
