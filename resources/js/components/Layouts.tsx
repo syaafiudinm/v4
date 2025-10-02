@@ -76,8 +76,14 @@ export default function Layout({ children }: PropsWithChildren) {
                     </div>
 
                     {/* Mobile Menu */}
-                    {mobileMenuOpen && (
-                        <div className="mt-6 space-y-4 pb-4 md:hidden">
+                    <div
+                        className={`transform overflow-hidden transition-all duration-300 ease-in-out md:hidden ${
+                            mobileMenuOpen
+                                ? 'max-h-96 translate-y-0 opacity-100'
+                                : 'max-h-0 -translate-y-2 opacity-0'
+                        }`}
+                    >
+                        <div className="mt-6 space-y-4 pb-4">
                             <Link
                                 href="/"
                                 className="block text-sm font-light transition hover:text-gray-600"
@@ -85,7 +91,7 @@ export default function Layout({ children }: PropsWithChildren) {
                                 Home
                             </Link>
                             <Link
-                                href="/blog"
+                                href="/posts"
                                 className="block text-sm font-light transition hover:text-gray-600"
                             >
                                 Blog
@@ -103,7 +109,7 @@ export default function Layout({ children }: PropsWithChildren) {
                                 About
                             </Link>
                         </div>
-                    )}
+                    </div>
                 </nav>
             </header>
 
