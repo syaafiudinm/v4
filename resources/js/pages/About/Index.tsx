@@ -7,6 +7,22 @@ import {
     Linkedin,
     Mail,
 } from 'lucide-react';
+import {
+    SiBootstrap,
+    SiDocker,
+    SiFirebase,
+    SiGit,
+    SiGo,
+    SiInertia,
+    SiLaravel,
+    SiLivewire,
+    SiMysql,
+    SiNextdotjs,
+    SiPostgresql,
+    SiReact,
+    SiSupabase,
+    SiTailwindcss,
+} from 'react-icons/si';
 
 interface Experience {
     company: string;
@@ -57,6 +73,24 @@ export default function About() {
             period: '2019 - 2022',
         },
     ];
+
+    const skills = [
+        { name: 'Laravel', icon: <SiLaravel size={20} /> },
+        { name: 'React', icon: <SiReact size={20} /> },
+        { name: 'Next.js', icon: <SiNextdotjs size={20} /> },
+        { name: 'Golang', icon: <SiGo size={20} /> },
+        { name: 'Inertia', icon: <SiInertia size={20} /> },
+        { name: 'Livewire', icon: <SiLivewire size={20} /> },
+        { name: 'Tailwind CSS', icon: <SiTailwindcss size={20} /> },
+        { name: 'Bootstrap', icon: <SiBootstrap size={20} /> },
+        { name: 'MySQL', icon: <SiMysql size={20} /> },
+        { name: 'PostgreSQL', icon: <SiPostgresql size={20} /> },
+        { name: 'Supabase', icon: <SiSupabase size={20} /> },
+        { name: 'Firebase', icon: <SiFirebase size={20} /> },
+        { name: 'Git', icon: <SiGit size={20} /> },
+        { name: 'Docker', icon: <SiDocker size={20} /> },
+    ];
+
     return (
         <Layout>
             <div className="max-w-4xl">
@@ -168,35 +202,21 @@ export default function About() {
                     </div>
                 </div>
 
-                {/* Skills Section */}
+                {/* Skills Section - Updated with Logos */}
                 <div className="animate-fade-in-up animation-delay-600 border-t border-gray-200 pt-12">
                     <h2 className="mb-6 text-2xl font-light">Skills</h2>
 
                     <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-                        {[
-                            'Laravel',
-                            'React',
-                            'NextJS',
-                            'Golang',
-                            'Inertia',
-                            'Livewire',
-                            'Tailwind',
-                            'Bootstrap',
-                            'MySQL',
-                            'PostgreSQL',
-                            'Supabase',
-                            'Firebase',
-                            'Git',
-                            'Docker',
-                        ].map((skill, index) => (
+                        {skills.map((skill, index) => (
                             <div
-                                key={skill}
-                                className="animate-fade-in-up border border-gray-200 px-4 py-3 text-center font-light"
+                                key={skill.name}
+                                className="animate-fade-in-up flex items-center justify-center space-x-3 border border-gray-200 px-4 py-3 text-center font-light"
                                 style={{
                                     animationDelay: `${700 + index * 30}ms`,
                                 }}
                             >
-                                {skill}
+                                {skill.icon}
+                                <span>{skill.name}</span>
                             </div>
                         ))}
                     </div>

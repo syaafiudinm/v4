@@ -9,9 +9,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="min-h-screen bg-white text-gray-900">
             {/* Header */}
             <header className="fixed top-4 left-0 right-0 z-50 px-6">
-                <div className="flex justify-center md:justify-center justify-end">
+                <div className="flex md:justify-center justify-end">
                     <div className="relative">
-                        <nav className="rounded-full border-2 border-gray-200 bg-white/80 backdrop-blur-md px-8 py-4 w-auto inline-flex">
+                        <nav className="rounded-full border-2 border-gray-200 bg-white/80 backdrop-blur-md px-8 py-4 w-auto inline-flex shadow-lg">
                             {/* Desktop Menu */}
                             <div className="hidden items-center space-x-12 md:flex">
                                 <Link
