@@ -1,7 +1,7 @@
 import Layout from '@/components/Layouts';
 import { PaginatedData, Post } from '@/types/models';
 import { Link } from '@inertiajs/react';
-import { Heart, MessageCircle } from 'lucide-react';
+import { Calendar, Heart, MessageCircle } from 'lucide-react';
 
 interface Props {
     posts: PaginatedData<Post>;
@@ -33,47 +33,40 @@ export default function BlogIndex({ posts }: Props) {
                         <Link
                             key={post.id}
                             href={`/post/${post.slug}`}
-                            className="group"
+                            className="group overflow-hidden rounded-lg border border-gray-200 bg-white transition-shadow duration-300 hover:shadow-lg"
                         >
-                            {/* Featured Image */}
-                            {post.featured_image && (
-                                <div className="mb-4 aspect-video overflow-hidden bg-gray-100">
-                                    <img
-                                        src={post.featured_image}
-                                        alt={post.title}
-                                        className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                                    />
+                            {/* Card Content */}
+                            <div className="p-6">
+                                {/* Date */}
+                                <div className="mb-3 flex items-center space-x-2 text-xs font-light text-gray-500">
+                                    <Calendar className="h-3 w-3" />
+                                    <span>{formatDate(post.published_at)}</span>
                                 </div>
-                            )}
 
-                            {/* Date */}
-                            <p className="mb-2 text-xs font-light text-gray-500">
-                                {formatDate(post.published_at)}
-                            </p>
+                                {/* Title */}
+                                <h2 className="mb-3 line-clamp-2 text-xl font-light transition group-hover:text-gray-600">
+                                    {post.title}
+                                </h2>
 
-                            {/* Title */}
-                            <h2 className="mb-2 text-xl font-light transition group-hover:text-gray-600">
-                                {post.title}
-                            </h2>
+                                {/* Excerpt */}
+                                <p className="mb-4 line-clamp-3 text-sm font-light text-gray-600">
+                                    {post.excerpt}
+                                </p>
 
-                            {/* Excerpt */}
-                            <p className="mb-4 line-clamp-2 text-sm font-light text-gray-600">
-                                {post.excerpt}
-                            </p>
-
-                            {/* Stats */}
-                            <div className="flex items-center space-x-4 text-gray-400">
-                                <div className="flex items-center space-x-1">
-                                    <Heart className="h-4 w-4" />
-                                    <span className="text-xs font-light">
-                                        {post.likes?.length || 0}
-                                    </span>
-                                </div>
-                                <div className="flex items-center space-x-1">
-                                    <MessageCircle className="h-4 w-4" />
-                                    <span className="text-xs font-light">
-                                        {post.comments?.length || 0}
-                                    </span>
+                                {/* Stats */}
+                                <div className="flex items-center space-x-4 border-t border-gray-100 pt-4">
+                                    <div className="flex items-center space-x-1 text-gray-400">
+                                        <Heart className="h-4 w-4" />
+                                        <span className="text-xs font-light">
+                                            {post.likes?.length || 0}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center space-x-1 text-gray-400">
+                                        <MessageCircle className="h-4 w-4" />
+                                        <span className="text-xs font-light">
+                                            {post.comments?.length || 0}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </Link>
@@ -88,10 +81,10 @@ export default function BlogIndex({ posts }: Props) {
                                 <Link
                                     key={index}
                                     href={link.url}
-                                    className={`border px-4 py-2 text-sm font-light transition ${
+                                    className={`rounded-lg border px-4 py-2 text-sm font-light transition ${
                                         link.active
                                             ? 'border-gray-900 bg-gray-900 text-white'
-                                            : 'border-gray-200 hover:border-gray-900'
+                                            : 'border-gray-200 bg-white hover:border-gray-900'
                                     }`}
                                     dangerouslySetInnerHTML={{
                                         __html: link.label,
