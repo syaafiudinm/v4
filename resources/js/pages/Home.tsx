@@ -41,7 +41,7 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                     </p>
                     <Link
                         href="/about"
-                        className="inline-flex items-center space-x-2 border-b border-gray-900 pb-1 text-sm font-light transition hover:text-gray-600"
+                        className="inline-flex items-center space-x-2 border-b border-gray-900 pb-1 text-sm font-light transition hover:text-gray-600 hover:translate-x-1 ease-in-out duration-100"
                     >
                         <span>More about me</span>
                         <ArrowRight className="h-4 w-4" />

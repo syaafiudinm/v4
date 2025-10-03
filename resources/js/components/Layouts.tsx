@@ -8,10 +8,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <div className="min-h-screen bg-white text-gray-900">
             {/* Header */}
-            <header className="fixed top-4 left-0 right-0 z-50 px-6">
-                <div className="flex md:justify-center justify-end">
+            <header className="fixed top-4 right-0 left-0 z-50 px-6">
+                <div className="flex justify-end md:justify-center">
                     <div className="relative">
-                        <nav className="rounded-full border-2 border-gray-200 bg-white/80 backdrop-blur-md px-8 py-4 w-auto inline-flex shadow-lg">
+                        <nav className="inline-flex w-auto rounded-full border-2 border-gray-200 bg-white/80 px-8 py-4 shadow-lg backdrop-blur-md">
                             {/* Desktop Menu */}
                             <div className="hidden items-center space-x-12 md:flex">
                                 <Link
@@ -42,7 +42,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
                             {/* Mobile Menu Button */}
                             <button
-                                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                                onClick={() =>
+                                    setMobileMenuOpen(!mobileMenuOpen)
+                                }
                                 className="flex items-center space-x-2 text-sm font-light transition md:hidden"
                             >
                                 <span>Menu</span>
@@ -55,11 +57,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         </nav>
 
                         {/* Mobile Dropdown Menu */}
-                        <div className={`absolute top-full right-0 mt-4 w-72 rounded-2xl border border-gray-200 bg-white p-6 shadow-xl md:hidden transition-all duration-300 ease-in-out origin-top-right ${
-                            mobileMenuOpen 
-                                ? 'opacity-100 scale-100 translate-y-0' 
-                                : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
-                        }`}>
+                        <div
+                            className={`absolute top-full right-0 mt-4 w-72 origin-top-right rounded-2xl border border-gray-200 bg-white p-6 shadow-xl transition-all duration-300 ease-in-out md:hidden ${
+                                mobileMenuOpen
+                                    ? 'translate-y-0 scale-100 opacity-100'
+                                    : 'pointer-events-none -translate-y-2 scale-95 opacity-0'
+                            }`}
+                        >
                             <div className="mb-4 text-sm font-medium text-gray-500">
                                 Navigation
                             </div>
