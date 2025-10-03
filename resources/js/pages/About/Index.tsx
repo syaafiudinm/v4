@@ -171,6 +171,7 @@ export default function About() {
                             'NextJS',
                             'Golang',
                             'Inertia',
+                            'Livewire',
                             'Tailwind',
                             'Bootstrap',
                             'MySQL',

@@ -42,7 +42,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
 
     const handleCommentSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        submit(`/blog/${post.id}/comment`, {
+        submit(`/post/${post.id}/comment`, {
             onSuccess: () => reset(),
         });
     };
