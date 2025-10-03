@@ -31,7 +31,7 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
         <Layout>
             <div>
                 {/* Hero Section */}
-                <section className="py-16 md:py-32">
+                <section className="animate-fade-in py-16 md:py-32">
                     <h1 className="mb-6 text-4xl leading-tight font-light md:text-7xl">
                         {displayedText}
                     </h1>
@@ -49,7 +49,7 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                 </section>
 
                 {/* Featured Projects */}
-                <section className="border-t border-gray-200 py-16">
+                <section className="animate-fade-in-up animation-delay-200 border-t border-gray-200 py-16">
                     <div className="mb-12 flex items-center justify-between">
                         <h2 className="text-3xl font-light">
                             Featured Projects
@@ -94,7 +94,7 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                 </section>
 
                 {/* Recent Blog Posts */}
-                <section className="border-t border-gray-200 py-16">
+                <section className="animate-fade-in-up animation-delay-200 border-t border-gray-200 py-16">
                     <div className="mb-12 flex items-center justify-between">
                         <h2 className="text-3xl font-light">Recent Posts</h2>
                         <Link

@@ -29,11 +29,12 @@ export default function BlogIndex({ posts }: Props) {
                 </div>
 
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    {posts.data.map((post) => (
+                    {posts.data.map((post, index) => (
                         <Link
                             key={post.id}
                             href={`/post/${post.slug}`}
-                            className="group overflow-hidden rounded-lg border border-gray-200 bg-white transition-shadow duration-300 hover:shadow-lg"
+                            className="group animate-fade-in-up overflow-hidden rounded-lg border border-gray-200 bg-white transition-shadow duration-300 hover:shadow-lg"
+                            style={{ animationDelay: `${index * 50}ms` }}
                         >
                             {/* Card Content */}
                             <div className="p-6">

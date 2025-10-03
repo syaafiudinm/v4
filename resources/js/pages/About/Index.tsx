@@ -60,7 +60,8 @@ export default function About() {
     return (
         <Layout>
             <div className="max-w-4xl">
-                <div className="mb-16">
+                {/* Intro Section */}
+                <div className="animate-fade-in mb-16">
                     <h1 className="mb-8 text-4xl font-light md:text-5xl">
                         About Me
                     </h1>
@@ -90,7 +91,7 @@ export default function About() {
                 </div>
 
                 {/* Experience Section */}
-                <div className="mb-12 border-t border-gray-200 pt-12">
+                <div className="animate-fade-in-up animation-delay-200 mb-12 border-t border-gray-200 pt-12">
                     <h2 className="mb-8 flex items-center space-x-2 text-2xl font-light">
                         <Briefcase className="h-6 w-6" />
                         <span>Experience</span>
@@ -100,7 +101,10 @@ export default function About() {
                         {experiences.map((exp, index) => (
                             <div
                                 key={index}
-                                className="relative border-l-2 border-gray-200 pl-8"
+                                className="animate-fade-in-up relative border-l-2 border-gray-200 pl-8"
+                                style={{
+                                    animationDelay: `${300 + index * 150}ms`,
+                                }}
                             >
                                 <div className="absolute top-0 -left-2 h-4 w-4 rounded-full bg-gray-900"></div>
                                 <div>
@@ -125,7 +129,7 @@ export default function About() {
                 </div>
 
                 {/* Education Section */}
-                <div className="mb-12 border-t border-gray-200 pt-12">
+                <div className="animate-fade-in-up animation-delay-400 mb-12 border-t border-gray-200 pt-12">
                     <h2 className="mb-8 flex items-center space-x-2 text-2xl font-light">
                         <GraduationCap className="h-6 w-6" />
                         <span>Education</span>
@@ -135,7 +139,10 @@ export default function About() {
                         {education.map((edu, index) => (
                             <div
                                 key={index}
-                                className="relative border-l-2 border-gray-200 pl-8"
+                                className="animate-fade-in-up relative border-l-2 border-gray-200 pl-8"
+                                style={{
+                                    animationDelay: `${500 + index * 150}ms`,
+                                }}
                             >
                                 <div className="absolute top-0 -left-2 h-4 w-4 rounded-full bg-gray-900"></div>
                                 <div>
@@ -161,7 +168,8 @@ export default function About() {
                     </div>
                 </div>
 
-                <div className="border-t border-gray-200 pt-12">
+                {/* Skills Section */}
+                <div className="animate-fade-in-up animation-delay-600 border-t border-gray-200 pt-12">
                     <h2 className="mb-6 text-2xl font-light">Skills</h2>
 
                     <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
@@ -180,10 +188,13 @@ export default function About() {
                             'Firebase',
                             'Git',
                             'Docker',
-                        ].map((skill) => (
+                        ].map((skill, index) => (
                             <div
                                 key={skill}
-                                className="border border-gray-200 px-4 py-3 text-center font-light"
+                                className="animate-fade-in-up border border-gray-200 px-4 py-3 text-center font-light"
+                                style={{
+                                    animationDelay: `${700 + index * 30}ms`,
+                                }}
                             >
                                 {skill}
                             </div>
@@ -191,7 +202,8 @@ export default function About() {
                     </div>
                 </div>
 
-                <div className="mt-12 border-t border-gray-200 pt-12">
+                {/* Contact Section */}
+                <div className="animate-fade-in-up animation-delay-800 mt-12 border-t border-gray-200 pt-12">
                     <h2 className="mb-6 text-2xl font-light">Get in Touch</h2>
 
                     <div className="flex flex-wrap gap-6">

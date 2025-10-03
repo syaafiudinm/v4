@@ -20,8 +20,12 @@ export default function Projects({ projects }: Props) {
                 </div>
 
                 <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
-                    {projects.map((project) => (
-                        <div key={project.id} className="group">
+                    {projects.map((project, index) => (
+                        <div
+                            key={project.id}
+                            className="group animate-fade-in-up"
+                            style={{ animationDelay: `${index * 100}ms` }}
+                        >
                             <div className="mb-6 aspect-video overflow-hidden bg-gray-100">
                                 <img
                                     src={`/${project.image}`}
