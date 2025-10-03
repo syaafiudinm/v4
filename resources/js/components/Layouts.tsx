@@ -1,131 +1,118 @@
 import { Link } from '@inertiajs/react';
-import { PropsWithChildren, useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import { useState } from 'react';
 
-export default function Layout({ children }: PropsWithChildren) {
+export default function Layout({ children }: { children: React.ReactNode }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     return (
         <div className="min-h-screen bg-white text-gray-900">
             {/* Header */}
-            <header className="border-b border-gray-200">
-                <nav className="mx-auto max-w-6xl px-6 py-6">
-                    <div className="flex items-center justify-between">
-                        <Link
-                            href="/"
-                            className="text-xl font-light tracking-wide transition hover:text-gray-600"
-                        >
-                            syaafiudinm
-                        </Link>
+            <header className="fixed top-4 left-0 right-0 z-50 px-6">
+                <div className="flex justify-center md:justify-center justify-end">
+                    <div className="relative">
+                        <nav className="rounded-full border-2 border-gray-200 bg-white/80 backdrop-blur-md px-8 py-4 w-auto inline-flex">
+                            {/* Desktop Menu */}
+                            <div className="hidden items-center space-x-12 md:flex">
+                                <Link
+                                    href="/"
+                                    className="text-sm font-light transition hover:text-gray-600"
+                                >
+                                    Home
+                                </Link>
+                                <Link
+                                    href="/about"
+                                    className="text-sm font-light transition hover:text-gray-600"
+                                >
+                                    About
+                                </Link>
+                                <Link
+                                    href="/posts"
+                                    className="text-sm font-light transition hover:text-gray-600"
+                                >
+                                    Blog
+                                </Link>
+                                <Link
+                                    href="/projects"
+                                    className="text-sm font-light transition hover:text-gray-600"
+                                >
+                                    Projects
+                                </Link>
+                            </div>
 
-                        {/* Desktop Menu */}
-                        <div className="hidden items-center space-x-8 md:flex">
-                            <Link
-                                href="/"
-                                className="text-sm font-light transition hover:text-gray-600"
+                            {/* Mobile Menu Button */}
+                            <button
+                                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                                className="flex items-center space-x-2 text-sm font-light transition md:hidden"
                             >
-                                Home
-                            </Link>
-                            <Link
-                                href="/posts"
-                                className="text-sm font-light transition hover:text-gray-600"
-                            >
-                                Blog
-                            </Link>
-                            <Link
-                                href="/projects"
-                                className="text-sm font-light transition hover:text-gray-600"
-                            >
-                                Projects
-                            </Link>
-                            <Link
-                                href="/about"
-                                className="text-sm font-light transition hover:text-gray-600"
-                            >
-                                About
-                            </Link>
-                        </div>
-
-                        {/* Mobile Menu Button */}
-                        <button
-                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="text-gray-900 md:hidden"
-                        >
-                            <svg
-                                className="h-6 w-6"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
+                                <span>Menu</span>
                                 {mobileMenuOpen ? (
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={1.5}
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
+                                    <X className="h-4 w-4" />
                                 ) : (
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={1.5}
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
+                                    <Menu className="h-4 w-4" />
                                 )}
-                            </svg>
-                        </button>
-                    </div>
+                            </button>
+                        </nav>
 
-                    {/* Mobile Menu */}
-                    <div
-                        className={`transform overflow-hidden transition-all duration-300 ease-in-out md:hidden ${
-                            mobileMenuOpen
-                                ? 'max-h-96 translate-y-0 opacity-100'
-                                : 'max-h-0 -translate-y-2 opacity-0'
-                        }`}
-                    >
-                        <div className="mt-6 space-y-4 pb-4">
-                            <Link
-                                href="/"
-                                className="block text-sm font-light transition hover:text-gray-600"
-                            >
-                                Home
-                            </Link>
-                            <Link
-                                href="/posts"
-                                className="block text-sm font-light transition hover:text-gray-600"
-                            >
-                                Blog
-                            </Link>
-                            <Link
-                                href="/projects"
-                                className="block text-sm font-light transition hover:text-gray-600"
-                            >
-                                Projects
-                            </Link>
-                            <Link
-                                href="/about"
-                                className="block text-sm font-light transition hover:text-gray-600"
-                            >
-                                About
-                            </Link>
+                        {/* Mobile Dropdown Menu */}
+                        <div className={`absolute top-full right-0 mt-4 w-72 rounded-2xl border border-gray-200 bg-white p-6 shadow-xl md:hidden transition-all duration-300 ease-in-out origin-top-right ${
+                            mobileMenuOpen 
+                                ? 'opacity-100 scale-100 translate-y-0' 
+                                : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
+                        }`}>
+                            <div className="mb-4 text-sm font-medium text-gray-500">
+                                Navigation
+                            </div>
+                            <div className="space-y-4">
+                                <Link
+                                    href="/"
+                                    className="block font-light text-gray-900 transition hover:text-gray-600"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                >
+                                    Home
+                                </Link>
+                                <Link
+                                    href="/about"
+                                    className="block font-light text-gray-900 transition hover:text-gray-600"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                >
+                                    About
+                                </Link>
+                                <Link
+                                    href="/posts"
+                                    className="block font-light text-gray-900 transition hover:text-gray-600"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                >
+                                    Blog
+                                </Link>
+                                <Link
+                                    href="/projects"
+                                    className="block font-light text-gray-900 transition hover:text-gray-600"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                >
+                                    Projects
+                                </Link>
+                            </div>
                         </div>
                     </div>
-                </nav>
+                </div>
             </header>
 
             {/* Main Content */}
-            <main className="mx-auto max-w-6xl px-6 py-12">{children}</main>
+            <main className="mx-auto max-w-6xl px-6 pt-24 pb-12">
+                {children}
+            </main>
 
             {/* Footer */}
             <footer className="mt-20 border-t border-gray-200">
                 <div className="mx-auto max-w-6xl px-6 py-8">
                     <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
                         <p className="text-sm font-light text-gray-500">
-                            © 2025 syaafiudinm. All rights reserved.
+                            © 2025 Syaafiudinm. All rights reserved.
                         </p>
                         <div className="flex space-x-6">
                             <a
-                                href="https://github.com/syaafiudinm"
+                                href="https://github.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-gray-500 transition hover:text-gray-900"
@@ -135,23 +122,13 @@ export default function Layout({ children }: PropsWithChildren) {
                                 </span>
                             </a>
                             <a
-                                href="https://www.linkedin.com/in/andi-syafiudin-musafir-a3b85a287/"
+                                href="https://linkedin.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-gray-500 transition hover:text-gray-900"
                             >
                                 <span className="text-sm font-light">
                                     LinkedIn
-                                </span>
-                            </a>
-                            <a
-                                href="https://instagram.com/syaafiudinm"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-gray-500 transition hover:text-gray-900"
-                            >
-                                <span className="text-sm font-light">
-                                    Instagram
                                 </span>
                             </a>
                         </div>

@@ -31,7 +31,7 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
         <Layout>
             <div>
                 {/* Hero Section */}
-                <section className="py-20 md:py-32">
+                <section className="py-16 md:py-32">
                     <h1 className="mb-6 text-4xl leading-tight font-light md:text-7xl">
                         {displayedText}
                     </h1>
