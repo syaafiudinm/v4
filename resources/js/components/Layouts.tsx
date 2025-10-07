@@ -1,9 +1,17 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const { url } = usePage();
+
+    const isActive = (path: string) => {
+        if (path === '/') {
+            return url === '/';
+        }
+        return url.startsWith(path);
+    };
 
     return (
         <div className="min-h-screen bg-white text-gray-900">
@@ -11,30 +19,40 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <header className="fixed top-4 right-0 left-0 z-50 px-6">
                 <div className="flex justify-end md:justify-center">
                     <div className="relative">
-                        <nav className="inline-flex w-auto rounded-full border-2 border-gray-200 bg-white/80 px-8 py-4 shadow-lg backdrop-blur-md">
+                        <nav className="inline-flex w-auto rounded-full border-2 border-gray-200 bg-white/80 px-8 py-4 backdrop-blur-md">
                             {/* Desktop Menu */}
                             <div className="hidden items-center space-x-12 md:flex">
                                 <Link
                                     href="/"
-                                    className="text-sm font-light transition hover:text-gray-600"
+                                    className={`nav-link text-sm font-light transition hover:text-gray-600 ${
+                                        isActive('/') ? 'active' : ''
+                                    }`}
                                 >
                                     Home
                                 </Link>
                                 <Link
                                     href="/about"
-                                    className="text-sm font-light transition hover:text-gray-600"
+                                    className={`nav-link text-sm font-light transition hover:text-gray-600 ${
+                                        isActive('/about') ? 'active' : ''
+                                    }`}
                                 >
                                     About
                                 </Link>
                                 <Link
                                     href="/posts"
-                                    className="text-sm font-light transition hover:text-gray-600"
+                                    className={`nav-link text-sm font-light transition hover:text-gray-600 ${
+                                        isActive('/posts') || isActive('/post')
+                                            ? 'active'
+                                            : ''
+                                    }`}
                                 >
                                     Blog
                                 </Link>
                                 <Link
                                     href="/projects"
-                                    className="text-sm font-light transition hover:text-gray-600"
+                                    className={`nav-link text-sm font-light transition hover:text-gray-600 ${
+                                        isActive('/projects') ? 'active' : ''
+                                    }`}
                                 >
                                     Projects
                                 </Link>
@@ -70,28 +88,44 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             <div className="space-y-4">
                                 <Link
                                     href="/"
-                                    className="block font-light text-gray-900 transition hover:text-gray-600"
+                                    className={`block font-light transition hover:text-gray-600 ${
+                                        isActive('/')
+                                            ? 'inline-block border-b-2 border-gray-900 pb-1 text-gray-900'
+                                            : 'text-gray-900'
+                                    }`}
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
                                     Home
                                 </Link>
                                 <Link
                                     href="/about"
-                                    className="block font-light text-gray-900 transition hover:text-gray-600"
+                                    className={`block font-light transition hover:text-gray-600 ${
+                                        isActive('/about')
+                                            ? 'inline-block border-b-2 border-gray-900 pb-1 text-gray-900'
+                                            : 'text-gray-900'
+                                    }`}
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
                                     About
                                 </Link>
                                 <Link
                                     href="/posts"
-                                    className="block font-light text-gray-900 transition hover:text-gray-600"
+                                    className={`block font-light transition hover:text-gray-600 ${
+                                        isActive('/posts') || isActive('/post')
+                                            ? 'inline-block border-b-2 border-gray-900 pb-1 text-gray-900'
+                                            : 'text-gray-900'
+                                    }`}
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
                                     Blog
                                 </Link>
                                 <Link
                                     href="/projects"
-                                    className="block font-light text-gray-900 transition hover:text-gray-600"
+                                    className={`block font-light transition hover:text-gray-600 ${
+                                        isActive('/projects')
+                                            ? 'inline-block border-b-2 border-gray-900 pb-1 text-gray-900'
+                                            : 'text-gray-900'
+                                    }`}
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
                                     Projects
@@ -102,10 +136,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </div>
             </header>
 
-            {/* Main Content */}
-            <main className="mx-auto max-w-6xl px-6 pt-24 pb-12">
-                {children}
-            </main>
+            {/* Page Transition Wrapper */}
+            <div className="animate-page-enter">
+                <main className="mx-auto max-w-6xl px-6 pt-24 pb-12">
+                    {children}
+                </main>
+            </div>
 
             {/* Footer */}
             <footer className="mt-20 border-t border-gray-200">
