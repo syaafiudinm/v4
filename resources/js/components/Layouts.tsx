@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     };
 
     return (
-        <div className="min-h-screen bg-white text-gray-900">
+        <div className="flex min-h-screen flex-col bg-white text-gray-900">
             {/* Header */}
             <header className="fixed top-4 right-0 left-0 z-50 px-6">
                 <div className="flex justify-end md:justify-center">
@@ -137,14 +137,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </header>
 
             {/* Page Transition Wrapper */}
-            <div className="animate-page-enter">
+            <div className="animate-page-enter flex-1">
                 <main className="mx-auto max-w-6xl px-6 pt-24 pb-12">
                     {children}
                 </main>
             </div>
 
             {/* Footer */}
-            <footer className="mt-20 border-t border-gray-200">
+            <footer className="mt-auto border-t border-gray-200">
                 <div className="mx-auto max-w-6xl px-6 py-8">
                     <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
                         <p className="text-sm font-light text-gray-500">
