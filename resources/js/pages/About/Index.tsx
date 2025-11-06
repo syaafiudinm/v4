@@ -1,6 +1,7 @@
 import Layout from '@/components/Layouts';
 import {
     Briefcase,
+    Download,
     Github,
     GraduationCap,
     Instagram,
@@ -8,6 +9,7 @@ import {
     Mail,
 } from 'lucide-react';
 import {
+    SiAmazonwebservices,
     SiBootstrap,
     SiDocker,
     SiFirebase,
@@ -89,38 +91,83 @@ export default function About() {
         { name: 'Firebase', icon: <SiFirebase size={20} /> },
         { name: 'Git', icon: <SiGit size={20} /> },
         { name: 'Docker', icon: <SiDocker size={20} /> },
+        { name: 'AWS', icon: <SiAmazonwebservices size={20} /> },
     ];
 
     return (
         <Layout>
             <div className="max-w-4xl">
-                {/* Intro Section */}
                 <div className="animate-fade-in mb-16">
-                    <h1 className="mb-8 text-4xl font-light md:text-5xl">
-                        About Me
-                    </h1>
+                    <div className="mb-8 flex flex-col items-center gap-8 md:flex-row">
+                        {/* Profile Photo */}
+                        <div className="flex-shrink-0">
+                            <img
+                                src="/profil.png"
+                                alt="Andi Syafiudin Musafir"
+                                className="h-32 w-32 rounded-full border-4 border-gray-200 object-cover md:h-48 md:w-48"
+                            />
+                        </div>
 
-                    <div className="space-y-6 leading-relaxed font-light text-gray-700">
-                        <p className="text-xl">
-                            Hi, I'm a passionate developer who loves creating
-                            beautiful and functional web experiences.
-                        </p>
+                        {/* Intro */}
+                        <div className="flex-1">
+                            <h1 className="mb-4 text-4xl font-light md:text-5xl">
+                                About Me
+                            </h1>
 
-                        <p>
-                            With expertise in modern web technologies, I
-                            specialize in building scalable applications that
-                            solve real-world problems. My journey in web
-                            development started several years ago, and I've been
-                            continuously learning and evolving ever since.
-                        </p>
+                            <div className="space-y-6 leading-relaxed font-light text-gray-700">
+                                <p className="text-xl">
+                                    Hi, I'm a passionate developer who loves
+                                    creating beautiful and functional web
+                                    experiences.
+                                </p>
 
-                        <p>
-                            I enjoy working with technologies like Laravel,
-                            React, NextJS, and Tailwind CSS. When I'm not
-                            coding, you can find me exploring new technologies,
-                            contributing to open source, or sharing my knowledge
-                            through blog posts.
-                        </p>
+                                <p>
+                                    With expertise in modern web technologies, I
+                                    specialize in building scalable applications
+                                    that solve real-world problems. My journey
+                                    in web development started several years
+                                    ago, and I've been continuously learning and
+                                    evolving ever since.
+                                </p>
+                            </div>
+
+                            {/* Download CV Button */}
+                            <div className="mt-6">
+                                <a
+                                    href="/cv_syafiudin.pdf"
+                                    download
+                                    className="inline-flex items-center space-x-2 rounded-lg bg-gray-900 px-6 py-3 font-light text-white transition hover:bg-gray-800"
+                                >
+                                    <Download className="h-4 w-4" />
+                                    <span>Download CV</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Currently Learning Section */}
+                    <div className="w-fit rounded-lg border border-gray-300 bg-gray-50 p-6">
+                        <h3 className="mb-3 flex items-center space-x-2 text-lg font-light text-gray-900">
+                            <span>📚</span>
+                            <span>What I'm Currently Learning</span>
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                            {[
+                                'Kubernetes',
+                                'Serverless',
+                                'Go',
+                                'gRPC',
+                                'Microservices',
+                                'Google Cloud Platform',
+                            ].map((tech) => (
+                                <span
+                                    key={tech}
+                                    className="rounded-full border border-gray-300 bg-gray-50 px-3 py-1 text-sm font-light text-gray-800"
+                                >
+                                    {tech}
+                                </span>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
