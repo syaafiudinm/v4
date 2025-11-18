@@ -129,16 +129,22 @@ export default function Projects({ projects }: Props) {
 
                             <div className="flex items-center space-x-4">
                                 {project.demo_url && (
-                                    <span className="flex items-center space-x-2 text-sm font-light text-gray-600">
+                                    <a
+                                        href={project.demo_url}
+                                        className="flex items-center space-x-2 text-sm font-light text-gray-600"
+                                    >
                                         <ExternalLink className="h-4 w-4" />
                                         <span>Live Demo</span>
-                                    </span>
+                                    </a>
                                 )}
                                 {project.github_url && (
-                                    <span className="flex items-center space-x-2 text-sm font-light text-gray-600">
+                                    <a
+                                        href={project.github_url}
+                                        className="flex items-center space-x-2 text-sm font-light text-gray-600"
+                                    >
                                         <Github className="h-4 w-4" />
                                         <span>Source Code</span>
-                                    </span>
+                                    </a>
                                 )}
                             </div>
                         </div>
