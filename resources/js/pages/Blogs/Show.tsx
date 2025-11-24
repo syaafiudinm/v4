@@ -121,7 +121,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
                                         onChange={(e) =>
                                             setData('name', e.target.value)
                                         }
-                                        className="w-full border border-gray-200 px-4 py-3 font-light transition focus:border-gray-900 focus:outline-none"
+                                        className="w-full rounded-sm border border-gray-200 px-4 py-3 font-light transition focus:border-gray-900 focus:outline-none"
                                     />
                                     {errors.name && (
                                         <p className="mt-1 text-xs text-red-500">
@@ -137,7 +137,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
                                         onChange={(e) =>
                                             setData('email', e.target.value)
                                         }
-                                        className="w-full border border-gray-200 px-4 py-3 font-light transition focus:border-gray-900 focus:outline-none"
+                                        className="w-full rounded-sm border border-gray-200 px-4 py-3 font-light transition focus:border-gray-900 focus:outline-none"
                                     />
                                     {errors.email && (
                                         <p className="mt-1 text-xs text-red-500">
@@ -154,7 +154,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
                                         setData('content', e.target.value)
                                     }
                                     rows={parseInt('4')}
-                                    className="w-full resize-none border border-gray-200 px-4 py-3 font-light transition focus:border-gray-900 focus:outline-none"
+                                    className="w-full rounded-sm resize-none border border-gray-200 px-4 py-3 font-light transition focus:border-gray-900 focus:outline-none"
                                 />
                                 {errors.content && (
                                     <p className="mt-1 text-xs text-red-500">
@@ -165,7 +165,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="bg-gray-900 px-6 py-3 font-light text-white transition hover:bg-gray-800 disabled:opacity-50"
+                                className="bg-gray-900 rounded-sm px-6 py-3 font-light text-white transition hover:bg-gray-800 disabled:opacity-50"
                             >
                                 {processing ? 'Posting...' : 'Post Comment'}
                             </button>
