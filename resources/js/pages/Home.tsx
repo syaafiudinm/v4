@@ -41,7 +41,7 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                     </p>
                     <Link
                         href="/about"
-                        className="inline-flex items-center space-x-2 border-b border-gray-900 pb-1 text-sm font-light transition hover:text-gray-600 hover:translate-x-1 ease-in-out duration-100"
+                        className="inline-flex items-center space-x-2 border-b border-gray-900 pb-1 text-sm font-light transition duration-100 ease-in-out hover:translate-x-1 hover:text-gray-600"
                     >
                         <span>More about me</span>
                         <ArrowRight className="h-4 w-4" />
@@ -63,7 +63,7 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                     </div>
 
                     <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                        {featuredProjects?.slice(0, 4).map((project) => (
+                        {featuredProjects?.slice(0, 10).map((project) => (
                             <div key={project.id} className="group">
                                 <div className="mb-4 aspect-video overflow-hidden bg-gray-100">
                                     <img
