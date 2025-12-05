@@ -14,7 +14,7 @@ class PostController extends Controller
             ->latest('published_at')
             ->paginate(5);
 
-    
+
         return Inertia::render('Blogs/Index', ['posts' => $posts]);
     }
 
@@ -44,7 +44,7 @@ class PostController extends Controller
             'email' => 'required|email',
             'content' => 'required|max:1000'
         ]);
-        
+
         $post->comments()->create($validated);
         return back();
     }

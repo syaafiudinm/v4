@@ -14,7 +14,7 @@ class HomeController extends Controller
     {
         return Inertia::render('Home', [
             'recentPosts' => Post::latest('published_at')->take(3)->get(),
-            'featuredProjects' => Project::where('featured', true)->take(4)->get()
+            'featuredProjects' => Project::where('featured', true)->take(10)->get()
         ]);
     }
 
