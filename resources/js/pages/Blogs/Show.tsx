@@ -1,7 +1,7 @@
 import Layout from '@/components/Layouts';
 import { Post } from '@/types/models';
 import { useForm } from '@inertiajs/react';
-import { Heart, MessageCircle } from 'lucide-react';
+import { Eye, Heart, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
 
 interface Props {
@@ -83,6 +83,12 @@ export default function BlogShow({ post, hasLiked }: Props) {
                                 {post.comments?.length || 0}
                             </span>
                         </div>
+                        <div className="flex items-center space-x-2 text-gray-400">
+                            <Eye className="h-5 w-5" />
+                            <span className="text-sm font-light">
+                                {post.views || 0} views
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -154,7 +160,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
                                         setData('content', e.target.value)
                                     }
                                     rows={parseInt('4')}
-                                    className="w-full rounded-sm resize-none border border-gray-200 px-4 py-3 font-light transition focus:border-gray-900 focus:outline-none"
+                                    className="w-full resize-none rounded-sm border border-gray-200 px-4 py-3 font-light transition focus:border-gray-900 focus:outline-none"
                                 />
                                 {errors.content && (
                                     <p className="mt-1 text-xs text-red-500">
@@ -165,7 +171,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="bg-gray-900 rounded-sm px-6 py-3 font-light text-white transition hover:bg-gray-800 disabled:opacity-50"
+                                className="rounded-sm bg-gray-900 px-6 py-3 font-light text-white transition hover:bg-gray-800 disabled:opacity-50"
                             >
                                 {processing ? 'Posting...' : 'Post Comment'}
                             </button>

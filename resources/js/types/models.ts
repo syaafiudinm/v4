@@ -10,6 +10,7 @@ export interface Post {
     updated_at: string;
     likes?: Like[];
     comments?: Comment[];
+    views?: number;
 }
 
 export interface Comment {

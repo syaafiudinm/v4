@@ -57,6 +57,12 @@ export default function About() {
             description:
                 'Planning and executing educational and social programs for students. Organizing and leading student activities.',
         },
+        {
+            company: 'PT. Digital Desa Indonesia',
+            position: 'Backend Engineer Intern',
+            period: '2025 - Present',
+            description: 'Develop and troubleshoot internal business issues',
+        },
     ];
 
     const education: Education[] = [
@@ -134,7 +140,7 @@ export default function About() {
                             {/* Download CV Button */}
                             <div className="mt-6">
                                 <a
-                                    href="/cv_syafiudin.pdf"
+                                    href="/cv_syafiudin-1.pdf"
                                     download
                                     className="inline-flex items-center space-x-2 rounded-lg bg-gray-900 px-6 py-3 font-light text-white transition hover:bg-gray-800"
                                 >

@@ -23,6 +23,8 @@ class PostController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
+        $post->increment('views');
+
         return Inertia::render('Blogs/Show', [
             'post' => $post,
             'hasLiked' => $post->likes()->where('ip_address', request()->ip())->exists()

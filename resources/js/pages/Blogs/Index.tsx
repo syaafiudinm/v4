@@ -1,7 +1,14 @@
 import Layout from '@/components/Layouts';
 import { PaginatedData, Post } from '@/types/models';
 import { Link } from '@inertiajs/react';
-import { Calendar, Clock, Heart, MessageCircle, Search } from 'lucide-react';
+import {
+    Calendar,
+    Clock,
+    Eye,
+    Heart,
+    MessageCircle,
+    Search,
+} from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 interface Props {
@@ -110,6 +117,12 @@ export default function BlogIndex({ posts }: Props) {
                                         <MessageCircle className="h-4 w-4" />
                                         <span className="text-xs font-light">
                                             {post.comments?.length || 0}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center space-x-1 text-gray-400">
+                                        <Eye className="h-4 w-4" />
+                                        <span className="text-xs font-light">
+                                            {post.views || 0}
                                         </span>
                                     </div>
                                 </div>
