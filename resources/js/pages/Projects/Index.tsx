@@ -40,10 +40,10 @@ export default function Projects({ projects }: Props) {
         <Layout>
             <div>
                 <div className="animate-fade-in mb-12">
-                    <h1 className="mb-4 text-4xl font-light md:text-5xl">
+                    <h1 className="mb-4 text-4xl font-light md:text-5xl dark:text-gray-100">
                         Projects
                     </h1>
-                    <p className="text-lg font-light text-gray-600">
+                    <p className="text-lg font-light text-gray-600 dark:text-gray-300">
                         A collection of {projects.length} things I've built
                     </p>
                 </div>
@@ -52,13 +52,13 @@ export default function Projects({ projects }: Props) {
                 <div className="animate-fade-in-up animation-delay-200 mb-8 space-y-4">
                     {/* Search */}
                     <div className="relative">
-                        <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                        <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
                         <input
                             type="text"
                             placeholder="Search projects..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full rounded-lg border border-gray-200 py-3 pr-4 pl-12 transition focus:border-transparent focus:ring-2 focus:ring-gray-900 focus:outline-none"
+                            className="w-full rounded-lg border border-gray-200 bg-white py-3 pr-4 pl-12 text-gray-900 transition placeholder:text-gray-400 focus:border-transparent focus:ring-2 focus:ring-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:ring-gray-100"
                         />
                     </div>
 
@@ -68,8 +68,8 @@ export default function Projects({ projects }: Props) {
                             onClick={() => setSelectedTag('all')}
                             className={`rounded-full px-4 py-2 text-sm font-light transition ${
                                 selectedTag === 'all'
-                                    ? 'bg-gray-900 text-white'
-                                    : 'border border-gray-200 hover:border-gray-900'
+                                    ? 'bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900'
+                                    : 'border border-gray-200 bg-white text-gray-900 hover:border-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:border-gray-100'
                             }`}
                         >
                             All
@@ -80,8 +80,8 @@ export default function Projects({ projects }: Props) {
                                 onClick={() => setSelectedTag(tag)}
                                 className={`rounded-full px-4 py-2 text-sm font-light transition ${
                                     selectedTag === tag
-                                        ? 'bg-gray-900 text-white'
-                                        : 'border border-gray-200 hover:border-gray-900'
+                                        ? 'bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900'
+                                        : 'border border-gray-200 bg-white text-gray-900 hover:border-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:border-gray-100'
                                 }`}
                             >
                                 {tag}
@@ -91,7 +91,7 @@ export default function Projects({ projects }: Props) {
                 </div>
 
                 {/* Results count */}
-                <p className="mb-6 text-sm font-light text-gray-600">
+                <p className="mb-6 text-sm font-light text-gray-600 dark:text-gray-300">
                     Showing {filteredProjects.length} of {projects.length}{' '}
                     projects
                 </p>
@@ -99,8 +99,8 @@ export default function Projects({ projects }: Props) {
                 {/* Projects Grid */}
                 <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
                     {filteredProjects.map((project, index) => (
-                        <div key={index}>
-                            <div className="mb-6 aspect-video overflow-hidden rounded-lg border border-gray-200 bg-gray-100">
+                        <div key={index} className="group">
+                            <div className="mb-6 aspect-video overflow-hidden rounded-lg border border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-800">
                                 <img
                                     src={`/${project.image}`}
                                     alt={project.title}
@@ -108,11 +108,11 @@ export default function Projects({ projects }: Props) {
                                 />
                             </div>
 
-                            <h2 className="mb-3 text-2xl font-light transition group-hover:text-gray-600">
+                            <h2 className="mb-3 text-2xl font-light transition group-hover:text-gray-600 dark:text-gray-100 dark:group-hover:text-gray-300">
                                 {project.title}
                             </h2>
 
-                            <p className="mb-4 line-clamp-2 font-light text-gray-600">
+                            <p className="mb-4 line-clamp-2 font-light text-gray-600 dark:text-gray-300">
                                 {project.description}
                             </p>
 
@@ -120,7 +120,7 @@ export default function Projects({ projects }: Props) {
                                 {project.tags?.map((tag, index) => (
                                     <span
                                         key={index}
-                                        className="rounded-full border border-gray-200 px-3 py-1 text-xs font-light"
+                                        className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-light dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
                                     >
                                         {tag}
                                     </span>
@@ -131,7 +131,7 @@ export default function Projects({ projects }: Props) {
                                 {project.demo_url && (
                                     <a
                                         href={project.demo_url}
-                                        className="flex items-center space-x-2 text-sm font-light text-gray-600"
+                                        className="flex items-center space-x-2 text-sm font-light text-gray-600 transition hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
                                     >
                                         <ExternalLink className="h-4 w-4" />
                                         <span>Live Demo</span>
@@ -140,7 +140,7 @@ export default function Projects({ projects }: Props) {
                                 {project.github_url && (
                                     <a
                                         href={project.github_url}
-                                        className="flex items-center space-x-2 text-sm font-light text-gray-600"
+                                        className="flex items-center space-x-2 text-sm font-light text-gray-600 transition hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
                                     >
                                         <Github className="h-4 w-4" />
                                         <span>Source Code</span>
@@ -153,7 +153,7 @@ export default function Projects({ projects }: Props) {
 
                 {filteredProjects.length === 0 && (
                     <div className="py-12 text-center">
-                        <p className="font-light text-gray-500">
+                        <p className="font-light text-gray-500 dark:text-gray-400">
                             No projects found matching your criteria.
                         </p>
                     </div>

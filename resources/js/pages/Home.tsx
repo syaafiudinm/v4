@@ -32,16 +32,16 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
             <div>
                 {/* Hero Section */}
                 <section className="animate-fade-in py-16 md:py-32">
-                    <h1 className="mb-6 text-4xl leading-tight font-light md:text-7xl">
+                    <h1 className="mb-6 text-4xl leading-tight font-light md:text-7xl dark:text-white">
                         {displayedText}
                     </h1>
-                    <p className="mb-8 max-w-2xl text-xl font-light text-gray-600 md:text-2xl">
+                    <p className="mb-8 max-w-2xl text-xl font-light text-gray-600 md:text-2xl dark:text-gray-400">
                         A passionate developer creating beautiful and functional
                         web experiences
                     </p>
                     <Link
                         href="/about"
-                        className="inline-flex items-center space-x-2 border-b border-gray-900 pb-1 text-sm font-light transition duration-100 ease-in-out hover:translate-x-1 hover:text-gray-600"
+                        className="inline-flex items-center space-x-2 border-b border-gray-900 pb-1 text-sm font-light transition duration-100 ease-in-out hover:translate-x-1 hover:text-gray-600 dark:border-gray-300 dark:text-gray-300 dark:hover:text-gray-500"
                     >
                         <span>More about me</span>
                         <ArrowRight className="h-4 w-4" />
@@ -49,14 +49,14 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                 </section>
 
                 {/* Featured Projects */}
-                <section className="animate-fade-in-up animation-delay-200 border-t border-gray-200 py-16">
+                <section className="animate-fade-in-up animation-delay-200 border-t border-gray-200 py-16 dark:border-gray-700">
                     <div className="mb-12 flex items-center justify-between">
-                        <h2 className="text-3xl font-light">
+                        <h2 className="text-3xl font-light dark:text-white">
                             Featured Projects
                         </h2>
                         <Link
                             href="/projects"
-                            className="text-sm font-light transition hover:text-gray-600"
+                            className="text-sm font-light transition hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-500"
                         >
                             View all
                         </Link>
@@ -65,24 +65,24 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                     <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                         {featuredProjects?.slice(0, 10).map((project) => (
                             <div key={project.id} className="group">
-                                <div className="mb-4 aspect-video overflow-hidden bg-gray-100">
+                                <div className="mb-4 aspect-video overflow-hidden bg-gray-100 dark:bg-gray-800">
                                     <img
                                         src={`/${project.image}`}
                                         alt={project.title}
                                         className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                                     />
                                 </div>
-                                <h3 className="mb-2 text-xl font-light transition group-hover:text-gray-600">
+                                <h3 className="mb-2 text-xl font-light transition group-hover:text-gray-600 dark:text-white dark:group-hover:text-gray-400">
                                     {project.title}
                                 </h3>
-                                <p className="mb-3 text-sm font-light text-gray-600">
+                                <p className="mb-3 text-sm font-light text-gray-600 dark:text-gray-400">
                                     {project.description}
                                 </p>
                                 <div className="flex flex-wrap gap-2">
                                     {project.tags?.map((tag, index) => (
                                         <span
                                             key={index}
-                                            className="border border-gray-200 px-2 py-1 text-xs font-light"
+                                            className="border border-gray-200 px-2 py-1 text-xs font-light dark:border-gray-700 dark:text-gray-300"
                                         >
                                             {tag}
                                         </span>
@@ -94,12 +94,14 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                 </section>
 
                 {/* Recent Blog Posts */}
-                <section className="animate-fade-in-up animation-delay-200 border-t border-gray-200 py-16">
+                <section className="animate-fade-in-up animation-delay-200 border-t border-gray-200 py-16 dark:border-gray-700">
                     <div className="mb-12 flex items-center justify-between">
-                        <h2 className="text-3xl font-light">Recent Posts</h2>
+                        <h2 className="text-3xl font-light dark:text-white">
+                            Recent Posts
+                        </h2>
                         <Link
                             href="/posts"
-                            className="text-sm font-light transition hover:text-gray-600"
+                            className="text-sm font-light transition hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-500"
                         >
                             View all
                         </Link>
@@ -110,9 +112,9 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                             <Link
                                 key={post.id}
                                 href={`/post/${post.slug}`}
-                                className="group block border-b border-gray-100 pb-8 last:border-0"
+                                className="group block border-b border-gray-100 pb-8 last:border-0 dark:border-gray-800"
                             >
-                                <p className="mb-2 text-xs font-light text-gray-500">
+                                <p className="mb-2 text-xs font-light text-gray-500 dark:text-gray-500">
                                     {new Date(
                                         post.published_at,
                                     ).toLocaleDateString('en-US', {
@@ -121,10 +123,10 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                                         day: 'numeric',
                                     })}
                                 </p>
-                                <h3 className="mb-2 text-2xl font-light transition group-hover:text-gray-600">
+                                <h3 className="mb-2 text-2xl font-light transition group-hover:text-gray-600 dark:text-white dark:group-hover:text-gray-400">
                                     {post.title}
                                 </h3>
-                                <p className="font-light text-gray-600">
+                                <p className="font-light text-gray-600 dark:text-gray-400">
                                     {post.excerpt}
                                 </p>
                             </Link>

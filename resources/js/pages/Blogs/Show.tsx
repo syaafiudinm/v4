@@ -52,10 +52,10 @@ export default function BlogShow({ post, hasLiked }: Props) {
             <article className="mx-auto mt-10 max-w-3xl">
                 {/* Header */}
                 <div className="mb-12">
-                    <p className="mb-4 text-sm font-light text-gray-500">
+                    <p className="mb-4 text-sm font-light text-gray-500 dark:text-gray-400">
                         {formatDate(post.published_at)}
                     </p>
-                    <h1 className="mb-6 text-4xl leading-tight font-light md:text-5xl">
+                    <h1 className="mb-6 text-4xl leading-tight font-light md:text-5xl dark:text-gray-100">
                         {post.title}
                     </h1>
 
@@ -67,7 +67,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
                             className={`flex items-center space-x-2 transition ${
                                 liked
                                     ? 'text-red-500'
-                                    : 'text-gray-400 hover:text-red-500'
+                                    : 'text-gray-400 hover:text-red-500 dark:text-gray-500'
                             }`}
                         >
                             <Heart
@@ -77,13 +77,13 @@ export default function BlogShow({ post, hasLiked }: Props) {
                                 {post.likes?.length || 0}
                             </span>
                         </button>
-                        <div className="flex items-center space-x-2 text-gray-400">
+                        <div className="flex items-center space-x-2 text-gray-400 dark:text-gray-500">
                             <MessageCircle className="h-5 w-5" />
                             <span className="text-sm font-light">
                                 {post.comments?.length || 0}
                             </span>
                         </div>
-                        <div className="flex items-center space-x-2 text-gray-400">
+                        <div className="flex items-center space-x-2 text-gray-400 dark:text-gray-500">
                             <Eye className="h-5 w-5" />
                             <span className="text-sm font-light">
                                 {post.views || 0} views
@@ -98,20 +98,20 @@ export default function BlogShow({ post, hasLiked }: Props) {
                         <img
                             src={post.featured_image}
                             alt={post.title}
-                            className="aspect-video w-full object-cover"
+                            className="aspect-video w-full rounded-lg object-cover"
                         />
                     </div>
                 )}
 
                 {/* Content */}
                 <div
-                    className="prose prose-lg mb-16 max-w-none text-justify font-light"
+                    className="prose prose-lg mb-16 max-w-none text-justify font-light dark:prose-invert"
                     dangerouslySetInnerHTML={{ __html: post.content }}
                 />
 
                 {/* Comments Section */}
-                <div className="border-t border-gray-200 pt-12">
-                    <h2 className="mb-8 text-2xl font-light">
+                <div className="border-t border-gray-200 pt-12 dark:border-gray-700">
+                    <h2 className="mb-8 text-2xl font-light dark:text-gray-100">
                         Comments ({post.comments?.length || 0})
                     </h2>
 
@@ -127,7 +127,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
                                         onChange={(e) =>
                                             setData('name', e.target.value)
                                         }
-                                        className="w-full rounded-sm border border-gray-200 px-4 py-3 font-light transition focus:border-gray-900 focus:outline-none"
+                                        className="w-full rounded-sm border border-gray-200 bg-white px-4 py-3 font-light text-gray-900 transition placeholder:text-gray-400 focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-gray-100"
                                     />
                                     {errors.name && (
                                         <p className="mt-1 text-xs text-red-500">
@@ -143,7 +143,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
                                         onChange={(e) =>
                                             setData('email', e.target.value)
                                         }
-                                        className="w-full rounded-sm border border-gray-200 px-4 py-3 font-light transition focus:border-gray-900 focus:outline-none"
+                                        className="w-full rounded-sm border border-gray-200 bg-white px-4 py-3 font-light text-gray-900 transition placeholder:text-gray-400 focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-gray-100"
                                     />
                                     {errors.email && (
                                         <p className="mt-1 text-xs text-red-500">
@@ -160,7 +160,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
                                         setData('content', e.target.value)
                                     }
                                     rows={parseInt('4')}
-                                    className="w-full resize-none rounded-sm border border-gray-200 px-4 py-3 font-light transition focus:border-gray-900 focus:outline-none"
+                                    className="w-full resize-none rounded-sm border border-gray-200 bg-white px-4 py-3 font-light text-gray-900 transition placeholder:text-gray-400 focus:border-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-gray-100"
                                 />
                                 {errors.content && (
                                     <p className="mt-1 text-xs text-red-500">
@@ -171,7 +171,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="rounded-sm bg-gray-900 px-6 py-3 font-light text-white transition hover:bg-gray-800 disabled:opacity-50"
+                                className="rounded-sm bg-gray-900 px-6 py-3 font-light text-white transition hover:bg-gray-800 disabled:opacity-50 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200"
                             >
                                 {processing ? 'Posting...' : 'Post Comment'}
                             </button>
@@ -183,15 +183,17 @@ export default function BlogShow({ post, hasLiked }: Props) {
                         {post.comments?.map((comment) => (
                             <div
                                 key={comment.id}
-                                className="border-b border-gray-100 pb-8"
+                                className="border-b border-gray-100 pb-8 dark:border-gray-700"
                             >
                                 <div className="mb-3 flex items-center justify-between">
-                                    <p className="font-light">{comment.name}</p>
-                                    <p className="text-xs font-light text-gray-500">
+                                    <p className="font-light dark:text-gray-100">
+                                        {comment.name}
+                                    </p>
+                                    <p className="text-xs font-light text-gray-500 dark:text-gray-400">
                                         {formatDate(comment.created_at)}
                                     </p>
                                 </div>
-                                <p className="font-light text-gray-700">
+                                <p className="font-light text-gray-700 dark:text-gray-300">
                                     {comment.content}
                                 </p>
                             </div>
@@ -199,8 +201,8 @@ export default function BlogShow({ post, hasLiked }: Props) {
                     </div>
                 </div>
                 {/* Social Share */}
-                <div className="mt-8 border-t border-gray-200 pt-8">
-                    <h3 className="mb-4 text-lg font-light">
+                <div className="mt-8 border-t border-gray-200 pt-8 dark:border-gray-700">
+                    <h3 className="mb-4 text-lg font-light dark:text-gray-100">
                         Share this article
                     </h3>
                     <div className="flex flex-wrap gap-3">
@@ -208,7 +210,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
                             href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center space-x-2 rounded-lg border border-gray-200 px-4 py-2 transition hover:bg-gray-50"
+                            className="flex items-center space-x-2 rounded-lg border border-gray-200 bg-white px-4 py-2 transition hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
                         >
                             <svg
                                 className="h-4 w-4"
@@ -223,7 +225,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
                             href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center space-x-2 rounded-lg border border-gray-200 px-4 py-2 transition hover:bg-gray-50"
+                            className="flex items-center space-x-2 rounded-lg border border-gray-200 bg-white px-4 py-2 transition hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
                         >
                             <svg
                                 className="h-4 w-4"
@@ -238,7 +240,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
                             href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center space-x-2 rounded-lg border border-gray-200 px-4 py-2 transition hover:bg-gray-50"
+                            className="flex items-center space-x-2 rounded-lg border border-gray-200 bg-white px-4 py-2 transition hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
                         >
                             <svg
                                 className="h-4 w-4"
@@ -257,7 +259,7 @@ export default function BlogShow({ post, hasLiked }: Props) {
                                 );
                                 alert('Link copied to clipboard!');
                             }}
-                            className="flex items-center space-x-2 rounded-lg border border-gray-200 px-4 py-2 transition hover:bg-gray-50"
+                            className="flex items-center space-x-2 rounded-lg border border-gray-200 bg-white px-4 py-2 transition hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
                         >
                             <svg
                                 className="h-4 w-4"

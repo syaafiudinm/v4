@@ -46,10 +46,10 @@ export default function BlogIndex({ posts }: Props) {
         <Layout>
             <div>
                 <div className="animate-fade-in mb-16">
-                    <h1 className="mb-4 text-4xl font-light md:text-5xl">
+                    <h1 className="mb-4 text-4xl font-light md:text-5xl dark:text-gray-100">
                         Blog
                     </h1>
-                    <p className="text-lg font-light text-gray-600">
+                    <p className="text-lg font-light text-gray-600 dark:text-gray-300">
                         Thoughts, ideas, and stories · {posts.data.length}{' '}
                         articles
                     </p>
@@ -58,13 +58,13 @@ export default function BlogIndex({ posts }: Props) {
                 {/* Search */}
                 <div className="animate-fade-in-up animation-delay-200 mb-8">
                     <div className="relative">
-                        <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                        <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
                         <input
                             type="text"
                             placeholder="Search articles..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full rounded-lg border border-gray-200 py-3 pr-4 pl-12 transition focus:border-transparent focus:ring-2 focus:ring-gray-900 focus:outline-none"
+                            className="w-full rounded-lg border border-gray-200 bg-white py-3 pr-4 pl-12 text-gray-900 transition placeholder:text-gray-400 focus:border-transparent focus:ring-2 focus:ring-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:ring-gray-100"
                         />
                     </div>
                 </div>
@@ -74,12 +74,12 @@ export default function BlogIndex({ posts }: Props) {
                         <Link
                             key={post.id}
                             href={`/post/${post.slug}`}
-                            className="group animate-fade-in-up overflow-hidden rounded-lg border border-gray-200 bg-white transition-shadow duration-300 hover:shadow-lg"
+                            className="group animate-fade-in-up overflow-hidden rounded-lg border border-gray-200 bg-white transition-all duration-300 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600"
                             style={{ animationDelay: `${300 + index * 50}ms` }}
                         >
                             <div className="p-6">
                                 {/* Date & Reading Time */}
-                                <div className="mb-3 flex items-center justify-between text-xs font-light text-gray-500">
+                                <div className="mb-3 flex items-center justify-between text-xs font-light text-gray-500 dark:text-gray-400">
                                     <div className="flex items-center space-x-2">
                                         <Calendar className="h-3 w-3" />
                                         <span>
@@ -96,30 +96,30 @@ export default function BlogIndex({ posts }: Props) {
                                 </div>
 
                                 {/* Title */}
-                                <h2 className="mb-3 line-clamp-2 text-xl font-light transition group-hover:text-gray-600">
+                                <h2 className="mb-3 line-clamp-2 text-xl font-light transition group-hover:text-gray-600 dark:text-gray-100 dark:group-hover:text-gray-300">
                                     {post.title}
                                 </h2>
 
                                 {/* Excerpt */}
-                                <p className="mb-4 line-clamp-3 text-sm font-light text-gray-600">
+                                <p className="mb-4 line-clamp-3 text-sm font-light text-gray-600 dark:text-gray-300">
                                     {post.excerpt}
                                 </p>
 
                                 {/* Stats */}
-                                <div className="flex items-center space-x-4 border-t border-gray-100 pt-4">
-                                    <div className="flex items-center space-x-1 text-gray-400">
+                                <div className="flex items-center space-x-4 border-t border-gray-100 pt-4 dark:border-gray-700">
+                                    <div className="flex items-center space-x-1 text-gray-400 dark:text-gray-500">
                                         <Heart className="h-4 w-4" />
                                         <span className="text-xs font-light">
                                             {post.likes?.length || 0}
                                         </span>
                                     </div>
-                                    <div className="flex items-center space-x-1 text-gray-400">
+                                    <div className="flex items-center space-x-1 text-gray-400 dark:text-gray-500">
                                         <MessageCircle className="h-4 w-4" />
                                         <span className="text-xs font-light">
                                             {post.comments?.length || 0}
                                         </span>
                                     </div>
-                                    <div className="flex items-center space-x-1 text-gray-400">
+                                    <div className="flex items-center space-x-1 text-gray-400 dark:text-gray-500">
                                         <Eye className="h-4 w-4" />
                                         <span className="text-xs font-light">
                                             {post.views || 0}
@@ -133,7 +133,7 @@ export default function BlogIndex({ posts }: Props) {
 
                 {filteredPosts.length === 0 && (
                     <div className="py-12 text-center">
-                        <p className="font-light text-gray-500">
+                        <p className="font-light text-gray-500 dark:text-gray-400">
                             No articles found matching your search.
                         </p>
                     </div>
@@ -149,8 +149,8 @@ export default function BlogIndex({ posts }: Props) {
                                     href={link.url}
                                     className={`rounded-lg border px-4 py-2 text-sm font-light transition ${
                                         link.active
-                                            ? 'border-gray-900 bg-gray-900 text-white'
-                                            : 'border-gray-200 bg-white hover:border-gray-900'
+                                            ? 'border-gray-900 bg-gray-900 text-white dark:border-gray-100 dark:bg-gray-100 dark:text-gray-900'
+                                            : 'border-gray-200 bg-white text-gray-900 hover:border-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:border-gray-100'
                                     }`}
                                     dangerouslySetInnerHTML={{
                                         __html: link.label,
@@ -159,7 +159,7 @@ export default function BlogIndex({ posts }: Props) {
                             ) : (
                                 <span
                                     key={index}
-                                    className="px-4 py-2 text-sm font-light text-gray-400"
+                                    className="px-4 py-2 text-sm font-light text-gray-400 dark:text-gray-500"
                                     dangerouslySetInnerHTML={{
                                         __html: link.label,
                                     }}
