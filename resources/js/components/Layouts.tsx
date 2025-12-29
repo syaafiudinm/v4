@@ -23,13 +23,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     {/* Theme Toggle Button */}
                     <button
                         onClick={toggleTheme}
-                        className="rounded-full border-2 border-gray-200 bg-white/80 p-3 backdrop-blur-md transition hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800/80 dark:hover:bg-gray-700"
+                        className="rounded-full border-2 border-gray-200 bg-white/80 p-3 backdrop-blur-md transition hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-800/80 dark:hover:bg-gray-400"
                         aria-label="Toggle theme"
                     >
                         {isDark ? (
-                            <Sun className="h-5 w-5 text-yellow-500" />
-                        ) : (
                             <Moon className="h-5 w-5 text-gray-700" />
+                        ) : (
+                            <Sun className="h-5 w-5 text-yellow-500" />
                         )}
                     </button>
 
