@@ -23,7 +23,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     {/* Theme Toggle Button */}
                     <button
                         onClick={toggleTheme}
-                        className="rounded-full border-2 border-gray-200 bg-white/80 p-3 backdrop-blur-md transition hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-800/80 dark:hover:bg-gray-400"
+                        className="rounded-full border-2 border-gray-200 bg-white/80 p-3 backdrop-blur-md transition hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800/80 dark:hover:bg-gray-800"
                         aria-label="Toggle theme"
                     >
                         {isDark ? (
@@ -32,7 +32,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             <Sun className="h-5 w-5 text-yellow-500" />
                         )}
                     </button>
-
                     <div className="relative">
                         <nav className="inline-flex w-auto rounded-full border-2 border-gray-200 bg-white/80 px-8 py-4 backdrop-blur-md dark:border-gray-700 dark:bg-gray-800/80">
                             {/* Desktop Menu */}
@@ -163,7 +162,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div className="mx-auto max-w-6xl px-6 py-8">
                     <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
                         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                            © 2025 Syaafiudinm. All rights reserved.
+                            ©{new Date().getFullYear()} Syaafiudinm. All rights reserved.
                         </p>
                         <div className="flex space-x-6">
                             <a
