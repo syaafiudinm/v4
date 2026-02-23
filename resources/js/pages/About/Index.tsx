@@ -45,7 +45,7 @@ export default function About() {
     const experiences: Experience[] = [
         {
             company: 'Freelancer',
-            position: 'Full Stack Developer',
+            position: 'Software developer',
             period: '2024 - Present',
             description:
                 'Worked on various projects, including web applications. Learnt new technologies and frameworks.',
