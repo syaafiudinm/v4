@@ -89,10 +89,7 @@ function useSectionVisible(rootMargin = '50px') {
     return { ref, isVisible };
 }
 
-const TYPEWRITER_LINES = [
-    "Hi, I'm Andi Syafiudin Musafir",
-    'Software Engineer',
-];
+const TYPEWRITER_LINES = ["Hi, I'm Andi Syafiudin Musafir"];
 
 export default function Home({ recentPosts, featuredProjects }: Props) {
     const { completedLines, currentLine, isFinished } =
@@ -114,26 +111,6 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
             <div>
                 {/* Hero Section */}
                 <section className="animate-fade-in py-16 md:py-28">
-                    {/* Avatar + Status */}
-                    <div className="mb-8 flex items-center gap-4">
-                        <div className="relative">
-                            <img
-                                src="/profil.png"
-                                alt="Andi Syafiudin Musafir"
-                                className="h-14 w-14 rounded-full border-2 border-gray-100 object-cover dark:border-gray-700"
-                            />
-                            <span
-                                className="absolute right-0 bottom-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-emerald-500 dark:border-gray-900"
-                                title="Available for work"
-                            />
-                        </div>
-                        <div>
-                            <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Available for work
-                            </p>
-                        </div>
-                    </div>
-
                     {/* Typewriter */}
                     <h1 className="mb-4 text-4xl leading-tight font-light tracking-tight md:text-6xl dark:text-white">
                         {completedLines.map((line, i) => (
@@ -254,47 +231,6 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                             No posts yet.
                         </p>
                     )}
-                </section>
-
-                {/* CTA Section */}
-                <section
-                    ref={ctaSection.ref as React.RefObject<HTMLElement>}
-                    className="border-t border-gray-100 py-20 dark:border-gray-800"
-                    style={{
-                        opacity: ctaSection.isVisible ? 1 : 0,
-                        transform: ctaSection.isVisible
-                            ? 'translateY(0)'
-                            : 'translateY(20px)',
-                        transition:
-                            'opacity 0.6s ease-out, transform 0.6s ease-out',
-                    }}
-                >
-                    <div className="mx-auto max-w-xl text-center">
-                        <h2 className="mb-4 text-3xl font-light tracking-tight md:text-4xl dark:text-white">
-                            Let's work together
-                        </h2>
-                        <p className="mb-8 text-base leading-relaxed font-light text-gray-500 dark:text-gray-400">
-                            I'm always open to new opportunities,
-                            collaborations, and interesting projects. Feel free
-                            to reach out.
-                        </p>
-                        <div className="flex flex-wrap items-center justify-center gap-4">
-                            <a
-                                href="mailto:altafpasallo12@gmail.com"
-                                className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-6 py-3 text-sm font-light text-white transition-colors hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200"
-                            >
-                                <Mail className="h-4 w-4" />
-                                <span>altafpasallo12@gmail.com</span>
-                            </a>
-                            <Link
-                                href="/about"
-                                className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-light text-gray-600 transition-colors hover:border-gray-300 hover:text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-100"
-                            >
-                                <span>View resume</span>
-                                <ArrowRight className="h-3.5 w-3.5" />
-                            </Link>
-                        </div>
-                    </div>
                 </section>
             </div>
         </Layout>

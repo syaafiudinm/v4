@@ -257,11 +257,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         {/* Brand */}
                         <div>
                             <p className="mb-2 text-sm font-normal text-gray-900 dark:text-gray-100">
-                                Syaafiudinm
+                                syaafiudinm
                             </p>
                             <p className="mb-4 text-xs leading-relaxed font-light text-gray-400 dark:text-gray-500">
                                 Building beautiful and functional web
-                                experiences with Laravel & React.
+                                experiences.
                             </p>
                             <a
                                 href="mailto:altafpasallo12@gmail.com"
@@ -328,13 +328,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     </div>
 
                     {/* Bottom bar */}
-                    <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-gray-100 pt-6 md:flex-row dark:border-gray-800">
+                    <div className="mt-10 flex items-center justify-center gap-3 border-t border-gray-100 pt-6 md:flex-row dark:border-gray-800">
                         <p className="text-xs font-light text-gray-400 dark:text-gray-500">
                             &copy; {new Date().getFullYear()} Syaafiudinm. All
                             rights reserved.
-                        </p>
-                        <p className="text-xs font-light text-gray-300 dark:text-gray-600">
-                            Built with Laravel, React & Tailwind CSS
                         </p>
                     </div>
                 </div>
