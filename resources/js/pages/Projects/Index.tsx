@@ -1,6 +1,8 @@
 import Layout from '@/components/Layouts';
+import ProjectCard from '@/components/ProjectCard';
+import SeoHead from '@/components/SeoHead';
 import { Project } from '@/types/models';
-import { ExternalLink, Github, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 interface Props {
@@ -23,13 +25,10 @@ export default function Projects({ projects }: Props) {
     // Filter projects
     const filteredProjects = useMemo(() => {
         return projects.filter((project) => {
+            const term = searchTerm.toLowerCase();
             const matchesSearch =
-                project.title
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase()) ||
-                project.description
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase());
+                project.title.toLowerCase().includes(term) ||
+                project.description.toLowerCase().includes(term);
             const matchesTag =
                 selectedTag === 'all' || project.tags?.includes(selectedTag);
             return matchesSearch && matchesTag;
@@ -38,124 +37,111 @@ export default function Projects({ projects }: Props) {
 
     return (
         <Layout>
+            <SeoHead
+                title="Projects"
+                description={`A curated collection of ${projects.length} projects built by Andi Syafiudin Musafir — web applications, tools, and experiments using Laravel, React, and modern technologies.`}
+                keywords="projects, portfolio, web development, laravel, react, full stack, software engineering"
+                url="/projects"
+                type="website"
+            />
+
             <div>
-                <div className="animate-fade-in mb-12">
-                    <h1 className="mb-4 text-4xl font-light md:text-5xl dark:text-gray-100">
+                {/* Header */}
+                <header className="animate-fade-in mb-12">
+                    <h1 className="mb-3 text-4xl font-light tracking-tight md:text-5xl dark:text-gray-100">
                         Projects
                     </h1>
-                    <p className="text-lg font-light text-gray-600 dark:text-gray-300">
+                    <p className="text-base font-light text-gray-500 dark:text-gray-400">
                         A collection of {projects.length} things I've built
                     </p>
-                </div>
+                </header>
 
-                {/* Search and Filters */}
-                <div className="animate-fade-in-up animation-delay-200 mb-8 space-y-4">
+                {/* Search & Filters */}
+                <div className="animate-fade-in-up animation-delay-200 mb-10 space-y-4">
                     {/* Search */}
-                    <div className="relative">
-                        <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+                    <div className="relative max-w-md">
+                        <Search className="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
                         <input
                             type="text"
                             placeholder="Search projects..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full rounded-lg border border-gray-200 bg-white py-3 pr-4 pl-12 text-gray-900 transition placeholder:text-gray-400 focus:border-transparent focus:ring-2 focus:ring-gray-900 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:ring-gray-100"
+                            aria-label="Search projects"
+                            className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pr-4 pl-10 text-sm font-light text-gray-900 transition placeholder:text-gray-400 focus:border-gray-400 focus:ring-0 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-gray-500"
                         />
                     </div>
 
                     {/* Tag Filters */}
-                    <div className="flex flex-wrap gap-2">
-                        <button
-                            onClick={() => setSelectedTag('all')}
-                            className={`rounded-full px-4 py-2 text-sm font-light transition ${
-                                selectedTag === 'all'
-                                    ? 'bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900'
-                                    : 'border border-gray-200 bg-white text-gray-900 hover:border-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:border-gray-100'
-                            }`}
+                    {allTags.length > 0 && (
+                        <nav
+                            className="flex flex-wrap gap-1.5"
+                            aria-label="Filter projects by technology"
                         >
-                            All
-                        </button>
-                        {allTags.map((tag) => (
                             <button
-                                key={tag}
-                                onClick={() => setSelectedTag(tag)}
-                                className={`rounded-full px-4 py-2 text-sm font-light transition ${
-                                    selectedTag === tag
+                                onClick={() => setSelectedTag('all')}
+                                className={`rounded-full px-3.5 py-1.5 text-xs font-light transition ${
+                                    selectedTag === 'all'
                                         ? 'bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900'
-                                        : 'border border-gray-200 bg-white text-gray-900 hover:border-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:border-gray-100'
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
                                 }`}
+                                aria-pressed={selectedTag === 'all'}
                             >
-                                {tag}
+                                All
                             </button>
-                        ))}
-                    </div>
+                            {allTags.map((tag) => (
+                                <button
+                                    key={tag}
+                                    onClick={() => setSelectedTag(tag)}
+                                    className={`rounded-full px-3.5 py-1.5 text-xs font-light transition ${
+                                        selectedTag === tag
+                                            ? 'bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900'
+                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
+                                    }`}
+                                    aria-pressed={selectedTag === tag}
+                                >
+                                    {tag}
+                                </button>
+                            ))}
+                        </nav>
+                    )}
                 </div>
 
                 {/* Results count */}
-                <p className="mb-6 text-sm font-light text-gray-600 dark:text-gray-300">
-                    Showing {filteredProjects.length} of {projects.length}{' '}
-                    projects
-                </p>
+                {(searchTerm || selectedTag !== 'all') && (
+                    <p className="mb-6 text-xs font-light text-gray-400 dark:text-gray-500">
+                        Showing {filteredProjects.length} of {projects.length}
+                    </p>
+                )}
 
                 {/* Projects Grid */}
-                <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
+                <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
                     {filteredProjects.map((project, index) => (
-                        <div key={index} className="group">
-                            <div className="mb-6 aspect-video overflow-hidden rounded-lg border border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-800">
-                                <img
-                                    src={`/${project.image}`}
-                                    alt={project.title}
-                                    className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                                />
-                            </div>
-
-                            <h2 className="mb-3 text-2xl font-light transition group-hover:text-gray-600 dark:text-gray-100 dark:group-hover:text-gray-300">
-                                {project.title}
-                            </h2>
-
-                            <p className="mb-4 line-clamp-2 font-light text-gray-600 dark:text-gray-300">
-                                {project.description}
-                            </p>
-
-                            <div className="mb-6 flex flex-wrap gap-2">
-                                {project.tags?.map((tag, index) => (
-                                    <span
-                                        key={index}
-                                        className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-light dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
-                                    >
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
-
-                            <div className="flex items-center space-x-4">
-                                {project.demo_url && (
-                                    <a
-                                        href={project.demo_url}
-                                        className="flex items-center space-x-2 text-sm font-light text-gray-600 transition hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
-                                    >
-                                        <ExternalLink className="h-4 w-4" />
-                                        <span>Live Demo</span>
-                                    </a>
-                                )}
-                                {project.github_url && (
-                                    <a
-                                        href={project.github_url}
-                                        className="flex items-center space-x-2 text-sm font-light text-gray-600 transition hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
-                                    >
-                                        <Github className="h-4 w-4" />
-                                        <span>Source Code</span>
-                                    </a>
-                                )}
-                            </div>
-                        </div>
+                        <ProjectCard
+                            key={project.id}
+                            project={project}
+                            index={index}
+                        />
                     ))}
                 </div>
 
+                {/* Empty State */}
                 {filteredProjects.length === 0 && (
-                    <div className="py-12 text-center">
-                        <p className="font-light text-gray-500 dark:text-gray-400">
-                            No projects found matching your criteria.
+                    <div className="py-16 text-center">
+                        <p className="text-sm font-light text-gray-400 dark:text-gray-500">
+                            No projects found
+                            {searchTerm && ` matching "${searchTerm}"`}
+                            {selectedTag !== 'all' &&
+                                ` with tag "${selectedTag}"`}
                         </p>
+                        <button
+                            onClick={() => {
+                                setSearchTerm('');
+                                setSelectedTag('all');
+                            }}
+                            className="mt-3 text-sm font-light text-gray-500 underline underline-offset-4 transition hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+                        >
+                            Clear filters
+                        </button>
                     </div>
                 )}
             </div>
