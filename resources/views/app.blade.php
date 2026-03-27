@@ -51,7 +51,7 @@
         <title inertia>{{ config('app.name', 'Syaafiudinm') }}</title>
 
         {{-- Favicon --}}
-        <link rel="icon" href="/favicon.png" type="image/png">
+        <link rel="icon" href="/profil.png" type="image/png">
         <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
         {{-- DNS Prefetch & Preconnect --}}

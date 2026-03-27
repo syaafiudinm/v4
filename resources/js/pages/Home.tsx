@@ -96,7 +96,6 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
         useMultiLineTypewriter(TYPEWRITER_LINES);
     const projectsSection = useSectionVisible();
     const postsSection = useSectionVisible();
-    const ctaSection = useSectionVisible();
 
     return (
         <Layout>
@@ -179,13 +178,15 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                     </div>
 
                     <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
-                        {featuredProjects?.slice(0, 4).map((project, index) => (
-                            <ProjectCard
-                                key={project.id}
-                                project={project}
-                                index={index}
-                            />
-                        ))}
+                        {featuredProjects
+                            ?.slice(0, 10)
+                            .map((project, index) => (
+                                <ProjectCard
+                                    key={project.id}
+                                    project={project}
+                                    index={index}
+                                />
+                            ))}
                     </div>
 
                     {(!featuredProjects || featuredProjects.length === 0) && (
