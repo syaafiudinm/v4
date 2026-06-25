@@ -32,6 +32,7 @@ import {
     SiSupabase,
     SiTailwindcss,
 } from 'react-icons/si';
+import { useEffect, useRef, useState } from 'react';
 
 interface Experience {
     company: string;
@@ -51,7 +52,29 @@ interface Education {
 interface SkillCategory {
     label: string;
     icon: React.ReactNode;
+    color: string;
     skills: { name: string; icon: React.ReactNode }[];
+}
+
+function useSectionVisible(rootMargin = '50px') {
+    const ref = useRef<HTMLElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                    observer.disconnect();
+                }
+            },
+            { rootMargin, threshold: 0.1 },
+        );
+        if (ref.current) observer.observe(ref.current);
+        return () => observer.disconnect();
+    }, [rootMargin]);
+
+    return { ref, isVisible };
 }
 
 const experiences: Experience[] = [
@@ -63,7 +86,7 @@ const experiences: Experience[] = [
     },
     {
         company: 'Freelancer',
-        position: 'Software engineer',
+        position: 'Software Engineer',
         period: '2024 - Present',
         description:
             'Worked on various projects, including web applications. Learnt new technologies and frameworks.',
@@ -109,69 +132,82 @@ const socials = [
         href: 'mailto:altafpasallo12@gmail.com',
         icon: <Mail className="h-4 w-4" />,
         external: false,
+        color: '#FFEE00',
     },
     {
         label: 'GitHub',
         href: 'https://github.com/syaafiudinm',
         icon: <Github className="h-4 w-4" />,
         external: true,
+        color: '#A8FF78',
     },
     {
         label: 'LinkedIn',
         href: 'https://www.linkedin.com/in/andi-syafiudin-musafir-a3b85a287/',
         icon: <Linkedin className="h-4 w-4" />,
         external: true,
+        color: '#A8FF78',
     },
     {
         label: 'Instagram',
         href: 'https://instagram.com/syaafiudinm',
         icon: <Instagram className="h-4 w-4" />,
         external: true,
+        color: '#FF4F4F',
     },
 ];
 
 export default function About() {
+    const expSection = useSectionVisible();
+    const eduSection = useSectionVisible();
+    const skillsSection = useSectionVisible();
+    const contactSection = useSectionVisible();
+
     const skillCategories: SkillCategory[] = [
         {
             label: 'Frontend',
             icon: <Code className="h-4 w-4" />,
+            color: '#FFEE00',
             skills: [
-                { name: 'React', icon: <SiReact size={18} /> },
-                { name: 'Next.js', icon: <SiNextdotjs size={18} /> },
-                { name: 'Inertia', icon: <SiInertia size={18} /> },
-                { name: 'Livewire', icon: <SiLivewire size={18} /> },
-                { name: 'Tailwind CSS', icon: <SiTailwindcss size={18} /> },
-                { name: 'Bootstrap', icon: <SiBootstrap size={18} /> },
+                { name: 'React', icon: <SiReact size={16} /> },
+                { name: 'Next.js', icon: <SiNextdotjs size={16} /> },
+                { name: 'Inertia', icon: <SiInertia size={16} /> },
+                { name: 'Livewire', icon: <SiLivewire size={16} /> },
+                { name: 'Tailwind CSS', icon: <SiTailwindcss size={16} /> },
+                { name: 'Bootstrap', icon: <SiBootstrap size={16} /> },
             ],
         },
         {
             label: 'Backend',
             icon: <Server className="h-4 w-4" />,
+            color: '#A8FF78',
             skills: [
-                { name: 'Php', icon: <SiPhp size={18} /> },
-                { name: 'Laravel', icon: <SiLaravel size={18} /> },
-                { name: 'CodeIgniter', icon: <SiCodeigniter size={18} /> },
-                { name: 'Golang', icon: <SiGo size={18} /> },
-                { name: 'Gin', icon: <SiGin size={18} /> },
+                { name: 'PHP', icon: <SiPhp size={16} /> },
+                { name: 'Laravel', icon: <SiLaravel size={16} /> },
+                { name: 'CodeIgniter', icon: <SiCodeigniter size={16} /> },
+                { name: 'Golang', icon: <SiGo size={16} /> },
+                { name: 'Gin', icon: <SiGin size={16} /> },
             ],
         },
         {
             label: 'Database & Cloud',
             icon: <Database className="h-4 w-4" />,
+            color: '#FFEE00',
             skills: [
-                { name: 'MySQL', icon: <SiMysql size={18} /> },
-                { name: 'PostgreSQL', icon: <SiPostgresql size={18} /> },
-                { name: 'Supabase', icon: <SiSupabase size={18} /> },
-                { name: 'Firebase', icon: <SiFirebase size={18} /> },
-                { name: 'AWS', icon: <SiAmazonwebservices size={18} /> },
+                { name: 'MySQL', icon: <SiMysql size={16} /> },
+                { name: 'PostgreSQL', icon: <SiPostgresql size={16} /> },
+                { name: 'Supabase', icon: <SiSupabase size={16} /> },
+                { name: 'Firebase', icon: <SiFirebase size={16} /> },
+                { name: 'AWS', icon: <SiAmazonwebservices size={16} /> },
             ],
         },
         {
             label: 'DevOps & Tools',
             icon: <Server className="h-4 w-4" />,
+            color: '#A8FF78',
             skills: [
-                { name: 'Git', icon: <SiGit size={18} /> },
-                { name: 'Docker', icon: <SiDocker size={18} /> },
+                { name: 'Git', icon: <SiGit size={16} /> },
+                { name: 'Docker', icon: <SiDocker size={16} /> },
             ],
         },
     ];
@@ -188,62 +224,75 @@ export default function About() {
             />
 
             <div className="max-w-4xl">
-                {/* Hero / Intro */}
-                <div className="animate-fade-in mb-14">
-                    <div className="mb-10 flex flex-col items-start gap-8 md:flex-row md:items-center">
-                        {/* Profile Photo */}
+
+                {/* ── Hero / Intro ── */}
+                <section className="animate-fade-in py-16 md:py-28">
+                    {/* Status badge */}
+                    <div className="mb-6 inline-flex items-center gap-0 border-2 border-[#1A1A1A] shadow-[3px_3px_0px_#1A1A1A]">
+                        <div className="bg-[#FFEE00] px-3 py-1 text-[10px] font-bold tracking-widest text-[#1A1A1A] uppercase">
+                            Software Engineer
+                        </div>
+                        <div className="bg-[#1A1A1A] px-3 py-1 text-[10px] font-bold tracking-widest text-[#FFEE00] uppercase">
+                            CS Student · Open Source
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col items-start gap-8 md:flex-row md:items-start">
+                        {/* Profile Photo — neobrutalism frame */}
                         <div className="relative flex-shrink-0">
-                            <img
-                                src="/profil.png"
-                                alt="Andi Syafiudin Musafir"
-                                className="h-28 w-28 rounded-full border-2 border-gray-100 object-cover md:h-40 md:w-40 dark:border-gray-700"
-                            />
+                            <div className="border-2 border-[#1A1A1A] shadow-[4px_4px_0px_#1A1A1A] dark:shadow-[4px_4px_0px_#E5E7EB] dark:border-[#E5E7EB]">
+                                <img
+                                    src="/profil.png"
+                                    alt="Andi Syafiudin Musafir"
+                                    className="h-28 w-28 object-cover md:h-36 md:w-36 block"
+                                />
+                            </div>
+                            {/* Available dot */}
                             <span
-                                className="absolute right-1 bottom-1 h-4 w-4 rounded-full border-2 border-white bg-emerald-500 md:right-2 md:bottom-2 dark:border-gray-900"
+                                className="absolute -right-2 -bottom-2 flex h-5 w-5 items-center justify-center border-2 border-[#1A1A1A] bg-[#A8FF78]"
                                 title="Available for work"
-                            />
+                            >
+                                <span className="h-2 w-2 rounded-full bg-[#1A1A1A]" />
+                            </span>
                         </div>
 
                         {/* Intro Text */}
                         <div className="flex-1">
-                            <h1 className="mb-2 text-3xl font-light tracking-tight md:text-4xl dark:text-gray-100">
+                            <h1 className="mb-4 text-4xl font-bold tracking-tight leading-tight md:text-5xl dark:text-white">
                                 About Me
                             </h1>
-                            <p className="mb-4 text-sm font-light text-gray-400 dark:text-gray-500">
-                                Software Engineer · CS Student · Open Source
-                                Enthusiast
+
+                            <p
+                                className="mb-6 max-w-xl border-l-4 border-[#FFEE00] pl-4 text-lg leading-relaxed text-[#555] dark:text-[#999]"
+                                style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+                            >
+                                A passionate engineer who loves creating beautiful
+                                and functional web experiences. I specialize in
+                                building scalable applications that solve
+                                real-world problems.
                             </p>
 
-                            <div className="space-y-4 text-sm leading-relaxed font-light text-gray-600 dark:text-gray-300">
-                                <p>
-                                    Hi, I'm a passionate engineer who loves
-                                    creating beautiful and functional web
-                                    experiences. With expertise in modern web
-                                    technologies, I specialize in building
-                                    scalable applications that solve real-world
-                                    problems.
-                                </p>
-                                <p>
-                                    My journey in web development started
-                                    several years ago, and I've been
-                                    continuously learning and evolving ever
-                                    since.
-                                </p>
-                            </div>
+                            <p
+                                className="mb-6 max-w-xl text-sm leading-relaxed text-[#666] dark:text-[#888]"
+                                style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+                            >
+                                My journey in web development started several years ago,
+                                and I've been continuously learning and evolving ever since.
+                            </p>
 
                             {/* Actions */}
-                            <div className="mt-6 flex flex-wrap items-center gap-3">
+                            <div className="flex flex-wrap items-center gap-4">
                                 <a
                                     href="/cv_syafiudin-1.pdf"
                                     download
-                                    className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-5 py-2.5 text-sm font-light text-white transition hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200"
+                                    className="nb-btn nb-btn-black px-5 py-2.5 text-sm"
                                 >
                                     <Download className="h-4 w-4" />
                                     <span>Download CV</span>
                                 </a>
                                 <a
                                     href="mailto:altafpasallo12@gmail.com"
-                                    className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-5 py-2.5 text-sm font-light text-gray-600 transition hover:border-gray-300 hover:text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-100"
+                                    className="nb-btn nb-btn-yellow px-5 py-2.5 text-sm"
                                 >
                                     <Mail className="h-4 w-4" />
                                     <span>Get in touch</span>
@@ -253,158 +302,178 @@ export default function About() {
                     </div>
 
                     {/* Currently Learning */}
-                    <div className="rounded-2xl border border-gray-300 bg-gray-50/50 p-5 dark:border-gray-800 dark:bg-gray-800/30">
-                        <h3 className="mb-3 flex items-center gap-2 text-sm font-normal text-gray-900 dark:text-gray-100">
-                            <span>📚</span>
-                            <span>Currently Learning</span>
-                        </h3>
-                        <div className="flex flex-wrap gap-2">
+                    <div className="mt-10 border-2 border-[#1A1A1A] shadow-[4px_4px_0px_#1A1A1A] bg-[#FAFAF8] dark:bg-[#222222] dark:border-[#E5E7EB] dark:shadow-[4px_4px_0px_#E5E7EB]">
+                        <div className="flex items-center gap-0 border-b-2 border-[#1A1A1A] dark:border-[#E5E7EB]">
+                            <div className="bg-[#FFEE00] px-3 py-2 text-[10px] font-bold tracking-widest text-[#1A1A1A] uppercase border-r-2 border-[#1A1A1A] dark:border-[#E5E7EB]">
+                                📚
+                            </div>
+                            <span className="px-3 py-2 text-xs font-bold tracking-widest text-[#1A1A1A] uppercase dark:text-white">
+                                Currently Learning
+                            </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2 p-4">
                             {currentlyLearning.map((tech) => (
                                 <span
                                     key={tech}
-                                    className="rounded-full bg-gray-100 px-3 py-1 text-xs font-light text-gray-600 dark:bg-gray-700 dark:text-gray-300"
+                                    className="nb-tag"
                                 >
                                     {tech}
                                 </span>
                             ))}
                         </div>
                     </div>
-                </div>
+                </section>
 
-                {/* Experience */}
-                <section className="animate-fade-in-up animation-delay-200 mb-14 border-t border-gray-300 pt-10 dark:border-gray-800">
-                    <h2 className="mb-8 flex items-center gap-2.5 text-xl font-light dark:text-gray-100">
-                        <Briefcase className="h-5 w-5 text-gray-400 dark:text-gray-500" />
-                        <span>Experience</span>
-                    </h2>
+                {/* ── Experience ── */}
+                <section
+                    ref={expSection.ref as React.RefObject<HTMLElement>}
+                    className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
+                    style={{
+                        opacity: expSection.isVisible ? 1 : 0,
+                        transform: expSection.isVisible ? 'translateY(0)' : 'translateY(20px)',
+                        transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
+                    }}
+                >
+                    <div className="mb-10">
+                        <h2 className="flex items-center gap-2.5 text-2xl font-bold tracking-tight dark:text-white">
+                            <Briefcase className="h-5 w-5" />
+                            Experience
+                        </h2>
+                        <div className="mt-1 h-1 w-10 border border-[#1A1A1A] bg-[#FFEE00]" />
+                    </div>
 
-                    <div className="space-y-1">
+                    <div className="space-y-4">
                         {experiences.map((exp, index) => (
                             <div
                                 key={index}
-                                className="animate-fade-in-up relative pl-8"
-                                style={{
-                                    animationDelay: `${300 + index * 120}ms`,
-                                }}
+                                className="nb-card p-0 overflow-hidden"
                             >
-                                {/* Timeline */}
-                                <div className="absolute top-0 left-0 flex h-full flex-col items-center">
-                                    <div className="mt-1.5 h-3 w-3 flex-shrink-0 rounded-full border-2 border-gray-900 bg-white dark:border-gray-100 dark:bg-gray-900" />
-                                    {index < experiences.length - 1 && (
-                                        <div className="mt-1 w-px flex-1 bg-gray-200 dark:bg-gray-700" />
-                                    )}
-                                </div>
-
-                                <div className="rounded-2xl border border-gray-300 bg-gray-50/50 p-5 dark:border-gray-800 dark:bg-gray-800/30">
-                                    <div className="mb-1.5 flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
-                                        <h3 className="text-sm font-normal text-gray-900 dark:text-gray-100">
+                                {/* Colored top accent */}
+                                <div
+                                    className="h-1 w-full"
+                                    style={{ backgroundColor: index % 2 === 0 ? '#FFEE00' : '#A8FF78' }}
+                                />
+                                <div className="p-5">
+                                    <div className="mb-2 flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
+                                        <h3 className="text-base font-bold text-[#1A1A1A] dark:text-white">
                                             {exp.position}
                                         </h3>
-                                        <span className="text-xs font-light text-gray-400 dark:text-gray-500">
+                                        <span
+                                            className="inline-flex items-center border border-[#1A1A1A] px-2 py-0.5 text-[10px] font-bold tracking-widest uppercase bg-[#FAFAF8] dark:bg-[#2a2a2a] dark:border-[#E5E7EB] dark:text-white"
+                                        >
                                             {exp.period}
                                         </span>
                                     </div>
-                                    <p className="mb-2 text-xs font-light text-gray-500 dark:text-gray-400">
+                                    <p className="mb-2 text-xs font-bold tracking-wide text-[#555] uppercase dark:text-[#999]">
                                         {exp.company}
                                     </p>
-                                    <p className="text-sm leading-relaxed font-light text-gray-600 dark:text-gray-300">
+                                    <p
+                                        className="text-sm leading-relaxed text-[#666] dark:text-[#aaa]"
+                                        style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+                                    >
                                         {exp.description}
                                     </p>
                                 </div>
-
-                                {/* Spacer between cards */}
-                                {index < experiences.length - 1 && (
-                                    <div className="h-1" />
-                                )}
                             </div>
                         ))}
                     </div>
                 </section>
 
-                {/* Education */}
-                <section className="animate-fade-in-up animation-delay-400 mb-14 border-t border-gray-300 pt-10 dark:border-gray-800">
-                    <h2 className="mb-8 flex items-center gap-2.5 text-xl font-light dark:text-gray-100">
-                        <GraduationCap className="h-5 w-5 text-gray-400 dark:text-gray-500" />
-                        <span>Education</span>
-                    </h2>
+                {/* ── Education ── */}
+                <section
+                    ref={eduSection.ref as React.RefObject<HTMLElement>}
+                    className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
+                    style={{
+                        opacity: eduSection.isVisible ? 1 : 0,
+                        transform: eduSection.isVisible ? 'translateY(0)' : 'translateY(20px)',
+                        transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
+                    }}
+                >
+                    <div className="mb-10">
+                        <h2 className="flex items-center gap-2.5 text-2xl font-bold tracking-tight dark:text-white">
+                            <GraduationCap className="h-5 w-5" />
+                            Education
+                        </h2>
+                        <div className="mt-1 h-1 w-10 border border-[#1A1A1A] bg-[#A8FF78]" />
+                    </div>
 
-                    <div className="space-y-1">
+                    <div className="space-y-4">
                         {education.map((edu, index) => (
                             <div
                                 key={index}
-                                className="animate-fade-in-up relative pl-8"
-                                style={{
-                                    animationDelay: `${500 + index * 120}ms`,
-                                }}
+                                className="nb-card p-0 overflow-hidden"
                             >
-                                {/* Timeline */}
-                                <div className="absolute top-0 left-0 flex h-full flex-col items-center">
-                                    <div className="mt-1.5 h-3 w-3 flex-shrink-0 rounded-full border-2 border-gray-400 bg-white dark:border-gray-500 dark:bg-gray-900" />
-                                    {index < education.length - 1 && (
-                                        <div className="mt-1 w-px flex-1 bg-gray-200 dark:bg-gray-700" />
-                                    )}
-                                </div>
-
-                                <div className="rounded-2xl border border-gray-300 bg-gray-50/50 p-5 dark:border-gray-800 dark:bg-gray-800/30">
-                                    <div className="mb-1.5 flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
-                                        <h3 className="text-sm font-normal text-gray-900 dark:text-gray-100">
-                                            {edu.degree} in {edu.field}
+                                <div
+                                    className="h-1 w-full"
+                                    style={{ backgroundColor: index % 2 === 0 ? '#A8FF78' : '#FFEE00' }}
+                                />
+                                <div className="p-5">
+                                    <div className="mb-2 flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
+                                        <h3 className="text-base font-bold text-[#1A1A1A] dark:text-white">
+                                            {edu.degree} — {edu.field}
                                         </h3>
-                                        <span className="text-xs font-light text-gray-400 dark:text-gray-500">
+                                        <span className="inline-flex items-center border border-[#1A1A1A] px-2 py-0.5 text-[10px] font-bold tracking-widest uppercase bg-[#FAFAF8] dark:bg-[#2a2a2a] dark:border-[#E5E7EB] dark:text-white">
                                             {edu.period}
                                         </span>
                                     </div>
-                                    <p className="mb-2 text-xs font-light text-gray-500 dark:text-gray-400">
+                                    <p className="mb-2 text-xs font-bold tracking-wide text-[#555] uppercase dark:text-[#999]">
                                         {edu.school}
                                     </p>
                                     {edu.description && (
-                                        <p className="text-sm leading-relaxed font-light text-gray-600 dark:text-gray-300">
+                                        <p
+                                            className="text-sm leading-relaxed text-[#666] dark:text-[#aaa]"
+                                            style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+                                        >
                                             {edu.description}
                                         </p>
                                     )}
                                 </div>
-
-                                {index < education.length - 1 && (
-                                    <div className="h-1" />
-                                )}
                             </div>
                         ))}
                     </div>
                 </section>
 
-                {/* Skills — grouped by category */}
-                <section className="animate-fade-in-up animation-delay-600 mb-14 border-t border-gray-300 pt-10 dark:border-gray-800">
-                    <h2 className="mb-8 text-xl font-light dark:text-gray-100">
-                        Skills
-                    </h2>
+                {/* ── Skills ── */}
+                <section
+                    ref={skillsSection.ref as React.RefObject<HTMLElement>}
+                    className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
+                    style={{
+                        opacity: skillsSection.isVisible ? 1 : 0,
+                        transform: skillsSection.isVisible ? 'translateY(0)' : 'translateY(20px)',
+                        transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
+                    }}
+                >
+                    <div className="mb-10">
+                        <h2 className="text-2xl font-bold tracking-tight dark:text-white">
+                            Skills
+                        </h2>
+                        <div className="mt-1 h-1 w-10 border border-[#1A1A1A] bg-[#FFEE00]" />
+                    </div>
 
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                        {skillCategories.map((category, catIndex) => (
+                        {skillCategories.map((category) => (
                             <div
                                 key={category.label}
-                                className="animate-fade-in-up rounded-2xl border border-gray-300 bg-gray-50/50 p-5 dark:border-gray-800 dark:bg-gray-800/30"
-                                style={{
-                                    animationDelay: `${700 + catIndex * 100}ms`,
-                                }}
+                                className="nb-card p-0 overflow-hidden"
                             >
-                                <div className="mb-4 flex items-center gap-2">
-                                    <span className="text-gray-400 dark:text-gray-500">
-                                        {category.icon}
-                                    </span>
-                                    <h3 className="text-sm font-normal text-gray-900 dark:text-gray-100">
+                                {/* Category header */}
+                                <div
+                                    className="flex items-center gap-2 border-b-2 border-[#1A1A1A] px-4 py-2.5 dark:border-[#E5E7EB]"
+                                    style={{ backgroundColor: category.color }}
+                                >
+                                    <span className="text-[#1A1A1A]">{category.icon}</span>
+                                    <h3 className="text-xs font-bold tracking-widest text-[#1A1A1A] uppercase">
                                         {category.label}
                                     </h3>
                                 </div>
 
-                                <div className="flex flex-wrap gap-2">
+                                <div className="flex flex-wrap gap-2 p-4">
                                     {category.skills.map((skill) => (
                                         <div
                                             key={skill.name}
-                                            className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-xs font-light text-gray-600 transition hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                                            className="inline-flex items-center gap-1.5 border border-[#1A1A1A] bg-[#FAFAF8] px-2.5 py-1 text-xs font-medium text-[#1A1A1A] transition hover:bg-[#1A1A1A] hover:text-white dark:bg-[#2a2a2a] dark:border-[#E5E7EB] dark:text-white dark:hover:bg-[#E5E7EB] dark:hover:text-[#1A1A1A]"
                                         >
-                                            <span className="text-gray-500 dark:text-gray-400">
-                                                {skill.icon}
-                                            </span>
+                                            <span>{skill.icon}</span>
                                             <span>{skill.name}</span>
                                         </div>
                                     ))}
@@ -414,39 +483,54 @@ export default function About() {
                     </div>
                 </section>
 
-                {/* Contact */}
-                <section className="animate-fade-in-up animation-delay-800 border-t border-gray-100 pt-10 pb-4 dark:border-gray-800">
-                    <h2 className="mb-3 text-xl font-light dark:text-gray-100">
-                        Get in Touch
-                    </h2>
-                    <p className="mb-6 text-sm font-light text-gray-500 dark:text-gray-400">
+                {/* ── Contact ── */}
+                <section
+                    ref={contactSection.ref as React.RefObject<HTMLElement>}
+                    className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
+                    style={{
+                        opacity: contactSection.isVisible ? 1 : 0,
+                        transform: contactSection.isVisible ? 'translateY(0)' : 'translateY(20px)',
+                        transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
+                    }}
+                >
+                    <div className="mb-6">
+                        <h2 className="text-2xl font-bold tracking-tight dark:text-white">
+                            Get in Touch
+                        </h2>
+                        <div className="mt-1 h-1 w-10 border border-[#1A1A1A] bg-[#A8FF78]" />
+                    </div>
+
+                    <p
+                        className="mb-8 max-w-md text-sm leading-relaxed text-[#666] dark:text-[#999]"
+                        style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+                    >
                         I'm always open to new opportunities and collaborations.
                         Feel free to reach out!
                     </p>
 
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                         {socials.map((social) => (
                             <a
                                 key={social.label}
                                 href={social.href}
                                 target={social.external ? '_blank' : undefined}
-                                rel={
-                                    social.external
-                                        ? 'noopener noreferrer'
-                                        : undefined
-                                }
-                                className="group flex items-center gap-3 rounded-2xl border border-gray-100 bg-gray-50/50 p-4 transition-all hover:border-gray-200 dark:border-gray-800 dark:bg-gray-800/30 dark:hover:border-gray-700"
+                                rel={social.external ? 'noopener noreferrer' : undefined}
+                                className="group nb-card flex items-center gap-3 p-4 no-underline"
                             >
-                                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-colors group-hover:bg-gray-200 group-hover:text-gray-900 dark:bg-gray-700 dark:text-gray-400 dark:group-hover:bg-gray-600 dark:group-hover:text-gray-100">
-                                    {social.icon}
+                                <span
+                                    className="flex h-9 w-9 flex-shrink-0 items-center justify-center border-2 border-[#1A1A1A] dark:border-[#E5E7EB]"
+                                    style={{ backgroundColor: social.color }}
+                                >
+                                    <span className="text-[#1A1A1A]">{social.icon}</span>
                                 </span>
-                                <span className="text-sm font-light text-gray-600 transition-colors group-hover:text-gray-900 dark:text-gray-300 dark:group-hover:text-gray-100">
+                                <span className="text-sm font-semibold text-[#1A1A1A] dark:text-white">
                                     {social.label}
                                 </span>
                             </a>
                         ))}
                     </div>
                 </section>
+
             </div>
         </Layout>
     );

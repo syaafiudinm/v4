@@ -35,14 +35,11 @@ function useMultiLineTypewriter(
         const tick = () => {
             const li = lineIndexRef.current;
             const ci = charIndexRef.current;
-
             if (li >= lines.length) {
                 setIsFinished(true);
                 return;
             }
-
             const fullLine = lines[li];
-
             if (ci <= fullLine.length) {
                 setCurrentLine(fullLine.slice(0, ci));
                 charIndexRef.current++;
@@ -57,7 +54,6 @@ function useMultiLineTypewriter(
         };
 
         timeout = setTimeout(tick, speed);
-
         return () => clearTimeout(timeout);
     }, [lines, speed, pauseBetween]);
 
@@ -78,11 +74,7 @@ function useSectionVisible(rootMargin = '50px') {
             },
             { rootMargin, threshold: 0.1 },
         );
-
-        if (ref.current) {
-            observer.observe(ref.current);
-        }
-
+        if (ref.current) observer.observe(ref.current);
         return () => observer.disconnect();
     }, [rootMargin]);
 
@@ -108,10 +100,20 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
             />
 
             <div>
-                {/* Hero Section */}
+                {/* ── Hero ── */}
                 <section className="animate-fade-in py-16 md:py-28">
-                    {/* Typewriter */}
-                    <h1 className="mb-4 text-4xl leading-tight font-light tracking-tight md:text-6xl dark:text-white">
+                    {/* Yellow accent strip */}
+                    <div className="mb-6 inline-flex items-center gap-0 border-2 border-[#1A1A1A] shadow-[3px_3px_0px_#1A1A1A]">
+                        <div className="bg-[#FFEE00] px-3 py-1 text-[10px] font-bold tracking-widest text-[#1A1A1A] uppercase">
+                            Available for work
+                        </div>
+                        <div className="bg-[#1A1A1A] px-3 py-1 text-[10px] font-bold tracking-widest text-[#FFEE00] uppercase">
+                            Open to opportunities
+                        </div>
+                    </div>
+
+                    {/* Typewriter headline */}
+                    <h1 className="mb-4 text-4xl leading-tight font-bold tracking-tight md:text-6xl dark:text-white">
                         {completedLines.map((line, i) => (
                             <span key={i} className="block">
                                 {line}
@@ -120,14 +122,17 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                         {!isFinished && (
                             <span className="block">
                                 {currentLine}
-                                <span className="ml-0.5 inline-block w-[2px] animate-pulse bg-gray-900 dark:bg-gray-100">
+                                <span className="ml-0.5 inline-block w-[3px] animate-pulse border border-[#1A1A1A] bg-[#FFEE00]">
                                     &nbsp;
                                 </span>
                             </span>
                         )}
                     </h1>
 
-                    <p className="mb-8 max-w-xl text-lg leading-relaxed font-light text-gray-500 md:text-xl dark:text-gray-400">
+                    <p
+                        className="mb-8 max-w-xl border-l-4 border-[#FFEE00] pl-4 text-lg leading-relaxed text-[#555] md:text-xl dark:text-[#999]"
+                        style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+                    >
                         A passionate engineer creating beautiful and functional
                         web experiences
                     </p>
@@ -135,27 +140,25 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                     <div className="flex flex-wrap items-center gap-4">
                         <Link
                             href="/about"
-                            className="group inline-flex items-center gap-2 text-sm font-light text-gray-900 transition-colors hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-400"
+                            className="nb-btn nb-btn-black px-5 py-2.5 text-sm"
                         >
-                            <span className="border-b border-gray-900 pb-0.5 dark:border-gray-300">
-                                More about me
-                            </span>
-                            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                            <span>More about me</span>
+                            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </Link>
                         <a
                             href="mailto:altafpasallo12@gmail.com"
-                            className="inline-flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm font-light text-gray-600 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700"
+                            className="nb-btn nb-btn-yellow px-5 py-2.5 text-sm"
                         >
-                            <Mail className="h-3.5 w-3.5" />
+                            <Mail className="h-4 w-4" />
                             <span>Get in touch</span>
                         </a>
                     </div>
                 </section>
 
-                {/* Featured Projects */}
+                {/* ── Featured Projects ── */}
                 <section
                     ref={projectsSection.ref as React.RefObject<HTMLElement>}
-                    className="border-t border-gray-100 py-16 dark:border-gray-800"
+                    className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
                     style={{
                         opacity: projectsSection.isVisible ? 1 : 0,
                         transform: projectsSection.isVisible
@@ -166,18 +169,21 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                     }}
                 >
                     <div className="mb-10 flex items-baseline justify-between">
-                        <h2 className="text-2xl font-light tracking-tight dark:text-white">
-                            Featured Projects
-                        </h2>
+                        <div>
+                            <h2 className="text-2xl font-bold tracking-tight dark:text-white">
+                                Featured Projects
+                            </h2>
+                            <div className="mt-1 h-1 w-10 border border-[#1A1A1A] bg-[#FFEE00]" />
+                        </div>
                         <Link
                             href="/projects"
-                            className="text-sm font-light text-gray-400 transition-colors hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-200"
+                            className="text-sm font-bold text-[#1A1A1A] underline underline-offset-2 transition-colors hover:text-[#FF4F4F] dark:text-[#E5E7EB] dark:hover:text-[#FFEE00]"
                         >
-                            View all
+                            View all →
                         </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                         {featuredProjects
                             ?.slice(0, 10)
                             .map((project, index) => (
@@ -190,16 +196,18 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                     </div>
 
                     {(!featuredProjects || featuredProjects.length === 0) && (
-                        <p className="py-8 text-center text-sm font-light text-gray-400 dark:text-gray-500">
-                            No featured projects yet.
-                        </p>
+                        <div className="border-2 border-dashed border-[#1A1A1A] py-12 text-center dark:border-[#444]">
+                            <p className="text-sm font-medium text-[#888] dark:text-[#666]">
+                                No featured projects yet.
+                            </p>
+                        </div>
                     )}
                 </section>
 
-                {/* Recent Blog Posts */}
+                {/* ── Recent Posts ── */}
                 <section
                     ref={postsSection.ref as React.RefObject<HTMLElement>}
-                    className="border-t border-gray-100 py-16 dark:border-gray-800"
+                    className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
                     style={{
                         opacity: postsSection.isVisible ? 1 : 0,
                         transform: postsSection.isVisible
@@ -210,27 +218,32 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                     }}
                 >
                     <div className="mb-10 flex items-baseline justify-between">
-                        <h2 className="text-2xl font-light tracking-tight dark:text-white">
-                            Recent Posts
-                        </h2>
+                        <div>
+                            <h2 className="text-2xl font-bold tracking-tight dark:text-white">
+                                Recent Posts
+                            </h2>
+                            <div className="mt-1 h-1 w-10 border border-[#1A1A1A] bg-[#A8FF78]" />
+                        </div>
                         <Link
                             href="/posts"
-                            className="text-sm font-light text-gray-400 transition-colors hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-200"
+                            className="text-sm font-bold text-[#1A1A1A] underline underline-offset-2 transition-colors hover:text-[#FF4F4F] dark:text-[#E5E7EB] dark:hover:text-[#FFEE00]"
                         >
-                            View all
+                            View all →
                         </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                         {recentPosts?.slice(0, 3).map((post, index) => (
                             <BlogCard key={post.id} post={post} index={index} />
                         ))}
                     </div>
 
                     {(!recentPosts || recentPosts.length === 0) && (
-                        <p className="py-8 text-center text-sm font-light text-gray-400 dark:text-gray-500">
-                            No posts yet.
-                        </p>
+                        <div className="border-2 border-dashed border-[#1A1A1A] py-12 text-center dark:border-[#444]">
+                            <p className="text-sm font-medium text-[#888] dark:text-[#666]">
+                                No posts yet.
+                            </p>
+                        </div>
                     )}
                 </section>
             </div>

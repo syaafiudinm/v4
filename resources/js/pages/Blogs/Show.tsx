@@ -33,19 +33,14 @@ export default function BlogShow({ post, hasLiked, relatedPosts }: Props) {
         processing,
         errors,
         reset,
-    } = useForm({
-        name: '',
-        email: '',
-        content: '',
-    });
+    } = useForm({ name: '', email: '', content: '' });
 
-    const formatDate = (date: string) => {
-        return new Date(date).toLocaleDateString('en-US', {
+    const formatDate = (date: string) =>
+        new Date(date).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
         });
-    };
 
     const handleLike = () => {
         if (!liked) {
@@ -64,11 +59,8 @@ export default function BlogShow({ post, hasLiked, relatedPosts }: Props) {
         });
     };
 
-    // SSR-safe URL
     const currentUrl = useMemo(() => {
-        if (typeof window !== 'undefined') {
-            return window.location.href;
-        }
+        if (typeof window !== 'undefined') return window.location.href;
         return pageUrl;
     }, [pageUrl]);
 
@@ -79,7 +71,6 @@ export default function BlogShow({ post, hasLiked, relatedPosts }: Props) {
         setCopied(true);
     };
 
-    // Reset copied state after 2s
     useEffect(() => {
         if (!copied) return;
         const timer = setTimeout(() => setCopied(false), 2000);
@@ -97,7 +88,6 @@ export default function BlogShow({ post, hasLiked, relatedPosts }: Props) {
 
     const seoDescription =
         post.excerpt || stripHtml(post.content).slice(0, 160);
-
     const likesCount = post.likes?.length || 0;
     const commentsCount = post.comments?.length || 0;
     const viewsCount = post.views || 0;
@@ -122,36 +112,37 @@ export default function BlogShow({ post, hasLiked, relatedPosts }: Props) {
             />
 
             <article className="mx-auto mt-6 max-w-3xl">
-                {/* Back link */}
+                {/* ── Back link ── */}
                 <Link
                     href="/posts"
-                    className="group mb-8 inline-flex items-center gap-2 text-sm font-light text-gray-400 transition-colors hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-100"
+                    className="group mb-8 inline-flex items-center gap-2 border-2 border-[#1A1A1A] bg-[#FAFAF8] px-3 py-1.5 text-sm font-bold shadow-[2px_2px_0px_#1A1A1A] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none dark:border-[#E5E7EB] dark:bg-[#222] dark:text-[#FAFAF8] dark:shadow-[2px_2px_0px_#E5E7EB]"
                 >
                     <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
                     <span>Back to blog</span>
                 </Link>
 
-                {/* Header */}
+                {/* ── Header ── */}
                 <header className="mb-10">
                     <time
                         dateTime={post.published_at}
-                        className="mb-4 block text-sm font-light text-gray-400 dark:text-gray-500"
+                        className="mb-4 block text-sm font-medium text-[#888] dark:text-[#666]"
                     >
                         {formatDate(post.published_at)}
                     </time>
-                    <h1 className="mb-6 text-3xl leading-tight font-light tracking-tight md:text-5xl dark:text-gray-100">
+                    <h1 className="mb-6 text-3xl leading-tight font-bold tracking-tight md:text-5xl dark:text-[#FAFAF8]">
                         {post.title}
                     </h1>
+                    <div className="mb-5 h-1 w-16 border border-[#1A1A1A] bg-[#FFEE00]" />
 
-                    {/* Stats & Actions */}
-                    <div className="flex items-center gap-5">
+                    {/* Stats */}
+                    <div className="flex flex-wrap items-center gap-5">
                         <button
                             onClick={handleLike}
                             disabled={liked}
-                            className={`flex items-center gap-1.5 transition ${
+                            className={`nb-btn px-3 py-1.5 text-sm ${
                                 liked
-                                    ? 'text-red-500'
-                                    : 'text-gray-400 hover:text-red-500 dark:text-gray-500'
+                                    ? 'border-[#FF4F4F] bg-[#FF4F4F] text-white shadow-[2px_2px_0px_#1A1A1A]'
+                                    : 'nb-btn-ghost'
                             }`}
                             aria-label={
                                 liked ? 'Already liked' : 'Like this post'
@@ -159,30 +150,24 @@ export default function BlogShow({ post, hasLiked, relatedPosts }: Props) {
                             type="button"
                         >
                             <Heart
-                                className={`h-4.5 w-4.5 ${liked ? 'fill-current' : ''}`}
+                                className={`h-4 w-4 ${liked ? 'fill-current' : ''}`}
                             />
-                            <span className="text-sm font-light">
-                                {likesCount}
-                            </span>
+                            <span>{likesCount}</span>
                         </button>
-                        <div className="flex items-center gap-1.5 text-gray-400 dark:text-gray-500">
-                            <MessageCircle className="h-4.5 w-4.5" />
-                            <span className="text-sm font-light">
-                                {commentsCount}
-                            </span>
+                        <div className="flex items-center gap-1.5 text-sm font-medium text-[#888] dark:text-[#666]">
+                            <MessageCircle className="h-4 w-4" />
+                            <span>{commentsCount}</span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-gray-400 dark:text-gray-500">
-                            <Eye className="h-4.5 w-4.5" />
-                            <span className="text-sm font-light">
-                                {viewsCount} views
-                            </span>
+                        <div className="flex items-center gap-1.5 text-sm font-medium text-[#888] dark:text-[#666]">
+                            <Eye className="h-4 w-4" />
+                            <span>{viewsCount} views</span>
                         </div>
                     </div>
                 </header>
 
-                {/* Featured Image */}
+                {/* ── Featured Image ── */}
                 {post.featured_image && (
-                    <div className="mb-12 overflow-hidden rounded-2xl">
+                    <div className="mb-12 overflow-hidden border-2 border-[#1A1A1A] shadow-[6px_6px_0px_#1A1A1A] dark:border-[#E5E7EB] dark:shadow-[6px_6px_0px_#E5E7EB]">
                         <img
                             src={post.featured_image}
                             alt={post.title}
@@ -191,60 +176,64 @@ export default function BlogShow({ post, hasLiked, relatedPosts }: Props) {
                     </div>
                 )}
 
-                {/* Content */}
+                {/* ── Content ── */}
                 <div
-                    className="prose prose-lg mb-16 max-w-none text-justify font-light dark:prose-invert"
+                    className="prose prose-lg mb-16 max-w-none dark:prose-invert"
                     dangerouslySetInnerHTML={{ __html: post.content }}
                 />
 
-                {/* Social Share */}
-                <div className="mb-12 border-t border-gray-100 pt-8 dark:border-gray-800">
-                    <h3 className="mb-4 text-base font-light text-gray-900 dark:text-gray-100">
+                {/* ── Social Share ── */}
+                <div className="mb-12 border-t-2 border-[#1A1A1A] pt-8 dark:border-[#E5E7EB]">
+                    <h3 className="mb-4 text-base font-bold text-[#1A1A1A] dark:text-[#FAFAF8]">
                         Share this article
                     </h3>
                     <div className="flex flex-wrap gap-2">
-                        <a
-                            href={shareLinks.twitter}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-light text-gray-600 transition hover:border-gray-300 hover:text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-100"
-                            aria-label="Share on Twitter"
-                        >
-                            <Twitter className="h-3.5 w-3.5" />
-                            <span>Twitter</span>
-                        </a>
-                        <a
-                            href={shareLinks.facebook}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-light text-gray-600 transition hover:border-gray-300 hover:text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-100"
-                            aria-label="Share on Facebook"
-                        >
-                            <Facebook className="h-3.5 w-3.5" />
-                            <span>Facebook</span>
-                        </a>
-                        <a
-                            href={shareLinks.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-light text-gray-600 transition hover:border-gray-300 hover:text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-100"
-                            aria-label="Share on LinkedIn"
-                        >
-                            <Linkedin className="h-3.5 w-3.5" />
-                            <span>LinkedIn</span>
-                        </a>
+                        {[
+                            {
+                                href: shareLinks.twitter,
+                                icon: <Twitter className="h-3.5 w-3.5" />,
+                                label: 'Twitter',
+                                bg: 'hover:bg-[#1DA1F2] hover:text-white hover:border-[#1DA1F2]',
+                            },
+                            {
+                                href: shareLinks.facebook,
+                                icon: <Facebook className="h-3.5 w-3.5" />,
+                                label: 'Facebook',
+                                bg: 'hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]',
+                            },
+                            {
+                                href: shareLinks.linkedin,
+                                icon: <Linkedin className="h-3.5 w-3.5" />,
+                                label: 'LinkedIn',
+                                bg: 'hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]',
+                            },
+                        ].map(({ href, icon, label, bg }) => (
+                            <a
+                                key={label}
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`nb-btn nb-btn-ghost px-4 py-2 text-sm ${bg} transition-all`}
+                                aria-label={`Share on ${label}`}
+                            >
+                                {icon}
+                                <span>{label}</span>
+                            </a>
+                        ))}
                         <button
                             onClick={handleCopyLink}
                             type="button"
-                            className="relative inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-light text-gray-600 transition hover:border-gray-300 hover:text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-100"
+                            className={`nb-btn nb-btn-ghost px-4 py-2 text-sm ${
+                                copied
+                                    ? 'border-[#A8FF78] bg-[#A8FF78] text-[#1A1A1A]'
+                                    : ''
+                            }`}
                             aria-label="Copy link to clipboard"
                         >
                             {copied ? (
                                 <>
-                                    <Check className="h-3.5 w-3.5 text-emerald-500" />
-                                    <span className="text-emerald-500">
-                                        Copied!
-                                    </span>
+                                    <Check className="h-3.5 w-3.5" />
+                                    <span>Copied!</span>
                                 </>
                             ) : (
                                 <>
@@ -256,11 +245,11 @@ export default function BlogShow({ post, hasLiked, relatedPosts }: Props) {
                     </div>
                 </div>
 
-                {/* Comments Section */}
-                <div className="border-t border-gray-100 pt-10 dark:border-gray-800">
-                    <h2 className="mb-8 text-xl font-light dark:text-gray-100">
+                {/* ── Comments ── */}
+                <div className="border-t-2 border-[#1A1A1A] pt-10 dark:border-[#E5E7EB]">
+                    <h2 className="mb-8 text-xl font-bold dark:text-[#FAFAF8]">
                         Comments{' '}
-                        <span className="text-gray-400 dark:text-gray-500">
+                        <span className="text-[#888] dark:text-[#666]">
                             ({commentsCount})
                         </span>
                     </h2>
@@ -268,9 +257,9 @@ export default function BlogShow({ post, hasLiked, relatedPosts }: Props) {
                     {/* Comment Form */}
                     <form
                         onSubmit={handleCommentSubmit}
-                        className="mb-10 rounded-2xl border border-gray-100 bg-gray-50/50 p-6 dark:border-gray-800 dark:bg-gray-800/30"
+                        className="mb-10 border-2 border-[#1A1A1A] bg-[#FFFFF0] p-6 shadow-[4px_4px_0px_#1A1A1A] dark:border-[#E5E7EB] dark:bg-[#222] dark:shadow-[4px_4px_0px_#E5E7EB]"
                     >
-                        <p className="mb-4 text-sm font-light text-gray-500 dark:text-gray-400">
+                        <p className="mb-4 text-sm font-bold text-[#1A1A1A] dark:text-[#FAFAF8]">
                             Leave a comment
                         </p>
                         <div className="space-y-3">
@@ -283,10 +272,10 @@ export default function BlogShow({ post, hasLiked, relatedPosts }: Props) {
                                         onChange={(e) =>
                                             setData('name', e.target.value)
                                         }
-                                        className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-light text-gray-900 transition placeholder:text-gray-400 focus:border-gray-400 focus:ring-0 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-gray-500"
+                                        className="nb-input"
                                     />
                                     {errors.name && (
-                                        <p className="mt-1.5 text-xs font-light text-red-500">
+                                        <p className="mt-1.5 text-xs font-medium text-[#FF4F4F]">
                                             {errors.name}
                                         </p>
                                     )}
@@ -299,10 +288,10 @@ export default function BlogShow({ post, hasLiked, relatedPosts }: Props) {
                                         onChange={(e) =>
                                             setData('email', e.target.value)
                                         }
-                                        className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-light text-gray-900 transition placeholder:text-gray-400 focus:border-gray-400 focus:ring-0 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-gray-500"
+                                        className="nb-input"
                                     />
                                     {errors.email && (
-                                        <p className="mt-1.5 text-xs font-light text-red-500">
+                                        <p className="mt-1.5 text-xs font-medium text-[#FF4F4F]">
                                             {errors.email}
                                         </p>
                                     )}
@@ -316,10 +305,10 @@ export default function BlogShow({ post, hasLiked, relatedPosts }: Props) {
                                         setData('content', e.target.value)
                                     }
                                     rows={4}
-                                    className="w-full resize-none rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-light text-gray-900 transition placeholder:text-gray-400 focus:border-gray-400 focus:ring-0 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-gray-500"
+                                    className="nb-input resize-none"
                                 />
                                 {errors.content && (
-                                    <p className="mt-1.5 text-xs font-light text-red-500">
+                                    <p className="mt-1.5 text-xs font-medium text-[#FF4F4F]">
                                         {errors.content}
                                     </p>
                                 )}
@@ -327,7 +316,7 @@ export default function BlogShow({ post, hasLiked, relatedPosts }: Props) {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="rounded-xl bg-gray-900 px-5 py-2.5 text-sm font-light text-white transition hover:bg-gray-800 disabled:opacity-50 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200"
+                                className="nb-btn nb-btn-yellow px-5 py-2.5 text-sm disabled:opacity-50"
                             >
                                 {processing ? 'Posting...' : 'Post Comment'}
                             </button>
@@ -336,40 +325,46 @@ export default function BlogShow({ post, hasLiked, relatedPosts }: Props) {
 
                     {/* Comments List */}
                     {commentsCount > 0 ? (
-                        <div className="space-y-6">
+                        <div className="space-y-4">
                             {post.comments?.map((comment) => (
                                 <div
                                     key={comment.id}
-                                    className="rounded-2xl border border-gray-100 bg-gray-50/50 p-5 dark:border-gray-800 dark:bg-gray-800/30"
+                                    className="border-2 border-[#1A1A1A] bg-[#FAFAF8] p-5 shadow-[3px_3px_0px_#1A1A1A] dark:border-[#E5E7EB] dark:bg-[#222] dark:shadow-[3px_3px_0px_#E5E7EB]"
                                 >
                                     <div className="mb-3 flex items-center justify-between">
                                         <div className="flex items-center gap-2">
-                                            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-200 text-xs font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                                            <div className="flex h-7 w-7 items-center justify-center border-2 border-[#1A1A1A] bg-[#FFEE00] text-xs font-bold text-[#1A1A1A]">
                                                 {comment.name
                                                     .charAt(0)
                                                     .toUpperCase()}
                                             </div>
-                                            <p className="text-sm font-normal text-gray-900 dark:text-gray-100">
+                                            <p className="text-sm font-bold text-[#1A1A1A] dark:text-[#FAFAF8]">
                                                 {comment.name}
                                             </p>
                                         </div>
                                         <time
                                             dateTime={comment.created_at}
-                                            className="text-xs font-light text-gray-400 dark:text-gray-500"
+                                            className="text-xs font-medium text-[#888] dark:text-[#666]"
                                         >
                                             {formatDate(comment.created_at)}
                                         </time>
                                     </div>
-                                    <p className="text-sm leading-relaxed font-light text-gray-600 dark:text-gray-300">
+                                    <p
+                                        className="text-sm leading-relaxed text-[#555] dark:text-[#999]"
+                                        style={{
+                                            fontFamily:
+                                                "'Inter', system-ui, sans-serif",
+                                        }}
+                                    >
                                         {comment.content}
                                     </p>
                                 </div>
                             ))}
                         </div>
                     ) : (
-                        <div className="rounded-2xl border border-dashed border-gray-200 py-12 text-center dark:border-gray-700">
-                            <MessageCircle className="mx-auto mb-3 h-6 w-6 text-gray-300 dark:text-gray-600" />
-                            <p className="text-sm font-light text-gray-400 dark:text-gray-500">
+                        <div className="border-2 border-dashed border-[#1A1A1A] py-12 text-center dark:border-[#444]">
+                            <MessageCircle className="mx-auto mb-3 h-6 w-6 text-[#CCC] dark:text-[#555]" />
+                            <p className="text-sm font-medium text-[#888] dark:text-[#666]">
                                 No comments yet. Be the first to share your
                                 thoughts!
                             </p>
@@ -377,21 +372,24 @@ export default function BlogShow({ post, hasLiked, relatedPosts }: Props) {
                     )}
                 </div>
 
-                {/* Related Posts */}
+                {/* ── Related Posts ── */}
                 {relatedPosts && relatedPosts.length > 0 && (
-                    <div className="mt-12 border-t border-gray-100 pt-10 dark:border-gray-800">
+                    <div className="mt-12 border-t-2 border-[#1A1A1A] pt-10 dark:border-[#E5E7EB]">
                         <div className="mb-8 flex items-baseline justify-between">
-                            <h2 className="text-xl font-light dark:text-gray-100">
-                                Related Articles
-                            </h2>
+                            <div>
+                                <h2 className="text-xl font-bold dark:text-[#FAFAF8]">
+                                    Related Articles
+                                </h2>
+                                <div className="mt-1 h-1 w-10 border border-[#1A1A1A] bg-[#A8FF78]" />
+                            </div>
                             <Link
                                 href="/posts"
-                                className="text-sm font-light text-gray-400 transition-colors hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-200"
+                                className="text-sm font-bold text-[#1A1A1A] underline underline-offset-2 transition-colors hover:text-[#FF4F4F] dark:text-[#E5E7EB] dark:hover:text-[#FFEE00]"
                             >
-                                View all
+                                View all →
                             </Link>
                         </div>
-                        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                             {relatedPosts.slice(0, 3).map((related, index) => (
                                 <BlogCard
                                     key={related.id}

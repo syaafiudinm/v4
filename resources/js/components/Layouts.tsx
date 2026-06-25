@@ -38,27 +38,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         [url],
     );
 
-    // Close mobile menu on route change
     useEffect(() => {
         setMobileMenuOpen(false);
     }, [url]);
 
-    // Close mobile menu on escape key
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {
-            if (e.key === 'Escape' && mobileMenuOpen) {
-                setMobileMenuOpen(false);
-            }
+            if (e.key === 'Escape' && mobileMenuOpen) setMobileMenuOpen(false);
         };
-
         document.addEventListener('keydown', handleEscape);
         return () => document.removeEventListener('keydown', handleEscape);
     }, [mobileMenuOpen]);
 
-    // Close mobile menu on outside click
     useEffect(() => {
         if (!mobileMenuOpen) return;
-
         const handleClick = (e: MouseEvent) => {
             if (
                 mobileMenuRef.current &&
@@ -67,57 +60,45 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 setMobileMenuOpen(false);
             }
         };
-
         document.addEventListener('mousedown', handleClick);
         return () => document.removeEventListener('mousedown', handleClick);
     }, [mobileMenuOpen]);
 
-    // Prevent body scroll when mobile menu is open
     useEffect(() => {
-        if (mobileMenuOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
+        document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
         return () => {
             document.body.style.overflow = '';
         };
     }, [mobileMenuOpen]);
 
-    // Show back to top button on scroll
     useEffect(() => {
-        const handleScroll = () => {
-            setShowBackToTop(window.scrollY > 400);
-        };
-
+        const handleScroll = () => setShowBackToTop(window.scrollY > 400);
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+    const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
     return (
-        <div className="flex min-h-screen flex-col bg-white text-gray-900 transition-colors duration-300 dark:bg-gray-900 dark:text-gray-100">
-            {/* Skip to content link for accessibility */}
+        <div className="flex min-h-screen flex-col bg-[#FAFAF8] text-[#1A1A1A] dark:bg-[#1A1A1A] dark:text-[#FAFAF8]">
+            {/* Skip link */}
             <a
                 href="#main-content"
-                className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:rounded-lg focus:bg-gray-900 focus:px-4 focus:py-2 focus:text-sm focus:text-white focus:outline-none dark:focus:bg-gray-100 dark:focus:text-gray-900"
+                className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:rounded focus:border-2 focus:border-[#1A1A1A] focus:bg-[#FFEE00] focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-[#1A1A1A] focus:outline-none"
             >
                 Skip to content
             </a>
 
-            {/* Header */}
+            {/* ── Header ── */}
             <header
                 className="fixed top-4 right-0 left-0 z-50 px-6"
                 role="banner"
             >
                 <div className="flex items-center justify-end gap-3 md:justify-center">
-                    {/* Theme Toggle — icon shows what you switch TO */}
+                    {/* Theme Toggle */}
                     <button
                         onClick={toggleTheme}
-                        className="rounded-full border border-gray-200 bg-white/80 p-2.5 backdrop-blur-md transition hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800/80 dark:hover:bg-gray-700"
+                        className="nb-btn nb-btn-ghost p-2.5"
                         aria-label={
                             isDark
                                 ? 'Switch to light mode'
@@ -126,26 +107,26 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         type="button"
                     >
                         {isDark ? (
-                            <Sun className="h-4 w-4 text-yellow-400" />
+                            <Sun className="h-4 w-4 text-[#FFEE00]" />
                         ) : (
-                            <Moon className="h-4 w-4 text-gray-500" />
+                            <Moon className="h-4 w-4" />
                         )}
                     </button>
 
-                    {/* Navigation */}
+                    {/* Desktop Nav */}
                     <div className="relative" ref={mobileMenuRef}>
                         <nav
-                            className="inline-flex w-auto rounded-full border border-gray-200 bg-white/80 px-6 py-3 backdrop-blur-md dark:border-gray-700 dark:bg-gray-800/80"
+                            className="inline-flex w-auto border-2 border-[#1A1A1A] bg-[#FAFAF8] px-6 py-3 shadow-[4px_4px_0px_#1A1A1A] dark:border-[#E5E7EB] dark:bg-[#222222] dark:shadow-[4px_4px_0px_#E5E7EB]"
                             role="navigation"
                             aria-label="Main navigation"
                         >
-                            {/* Desktop Menu */}
+                            {/* Desktop links */}
                             <div className="hidden items-center gap-10 md:flex">
                                 {NAV_ITEMS.map((item) => (
                                     <Link
                                         key={item.href}
                                         href={item.href}
-                                        className={`nav-link text-sm font-light transition hover:text-gray-600 dark:hover:text-gray-300 ${
+                                        className={`nav-link text-sm transition-colors hover:text-[#1A1A1A] dark:hover:text-[#FFEE00] ${
                                             isActive(item.href) ? 'active' : ''
                                         }`}
                                         aria-current={
@@ -159,12 +140,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 ))}
                             </div>
 
-                            {/* Mobile Menu Button */}
+                            {/* Mobile burger */}
                             <button
                                 onClick={() =>
                                     setMobileMenuOpen(!mobileMenuOpen)
                                 }
-                                className="flex items-center gap-2 text-sm font-light transition md:hidden"
+                                className="flex items-center gap-2 text-sm font-medium transition md:hidden"
                                 aria-expanded={mobileMenuOpen}
                                 aria-controls="mobile-menu"
                                 aria-label={
@@ -181,10 +162,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             </button>
                         </nav>
 
-                        {/* Mobile Dropdown Menu */}
+                        {/* Mobile dropdown */}
                         <div
                             id="mobile-menu"
-                            className={`absolute top-full right-0 mt-3 w-64 origin-top-right rounded-2xl border border-gray-200 bg-white p-5 shadow-xl transition-all duration-200 ease-out md:hidden dark:border-gray-700 dark:bg-gray-800 ${
+                            className={`absolute top-full right-0 mt-2 w-56 origin-top-right border-2 border-[#1A1A1A] bg-[#FAFAF8] p-4 shadow-[4px_4px_0px_#1A1A1A] transition-all duration-200 ease-out md:hidden dark:border-[#E5E7EB] dark:bg-[#222222] dark:shadow-[4px_4px_0px_#E5E7EB] ${
                                 mobileMenuOpen
                                     ? 'translate-y-0 scale-100 opacity-100'
                                     : 'pointer-events-none -translate-y-2 scale-95 opacity-0'
@@ -192,18 +173,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             role="menu"
                             aria-hidden={!mobileMenuOpen}
                         >
-                            <div className="mb-3 text-xs font-medium tracking-wider text-gray-400 uppercase dark:text-gray-500">
+                            <div className="mb-3 text-[10px] font-bold tracking-widest text-[#888] uppercase dark:text-[#666]">
                                 Navigation
                             </div>
-                            <div className="space-y-1">
+                            <div className="space-y-0.5">
                                 {NAV_ITEMS.map((item) => (
                                     <Link
                                         key={item.href}
                                         href={item.href}
-                                        className={`block rounded-lg px-3 py-2 text-sm font-light transition hover:bg-gray-50 dark:hover:bg-gray-700 ${
+                                        className={`block px-3 py-2 text-sm font-medium transition hover:bg-[#FFEE00] hover:text-[#1A1A1A] dark:hover:bg-[#FFEE00] dark:hover:text-[#1A1A1A] ${
                                             isActive(item.href)
-                                                ? 'bg-gray-50 font-normal text-gray-900 dark:bg-gray-700 dark:text-gray-100'
-                                                : 'text-gray-600 dark:text-gray-300'
+                                                ? 'bg-[#FFEE00] text-[#1A1A1A]'
+                                                : 'text-[#1A1A1A] dark:text-[#E5E7EB]'
                                         }`}
                                         onClick={() => setMobileMenuOpen(false)}
                                         role="menuitem"
@@ -222,7 +203,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </div>
             </header>
 
-            {/* Main Content */}
+            {/* ── Main ── */}
             <div className="animate-page-enter flex-1">
                 <main
                     id="main-content"
@@ -233,10 +214,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </main>
             </div>
 
-            {/* Back to Top */}
+            {/* ── Back to Top ── */}
             <button
                 onClick={scrollToTop}
-                className={`fixed right-6 bottom-6 z-40 rounded-full border border-gray-200 bg-white/80 p-2.5 shadow-sm backdrop-blur-md transition-all duration-300 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800/80 dark:hover:bg-gray-700 ${
+                className={`nb-btn nb-btn-yellow fixed right-6 bottom-6 z-40 p-2.5 transition-all duration-300 ${
                     showBackToTop
                         ? 'translate-y-0 opacity-100'
                         : 'pointer-events-none translate-y-4 opacity-0'
@@ -244,28 +225,29 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 aria-label="Back to top"
                 type="button"
             >
-                <ArrowUp className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                <ArrowUp className="h-4 w-4" />
             </button>
 
-            {/* Footer */}
+            {/* ── Footer ── */}
             <footer
-                className="mt-auto border-t border-gray-100 dark:border-gray-800"
+                className="mt-auto border-t-2 border-[#1A1A1A] dark:border-[#E5E7EB]"
                 role="contentinfo"
             >
                 <div className="mx-auto max-w-6xl px-6 py-12">
                     <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
                         {/* Brand */}
                         <div>
-                            <p className="mb-2 text-sm font-normal text-gray-900 dark:text-gray-100">
+                            <p className="mb-1 text-xl font-bold tracking-tight text-[#1A1A1A] dark:text-[#FAFAF8]">
                                 syaafiudinm
                             </p>
-                            <p className="mb-4 text-xs leading-relaxed font-light text-gray-400 dark:text-gray-500">
+                            <div className="mb-3 h-1 w-12 border border-[#1A1A1A] bg-[#FFEE00]" />
+                            <p className="mb-4 text-xs leading-relaxed text-[#555] dark:text-[#999]">
                                 Building beautiful and functional web
                                 experiences.
                             </p>
                             <a
                                 href="mailto:altafpasallo12@gmail.com"
-                                className="inline-flex items-center gap-1.5 text-xs font-light text-gray-400 transition hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-100"
+                                className="inline-flex items-center gap-1.5 text-xs font-medium text-[#1A1A1A] underline underline-offset-2 transition-colors hover:text-[#FF4F4F] dark:text-[#E5E7EB] dark:hover:text-[#FFEE00]"
                             >
                                 <Mail className="h-3 w-3" />
                                 <span>altafpasallo12@gmail.com</span>
@@ -274,7 +256,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
                         {/* Quick Nav */}
                         <div>
-                            <p className="mb-3 text-xs font-medium tracking-wider text-gray-400 uppercase dark:text-gray-500">
+                            <p className="mb-3 text-[10px] font-bold tracking-widest text-[#888] uppercase dark:text-[#666]">
                                 Pages
                             </p>
                             <div className="flex flex-col gap-2">
@@ -282,7 +264,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                     <Link
                                         key={item.href}
                                         href={item.href}
-                                        className="text-xs font-light text-gray-500 transition hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+                                        className="text-sm font-medium text-[#1A1A1A] transition-colors hover:text-[#FF4F4F] dark:text-[#E5E7EB] dark:hover:text-[#FFEE00]"
                                     >
                                         {item.label}
                                     </Link>
@@ -290,46 +272,44 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             </div>
                         </div>
 
-                        {/* Socials */}
+                        {/* Connect */}
                         <div>
-                            <p className="mb-3 text-xs font-medium tracking-wider text-gray-400 uppercase dark:text-gray-500">
+                            <p className="mb-3 text-[10px] font-bold tracking-widest text-[#888] uppercase dark:text-[#666]">
                                 Connect
                             </p>
                             <div className="flex flex-col gap-2">
-                                <a
-                                    href="https://github.com/syaafiudinm"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-xs font-light text-gray-500 transition hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
-                                    aria-label="GitHub profile"
-                                >
-                                    GitHub
-                                </a>
-                                <a
-                                    href="https://www.linkedin.com/in/andi-syafiudin-musafir-a3b85a287/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-xs font-light text-gray-500 transition hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
-                                    aria-label="LinkedIn profile"
-                                >
-                                    LinkedIn
-                                </a>
-                                <a
-                                    href="https://instagram.com/syaafiudinm"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-xs font-light text-gray-500 transition hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
-                                    aria-label="Instagram profile"
-                                >
-                                    Instagram
-                                </a>
+                                {[
+                                    {
+                                        href: 'https://github.com/syaafiudinm',
+                                        label: 'GitHub',
+                                    },
+                                    {
+                                        href: 'https://www.linkedin.com/in/andi-syafiudin-musafir-a3b85a287/',
+                                        label: 'LinkedIn',
+                                    },
+                                    {
+                                        href: 'https://instagram.com/syaafiudinm',
+                                        label: 'Instagram',
+                                    },
+                                ].map(({ href, label }) => (
+                                    <a
+                                        key={label}
+                                        href={href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-sm font-medium text-[#1A1A1A] transition-colors hover:text-[#FF4F4F] dark:text-[#E5E7EB] dark:hover:text-[#FFEE00]"
+                                        aria-label={`${label} profile`}
+                                    >
+                                        {label}
+                                    </a>
+                                ))}
                             </div>
                         </div>
                     </div>
 
                     {/* Bottom bar */}
-                    <div className="mt-10 flex items-center justify-center gap-3 border-t border-gray-100 pt-6 md:flex-row dark:border-gray-800">
-                        <p className="text-xs font-light text-gray-400 dark:text-gray-500">
+                    <div className="mt-10 flex items-center justify-center border-t-2 border-[#1A1A1A] pt-6 dark:border-[#E5E7EB]">
+                        <p className="text-xs font-medium text-[#888] dark:text-[#666]">
                             &copy; {new Date().getFullYear()} Syaafiudinm. All
                             rights reserved.
                         </p>

@@ -13,7 +13,6 @@ export default function Projects({ projects }: Props) {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedTag, setSelectedTag] = useState<string>('all');
 
-    // Get all unique tags
     const allTags = useMemo(() => {
         const tags = new Set<string>();
         projects.forEach((project) => {
@@ -22,7 +21,6 @@ export default function Projects({ projects }: Props) {
         return Array.from(tags).sort();
     }, [projects]);
 
-    // Filter projects
     const filteredProjects = useMemo(() => {
         return projects.filter((project) => {
             const term = searchTerm.toLowerCase();
@@ -46,43 +44,56 @@ export default function Projects({ projects }: Props) {
             />
 
             <div>
-                {/* Header */}
+                {/* ── Header ── */}
                 <header className="animate-fade-in mb-12">
-                    <h1 className="mb-3 text-4xl font-light tracking-tight md:text-5xl dark:text-gray-100">
+                    <div className="mb-4 inline-flex border-2 border-[#1A1A1A] shadow-[4px_4px_0px_#1A1A1A]">
+                        <div className="bg-[#A8FF78] px-3 py-1 text-[10px] font-bold tracking-widest text-[#1A1A1A] uppercase">
+                            Portfolio
+                        </div>
+                    </div>
+                    <h1 className="mb-3 text-4xl font-bold tracking-tight md:text-5xl dark:text-[#FAFAF8]">
                         Projects
                     </h1>
-                    <p className="text-base font-light text-gray-500 dark:text-gray-400">
-                        A collection of {projects.length} things I've built
+                    <div className="mb-3 h-1 w-14 border border-[#1A1A1A] bg-[#A8FF78]" />
+                    <p
+                        className="text-base text-[#555] dark:text-[#999]"
+                        style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+                    >
+                        A collection of{' '}
+                        <strong className="text-[#1A1A1A] dark:text-[#FAFAF8]">
+                            {projects.length}
+                        </strong>{' '}
+                        things I've built
                     </p>
                 </header>
 
-                {/* Search & Filters */}
+                {/* ── Search & Filters ── */}
                 <div className="animate-fade-in-up animation-delay-200 mb-10 space-y-4">
                     {/* Search */}
                     <div className="relative max-w-md">
-                        <Search className="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+                        <Search className="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-[#888]" />
                         <input
                             type="text"
                             placeholder="Search projects..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             aria-label="Search projects"
-                            className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pr-4 pl-10 text-sm font-light text-gray-900 transition placeholder:text-gray-400 focus:border-gray-400 focus:ring-0 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-gray-500"
+                            className="nb-input pl-10"
                         />
                     </div>
 
                     {/* Tag Filters */}
                     {allTags.length > 0 && (
                         <nav
-                            className="flex flex-wrap gap-1.5"
+                            className="flex flex-wrap gap-2"
                             aria-label="Filter projects by technology"
                         >
                             <button
                                 onClick={() => setSelectedTag('all')}
-                                className={`rounded-full px-3.5 py-1.5 text-xs font-light transition ${
+                                className={`border-2 px-3.5 py-1.5 text-xs font-bold tracking-wide uppercase transition-all duration-150 ${
                                     selectedTag === 'all'
-                                        ? 'bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
+                                        ? 'border-[#1A1A1A] bg-[#FFEE00] text-[#1A1A1A] shadow-[2px_2px_0px_#1A1A1A]'
+                                        : 'border-[#1A1A1A] bg-[#FAFAF8] text-[#1A1A1A] shadow-[3px_3px_0px_#1A1A1A] hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none dark:border-[#E5E7EB] dark:bg-[#222] dark:text-[#FAFAF8]'
                                 }`}
                                 aria-pressed={selectedTag === 'all'}
                             >
@@ -92,10 +103,10 @@ export default function Projects({ projects }: Props) {
                                 <button
                                     key={tag}
                                     onClick={() => setSelectedTag(tag)}
-                                    className={`rounded-full px-3.5 py-1.5 text-xs font-light transition ${
+                                    className={`border-2 px-3.5 py-1.5 text-xs font-bold tracking-wide uppercase transition-all duration-150 ${
                                         selectedTag === tag
-                                            ? 'bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900'
-                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
+                                            ? 'border-[#1A1A1A] bg-[#A8FF78] text-[#1A1A1A] shadow-[2px_2px_0px_#1A1A1A]'
+                                            : 'border-[#1A1A1A] bg-[#FAFAF8] text-[#1A1A1A] shadow-[3px_3px_0px_#1A1A1A] hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none dark:border-[#E5E7EB] dark:bg-[#222] dark:text-[#FAFAF8]'
                                     }`}
                                     aria-pressed={selectedTag === tag}
                                 >
@@ -106,15 +117,19 @@ export default function Projects({ projects }: Props) {
                     )}
                 </div>
 
-                {/* Results count */}
+                {/* ── Results count ── */}
                 {(searchTerm || selectedTag !== 'all') && (
-                    <p className="mb-6 text-xs font-light text-gray-400 dark:text-gray-500">
-                        Showing {filteredProjects.length} of {projects.length}
+                    <p className="mb-6 text-xs font-bold text-[#888] dark:text-[#666]">
+                        Showing{' '}
+                        <span className="text-[#1A1A1A] dark:text-[#FAFAF8]">
+                            {filteredProjects.length}
+                        </span>{' '}
+                        of {projects.length}
                     </p>
                 )}
 
-                {/* Projects Grid */}
-                <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+                {/* ── Projects Grid ── */}
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     {filteredProjects.map((project, index) => (
                         <ProjectCard
                             key={project.id}
@@ -124,10 +139,10 @@ export default function Projects({ projects }: Props) {
                     ))}
                 </div>
 
-                {/* Empty State */}
+                {/* ── Empty State ── */}
                 {filteredProjects.length === 0 && (
-                    <div className="py-16 text-center">
-                        <p className="text-sm font-light text-gray-400 dark:text-gray-500">
+                    <div className="border-2 border-dashed border-[#1A1A1A] py-16 text-center dark:border-[#444]">
+                        <p className="mb-3 text-sm font-medium text-[#888] dark:text-[#666]">
                             No projects found
                             {searchTerm && ` matching "${searchTerm}"`}
                             {selectedTag !== 'all' &&
@@ -138,7 +153,7 @@ export default function Projects({ projects }: Props) {
                                 setSearchTerm('');
                                 setSelectedTag('all');
                             }}
-                            className="mt-3 text-sm font-light text-gray-500 underline underline-offset-4 transition hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+                            className="nb-btn nb-btn-yellow mx-auto px-4 py-2 text-sm"
                         >
                             Clear filters
                         </button>
