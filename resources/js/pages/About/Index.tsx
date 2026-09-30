@@ -12,6 +12,7 @@ import {
     Mail,
     Server,
 } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import {
     SiAmazonwebservices,
     SiBootstrap,
@@ -32,7 +33,6 @@ import {
     SiSupabase,
     SiTailwindcss,
 } from 'react-icons/si';
-import { useEffect, useRef, useState } from 'react';
 
 interface Experience {
     company: string;
@@ -224,7 +224,6 @@ export default function About() {
             />
 
             <div className="max-w-4xl">
-
                 {/* ── Hero / Intro ── */}
                 <section className="animate-fade-in py-16 md:py-28">
                     {/* Status badge */}
@@ -240,11 +239,11 @@ export default function About() {
                     <div className="flex flex-col items-start gap-8 md:flex-row md:items-start">
                         {/* Profile Photo — neobrutalism frame */}
                         <div className="relative flex-shrink-0">
-                            <div className="border-2 border-[#1A1A1A] shadow-[4px_4px_0px_#1A1A1A] dark:shadow-[4px_4px_0px_#E5E7EB] dark:border-[#E5E7EB]">
+                            <div className="border-2 border-[#1A1A1A] shadow-[4px_4px_0px_#1A1A1A] dark:border-[#E5E7EB] dark:shadow-[4px_4px_0px_#E5E7EB]">
                                 <img
                                     src="/profil.png"
                                     alt="Andi Syafiudin Musafir"
-                                    className="h-28 w-28 object-cover md:h-36 md:w-36 block"
+                                    className="block h-28 w-28 object-cover md:h-36 md:w-36"
                                 />
                             </div>
                             {/* Available dot */}
@@ -258,32 +257,39 @@ export default function About() {
 
                         {/* Intro Text */}
                         <div className="flex-1">
-                            <h1 className="mb-4 text-4xl font-bold tracking-tight leading-tight md:text-5xl dark:text-white">
+                            <h1 className="mb-4 text-4xl leading-tight font-bold tracking-tight md:text-5xl dark:text-white">
                                 About Me
                             </h1>
 
                             <p
                                 className="mb-6 max-w-xl border-l-4 border-[#FFEE00] pl-4 text-lg leading-relaxed text-[#555] dark:text-[#999]"
-                                style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+                                style={{
+                                    fontFamily:
+                                        "'Inter', system-ui, sans-serif",
+                                }}
                             >
-                                A passionate engineer who loves creating beautiful
-                                and functional web experiences. I specialize in
-                                building scalable applications that solve
-                                real-world problems.
+                                A passionate engineer who loves creating
+                                beautiful and functional web experiences. I
+                                specialize in building scalable applications
+                                that solve real-world problems.
                             </p>
 
                             <p
                                 className="mb-6 max-w-xl text-sm leading-relaxed text-[#666] dark:text-[#888]"
-                                style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+                                style={{
+                                    fontFamily:
+                                        "'Inter', system-ui, sans-serif",
+                                }}
                             >
-                                My journey in web development started several years ago,
-                                and I've been continuously learning and evolving ever since.
+                                My journey in web development started several
+                                years ago, and I've been continuously learning
+                                and evolving ever since.
                             </p>
 
                             {/* Actions */}
                             <div className="flex flex-wrap items-center gap-4">
                                 <a
-                                    href="/cv_syafiudin-1.pdf"
+                                    href="/cv_syafiudin-4.pdf"
                                     download
                                     className="nb-btn nb-btn-black px-5 py-2.5 text-sm"
                                 >
@@ -302,9 +308,9 @@ export default function About() {
                     </div>
 
                     {/* Currently Learning */}
-                    <div className="mt-10 border-2 border-[#1A1A1A] shadow-[4px_4px_0px_#1A1A1A] bg-[#FAFAF8] dark:bg-[#222222] dark:border-[#E5E7EB] dark:shadow-[4px_4px_0px_#E5E7EB]">
+                    <div className="mt-10 border-2 border-[#1A1A1A] bg-[#FAFAF8] shadow-[4px_4px_0px_#1A1A1A] dark:border-[#E5E7EB] dark:bg-[#222222] dark:shadow-[4px_4px_0px_#E5E7EB]">
                         <div className="flex items-center gap-0 border-b-2 border-[#1A1A1A] dark:border-[#E5E7EB]">
-                            <div className="bg-[#FFEE00] px-3 py-2 text-[10px] font-bold tracking-widest text-[#1A1A1A] uppercase border-r-2 border-[#1A1A1A] dark:border-[#E5E7EB]">
+                            <div className="border-r-2 border-[#1A1A1A] bg-[#FFEE00] px-3 py-2 text-[10px] font-bold tracking-widest text-[#1A1A1A] uppercase dark:border-[#E5E7EB]">
                                 📚
                             </div>
                             <span className="px-3 py-2 text-xs font-bold tracking-widest text-[#1A1A1A] uppercase dark:text-white">
@@ -313,10 +319,7 @@ export default function About() {
                         </div>
                         <div className="flex flex-wrap gap-2 p-4">
                             {currentlyLearning.map((tech) => (
-                                <span
-                                    key={tech}
-                                    className="nb-tag"
-                                >
+                                <span key={tech} className="nb-tag">
                                     {tech}
                                 </span>
                             ))}
@@ -330,8 +333,11 @@ export default function About() {
                     className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
                     style={{
                         opacity: expSection.isVisible ? 1 : 0,
-                        transform: expSection.isVisible ? 'translateY(0)' : 'translateY(20px)',
-                        transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
+                        transform: expSection.isVisible
+                            ? 'translateY(0)'
+                            : 'translateY(20px)',
+                        transition:
+                            'opacity 0.6s ease-out, transform 0.6s ease-out',
                     }}
                 >
                     <div className="mb-10">
@@ -346,21 +352,24 @@ export default function About() {
                         {experiences.map((exp, index) => (
                             <div
                                 key={index}
-                                className="nb-card p-0 overflow-hidden"
+                                className="nb-card overflow-hidden p-0"
                             >
                                 {/* Colored top accent */}
                                 <div
                                     className="h-1 w-full"
-                                    style={{ backgroundColor: index % 2 === 0 ? '#FFEE00' : '#A8FF78' }}
+                                    style={{
+                                        backgroundColor:
+                                            index % 2 === 0
+                                                ? '#FFEE00'
+                                                : '#A8FF78',
+                                    }}
                                 />
                                 <div className="p-5">
                                     <div className="mb-2 flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
                                         <h3 className="text-base font-bold text-[#1A1A1A] dark:text-white">
                                             {exp.position}
                                         </h3>
-                                        <span
-                                            className="inline-flex items-center border border-[#1A1A1A] px-2 py-0.5 text-[10px] font-bold tracking-widest uppercase bg-[#FAFAF8] dark:bg-[#2a2a2a] dark:border-[#E5E7EB] dark:text-white"
-                                        >
+                                        <span className="inline-flex items-center border border-[#1A1A1A] bg-[#FAFAF8] px-2 py-0.5 text-[10px] font-bold tracking-widest uppercase dark:border-[#E5E7EB] dark:bg-[#2a2a2a] dark:text-white">
                                             {exp.period}
                                         </span>
                                     </div>
@@ -369,7 +378,10 @@ export default function About() {
                                     </p>
                                     <p
                                         className="text-sm leading-relaxed text-[#666] dark:text-[#aaa]"
-                                        style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+                                        style={{
+                                            fontFamily:
+                                                "'Inter', system-ui, sans-serif",
+                                        }}
                                     >
                                         {exp.description}
                                     </p>
@@ -385,8 +397,11 @@ export default function About() {
                     className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
                     style={{
                         opacity: eduSection.isVisible ? 1 : 0,
-                        transform: eduSection.isVisible ? 'translateY(0)' : 'translateY(20px)',
-                        transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
+                        transform: eduSection.isVisible
+                            ? 'translateY(0)'
+                            : 'translateY(20px)',
+                        transition:
+                            'opacity 0.6s ease-out, transform 0.6s ease-out',
                     }}
                 >
                     <div className="mb-10">
@@ -401,18 +416,23 @@ export default function About() {
                         {education.map((edu, index) => (
                             <div
                                 key={index}
-                                className="nb-card p-0 overflow-hidden"
+                                className="nb-card overflow-hidden p-0"
                             >
                                 <div
                                     className="h-1 w-full"
-                                    style={{ backgroundColor: index % 2 === 0 ? '#A8FF78' : '#FFEE00' }}
+                                    style={{
+                                        backgroundColor:
+                                            index % 2 === 0
+                                                ? '#A8FF78'
+                                                : '#FFEE00',
+                                    }}
                                 />
                                 <div className="p-5">
                                     <div className="mb-2 flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
                                         <h3 className="text-base font-bold text-[#1A1A1A] dark:text-white">
                                             {edu.degree} — {edu.field}
                                         </h3>
-                                        <span className="inline-flex items-center border border-[#1A1A1A] px-2 py-0.5 text-[10px] font-bold tracking-widest uppercase bg-[#FAFAF8] dark:bg-[#2a2a2a] dark:border-[#E5E7EB] dark:text-white">
+                                        <span className="inline-flex items-center border border-[#1A1A1A] bg-[#FAFAF8] px-2 py-0.5 text-[10px] font-bold tracking-widest uppercase dark:border-[#E5E7EB] dark:bg-[#2a2a2a] dark:text-white">
                                             {edu.period}
                                         </span>
                                     </div>
@@ -422,7 +442,10 @@ export default function About() {
                                     {edu.description && (
                                         <p
                                             className="text-sm leading-relaxed text-[#666] dark:text-[#aaa]"
-                                            style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+                                            style={{
+                                                fontFamily:
+                                                    "'Inter', system-ui, sans-serif",
+                                            }}
                                         >
                                             {edu.description}
                                         </p>
@@ -439,8 +462,11 @@ export default function About() {
                     className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
                     style={{
                         opacity: skillsSection.isVisible ? 1 : 0,
-                        transform: skillsSection.isVisible ? 'translateY(0)' : 'translateY(20px)',
-                        transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
+                        transform: skillsSection.isVisible
+                            ? 'translateY(0)'
+                            : 'translateY(20px)',
+                        transition:
+                            'opacity 0.6s ease-out, transform 0.6s ease-out',
                     }}
                 >
                     <div className="mb-10">
@@ -454,14 +480,16 @@ export default function About() {
                         {skillCategories.map((category) => (
                             <div
                                 key={category.label}
-                                className="nb-card p-0 overflow-hidden"
+                                className="nb-card overflow-hidden p-0"
                             >
                                 {/* Category header */}
                                 <div
                                     className="flex items-center gap-2 border-b-2 border-[#1A1A1A] px-4 py-2.5 dark:border-[#E5E7EB]"
                                     style={{ backgroundColor: category.color }}
                                 >
-                                    <span className="text-[#1A1A1A]">{category.icon}</span>
+                                    <span className="text-[#1A1A1A]">
+                                        {category.icon}
+                                    </span>
                                     <h3 className="text-xs font-bold tracking-widest text-[#1A1A1A] uppercase">
                                         {category.label}
                                     </h3>
@@ -471,7 +499,7 @@ export default function About() {
                                     {category.skills.map((skill) => (
                                         <div
                                             key={skill.name}
-                                            className="inline-flex items-center gap-1.5 border border-[#1A1A1A] bg-[#FAFAF8] px-2.5 py-1 text-xs font-medium text-[#1A1A1A] transition hover:bg-[#1A1A1A] hover:text-white dark:bg-[#2a2a2a] dark:border-[#E5E7EB] dark:text-white dark:hover:bg-[#E5E7EB] dark:hover:text-[#1A1A1A]"
+                                            className="inline-flex items-center gap-1.5 border border-[#1A1A1A] bg-[#FAFAF8] px-2.5 py-1 text-xs font-medium text-[#1A1A1A] transition hover:bg-[#1A1A1A] hover:text-white dark:border-[#E5E7EB] dark:bg-[#2a2a2a] dark:text-white dark:hover:bg-[#E5E7EB] dark:hover:text-[#1A1A1A]"
                                         >
                                             <span>{skill.icon}</span>
                                             <span>{skill.name}</span>
@@ -489,8 +517,11 @@ export default function About() {
                     className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
                     style={{
                         opacity: contactSection.isVisible ? 1 : 0,
-                        transform: contactSection.isVisible ? 'translateY(0)' : 'translateY(20px)',
-                        transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
+                        transform: contactSection.isVisible
+                            ? 'translateY(0)'
+                            : 'translateY(20px)',
+                        transition:
+                            'opacity 0.6s ease-out, transform 0.6s ease-out',
                     }}
                 >
                     <div className="mb-6">
@@ -514,14 +545,20 @@ export default function About() {
                                 key={social.label}
                                 href={social.href}
                                 target={social.external ? '_blank' : undefined}
-                                rel={social.external ? 'noopener noreferrer' : undefined}
+                                rel={
+                                    social.external
+                                        ? 'noopener noreferrer'
+                                        : undefined
+                                }
                                 className="group nb-card flex items-center gap-3 p-4 no-underline"
                             >
                                 <span
                                     className="flex h-9 w-9 flex-shrink-0 items-center justify-center border-2 border-[#1A1A1A] dark:border-[#E5E7EB]"
                                     style={{ backgroundColor: social.color }}
                                 >
-                                    <span className="text-[#1A1A1A]">{social.icon}</span>
+                                    <span className="text-[#1A1A1A]">
+                                        {social.icon}
+                                    </span>
                                 </span>
                                 <span className="text-sm font-semibold text-[#1A1A1A] dark:text-white">
                                     {social.label}
@@ -530,7 +567,6 @@ export default function About() {
                         ))}
                     </div>
                 </section>
-
             </div>
         </Layout>
     );
