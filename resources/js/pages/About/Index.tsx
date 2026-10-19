@@ -1,5 +1,6 @@
 import Layout from '@/components/Layouts';
 import SeoHead from '@/components/SeoHead';
+import { Link } from '@inertiajs/react';
 import {
     Briefcase,
     Code,
@@ -289,20 +290,20 @@ export default function About() {
                             {/* Actions */}
                             <div className="flex flex-wrap items-center gap-4">
                                 <a
-                                    href="/cv_syafiudin-4.pdf"
+                                    href="/cv_syafiudin-6.pdf"
                                     download
                                     className="nb-btn nb-btn-black px-5 py-2.5 text-sm"
                                 >
                                     <Download className="h-4 w-4" />
                                     <span>Download CV</span>
                                 </a>
-                                <a
-                                    href="mailto:altafpasallo12@gmail.com"
+                                <Link
+                                    href="/contact"
                                     className="nb-btn nb-btn-yellow px-5 py-2.5 text-sm"
                                 >
                                     <Mail className="h-4 w-4" />
                                     <span>Get in touch</span>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

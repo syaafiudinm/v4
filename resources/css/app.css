@@ -273,6 +273,46 @@ body {
     animation-delay: 800ms;
 }
 
+/* ─── Infinite marquee ─── */
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.nb-marquee {
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 6%,
+        #000 94%,
+        transparent
+    );
+}
+
+.nb-marquee-track {
+    animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+
+.nb-marquee:hover .nb-marquee-track,
+.nb-marquee:focus-within .nb-marquee-track {
+    animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nb-marquee {
+        overflow-x: auto;
+        mask-image: none;
+    }
+
+    .nb-marquee-track {
+        animation: none;
+    }
+}
+
 @keyframes page-enter {
     from {
         opacity: 0;

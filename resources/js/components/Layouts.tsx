@@ -21,6 +21,11 @@ const NAV_ITEMS = [
         label: 'Projects',
         match: (url: string) => url.startsWith('/projects'),
     },
+    {
+        href: '/contact',
+        label: 'Contact',
+        match: (url: string) => url.startsWith('/contact'),
+    },
 ] as const;
 
 export default function Layout({ children }: { children: React.ReactNode }) {

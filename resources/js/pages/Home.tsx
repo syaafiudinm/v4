@@ -81,6 +81,44 @@ function useSectionVisible(rootMargin = '50px') {
     return { ref, isVisible };
 }
 
+// Minimum cards per loop so a single set always overflows the viewport.
+const MARQUEE_MIN_ITEMS = 6;
+const MARQUEE_SECONDS_PER_ITEM = 6;
+
+function ProjectMarquee({ projects }: { projects: Project[] }) {
+    const repeats = Math.ceil(MARQUEE_MIN_ITEMS / projects.length);
+    const loop = Array.from({ length: repeats }, () => projects).flat();
+    // Render the loop twice; the track slides by -50% so the seam is invisible.
+    const items = [...loop, ...loop];
+
+    return (
+        <div className="nb-marquee -mx-2 overflow-hidden">
+            <div
+                className="nb-marquee-track flex w-max py-2"
+                style={
+                    {
+                        '--marquee-duration': `${loop.length * MARQUEE_SECONDS_PER_ITEM}s`,
+                    } as React.CSSProperties
+                }
+            >
+                {items.map((project, i) => {
+                    const isCopy = i >= projects.length;
+                    return (
+                        <div
+                            key={`${project.id}-${i}`}
+                            className="grid w-[280px] shrink-0 px-3 sm:w-[340px] md:w-[380px]"
+                            aria-hidden={isCopy || undefined}
+                            inert={isCopy || undefined}
+                        >
+                            <ProjectCard project={project} />
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
 const TYPEWRITER_LINES = ["Hi, I'm Andi Syafiudin Musafir"];
 
 export default function Home({ recentPosts, featuredProjects }: Props) {
@@ -145,13 +183,13 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                             <span>More about me</span>
                             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </Link>
-                        <a
-                            href="mailto:altafpasallo12@gmail.com"
+                        <Link
+                            href="/contact"
                             className="nb-btn nb-btn-yellow px-5 py-2.5 text-sm"
                         >
                             <Mail className="h-4 w-4" />
                             <span>Get in touch</span>
-                        </a>
+                        </Link>
                     </div>
                 </section>
 
@@ -183,17 +221,11 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                         </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                        {featuredProjects
-                            ?.slice(0, 10)
-                            .map((project, index) => (
-                                <ProjectCard
-                                    key={project.id}
-                                    project={project}
-                                    index={index}
-                                />
-                            ))}
-                    </div>
+                    {featuredProjects && featuredProjects.length > 0 && (
+                        <ProjectMarquee
+                            projects={featuredProjects.slice(0, 10)}
+                        />
+                    )}
 
                     {(!featuredProjects || featuredProjects.length === 0) && (
                         <div className="border-2 border-dashed border-[#1A1A1A] py-12 text-center dark:border-[#444]">
