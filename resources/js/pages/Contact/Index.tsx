@@ -8,12 +8,7 @@ interface Props {
     whatsappNumber: string | null;
 }
 
-const TOPICS = [
-    'Project inquiry',
-    'Job opportunity',
-    'Collaboration',
-    'Just saying hi',
-] as const;
+const TOPICS = ['Project inquiry', 'Collaboration', 'Just saying hi'] as const;
 
 const MESSAGE_MAX_LENGTH = 1000;
 
@@ -80,7 +75,7 @@ export default function Contact({ whatsappNumber }: Props) {
         <Layout>
             <SeoHead
                 title="Contact"
-                description="Get in touch with Andi Syafiudin Musafir — send a message directly via WhatsApp for project inquiries, job opportunities, or collaboration."
+                description="Get in touch with Andi Syafiudin Musafir — send a message directly via WhatsApp for project inquiries or collaboration."
                 keywords="contact, hire, whatsapp, andi syafiudin musafir, web developer"
                 url="/contact"
                 type="website"

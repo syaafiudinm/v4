@@ -39,7 +39,7 @@ interface Experience {
     company: string;
     position: string;
     period: string;
-    description: string;
+    description?: string;
 }
 
 interface Education {
@@ -80,9 +80,16 @@ function useSectionVisible(rootMargin = '50px') {
 
 const experiences: Experience[] = [
     {
+        company: 'Galesong Group',
+        position: 'Software Engineer',
+        period: 'Oct 2026 - Present',
+        description:
+            'Build and maintain web applications and internal tools across the group. Design APIs, improve system performance, and collaborate with cross-functional teams to ship new features.',
+    },
+    {
         company: 'PT. Digital Desa Indonesia',
         position: 'Backend Engineer Intern',
-        period: '2025 - Present',
+        period: '2025 - Mar 2026',
         description: 'Develop and troubleshoot internal business issues.',
     },
     {
@@ -106,7 +113,7 @@ const education: Education[] = [
         school: 'Hasanuddin University',
         degree: 'Bachelor of Computer Science',
         field: 'Computer Science',
-        period: '2022 - now',
+        period: '2022 - 2026',
         description:
             'Focused on software engineering, data structures, and web development. Learnt about algorithms, design patterns, and database management.',
     },
@@ -217,8 +224,8 @@ export default function About() {
         <Layout>
             <SeoHead
                 title="About"
-                description="Learn more about Andi Syafiudin Musafir — a passionate engineer specializing in Laravel, React, and modern web technologies. Currently studying Computer Science at Hasanuddin University."
-                keywords="andi syafiudin musafir, about, web engineer, software engineer, laravel, react, hasanuddin university, computer science"
+                description="Learn more about Andi Syafiudin Musafir — a passionate engineer specializing in Laravel, React, and modern web technologies. Software Engineer at Galesong Group and Computer Science graduate of Hasanuddin University."
+                keywords="andi syafiudin musafir, about, web engineer, software engineer, galesong group, laravel, react, hasanuddin university, computer science"
                 url="/about"
                 type="profile"
                 image="/profil.png"
@@ -233,7 +240,7 @@ export default function About() {
                             Software Engineer
                         </div>
                         <div className="bg-[#1A1A1A] px-3 py-1 text-[10px] font-bold tracking-widest text-[#FFEE00] uppercase">
-                            CS Student · Open Source
+                            Open for projects
                         </div>
                     </div>
 
@@ -250,7 +257,7 @@ export default function About() {
                             {/* Available dot */}
                             <span
                                 className="absolute -right-2 -bottom-2 flex h-5 w-5 items-center justify-center border-2 border-[#1A1A1A] bg-[#A8FF78]"
-                                title="Available for work"
+                                title="Software Engineer at Galesong Group"
                             >
                                 <span className="h-2 w-2 rounded-full bg-[#1A1A1A]" />
                             </span>
@@ -377,15 +384,17 @@ export default function About() {
                                     <p className="mb-2 text-xs font-bold tracking-wide text-[#555] uppercase dark:text-[#999]">
                                         {exp.company}
                                     </p>
-                                    <p
-                                        className="text-sm leading-relaxed text-[#666] dark:text-[#aaa]"
-                                        style={{
-                                            fontFamily:
-                                                "'Inter', system-ui, sans-serif",
-                                        }}
-                                    >
-                                        {exp.description}
-                                    </p>
+                                    {exp.description && (
+                                        <p
+                                            className="text-sm leading-relaxed text-[#666] dark:text-[#aaa]"
+                                            style={{
+                                                fontFamily:
+                                                    "'Inter', system-ui, sans-serif",
+                                            }}
+                                        >
+                                            {exp.description}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                         ))}
@@ -536,8 +545,8 @@ export default function About() {
                         className="mb-8 max-w-md text-sm leading-relaxed text-[#666] dark:text-[#999]"
                         style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
                     >
-                        I'm always open to new opportunities and collaborations.
-                        Feel free to reach out!
+                        I'm always open to collaborations and interesting
+                        projects. Feel free to reach out!
                     </p>
 
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

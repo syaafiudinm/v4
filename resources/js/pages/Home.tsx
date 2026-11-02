@@ -143,10 +143,7 @@ export default function Home({ recentPosts, featuredProjects }: Props) {
                     {/* Yellow accent strip */}
                     <div className="mb-6 inline-flex items-center gap-0 border-2 border-[#1A1A1A] shadow-[3px_3px_0px_#1A1A1A]">
                         <div className="bg-[#FFEE00] px-3 py-1 text-[10px] font-bold tracking-widest text-[#1A1A1A] uppercase">
-                            Available for work
-                        </div>
-                        <div className="bg-[#1A1A1A] px-3 py-1 text-[10px] font-bold tracking-widest text-[#FFEE00] uppercase">
-                            Open to opportunities
+                            Software Engineer
                         </div>
                     </div>
 
