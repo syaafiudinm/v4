@@ -1,19 +1,7 @@
 import Layout from '@/components/Layouts';
+import Section, { Divider, Highlight, accentLink } from '@/components/Section';
 import SeoHead from '@/components/SeoHead';
 import { Link } from '@inertiajs/react';
-import {
-    Briefcase,
-    Code,
-    Database,
-    Download,
-    Github,
-    GraduationCap,
-    Instagram,
-    Linkedin,
-    Mail,
-    Server,
-} from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
 import {
     SiAmazonwebservices,
     SiBootstrap,
@@ -45,37 +33,18 @@ interface Experience {
 interface Education {
     school: string;
     degree: string;
-    field: string;
+    field?: string;
     period: string;
     description?: string;
 }
 
 interface SkillCategory {
     label: string;
-    icon: React.ReactNode;
-    color: string;
-    skills: { name: string; icon: React.ReactNode }[];
-}
-
-function useSectionVisible(rootMargin = '50px') {
-    const ref = useRef<HTMLElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.disconnect();
-                }
-            },
-            { rootMargin, threshold: 0.1 },
-        );
-        if (ref.current) observer.observe(ref.current);
-        return () => observer.disconnect();
-    }, [rootMargin]);
-
-    return { ref, isVisible };
+    // Brand color revealed on hover; omitted for monochrome logos (Next.js).
+    // Uses a plain `.group:hover` selector instead of `group-hover:` because
+    // Tailwind v4 wraps that in `@media (hover: hover)`, which touch
+    // devices (and touch emulation) don't match.
+    skills: { name: string; icon: React.ReactNode; color?: string }[];
 }
 
 const experiences: Experience[] = [
@@ -111,8 +80,7 @@ const experiences: Experience[] = [
 const education: Education[] = [
     {
         school: 'Hasanuddin University',
-        degree: 'Bachelor of Computer Science',
-        field: 'Computer Science',
+        degree: 'Bachelor of Informatics Engineering',
         period: '2022 - 2026',
         description:
             'Focused on software engineering, data structures, and web development. Learnt about algorithms, design patterns, and database management.',
@@ -134,450 +102,213 @@ const currentlyLearning = [
     'Google Cloud Platform',
 ];
 
-const socials = [
+const skillCategories: SkillCategory[] = [
     {
-        label: 'altafpasallo12@gmail.com',
-        href: 'mailto:altafpasallo12@gmail.com',
-        icon: <Mail className="h-4 w-4" />,
-        external: false,
-        color: '#FFEE00',
+        label: 'Frontend',
+        skills: [
+            { name: 'React', icon: <SiReact />, color: '#61DAFB' },
+            { name: 'Next.js', icon: <SiNextdotjs /> },
+            { name: 'Inertia', icon: <SiInertia />, color: '#9553E9' },
+            { name: 'Livewire', icon: <SiLivewire />, color: '#FB70A9' },
+            { name: 'Tailwind CSS', icon: <SiTailwindcss />, color: '#06B6D4' },
+            { name: 'Bootstrap', icon: <SiBootstrap />, color: '#7952B3' },
+        ],
     },
     {
-        label: 'GitHub',
-        href: 'https://github.com/syaafiudinm',
-        icon: <Github className="h-4 w-4" />,
-        external: true,
-        color: '#A8FF78',
+        label: 'Backend',
+        skills: [
+            { name: 'PHP', icon: <SiPhp />, color: '#777BB4' },
+            { name: 'Laravel', icon: <SiLaravel />, color: '#FF2D20' },
+            { name: 'CodeIgniter', icon: <SiCodeigniter />, color: '#EF4223' },
+            { name: 'Golang', icon: <SiGo />, color: '#00ADD8' },
+            { name: 'Gin', icon: <SiGin />, color: '#008ECF' },
+        ],
     },
     {
-        label: 'LinkedIn',
-        href: 'https://www.linkedin.com/in/andi-syafiudin-musafir-a3b85a287/',
-        icon: <Linkedin className="h-4 w-4" />,
-        external: true,
-        color: '#A8FF78',
+        label: 'Database & Cloud',
+        skills: [
+            { name: 'MySQL', icon: <SiMysql />, color: '#4479A1' },
+            { name: 'PostgreSQL', icon: <SiPostgresql />, color: '#4169E1' },
+            { name: 'Supabase', icon: <SiSupabase />, color: '#3FCF8E' },
+            { name: 'Firebase', icon: <SiFirebase />, color: '#FFCA28' },
+            { name: 'AWS', icon: <SiAmazonwebservices />, color: '#FF9900' },
+        ],
     },
     {
-        label: 'Instagram',
-        href: 'https://instagram.com/syaafiudinm',
-        icon: <Instagram className="h-4 w-4" />,
-        external: true,
-        color: '#FF4F4F',
+        label: 'DevOps & Tools',
+        skills: [
+            { name: 'Git', icon: <SiGit />, color: '#F05032' },
+            { name: 'Docker', icon: <SiDocker />, color: '#2496ED' },
+        ],
     },
 ];
 
+function TimelineItem({
+    title,
+    subtitle,
+    period,
+    description,
+}: {
+    title: string;
+    subtitle: string;
+    period: string;
+    description?: string;
+}) {
+    return (
+        <li className="flex flex-col gap-1">
+            <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                <h3 className="text-lg leading-snug font-semibold text-gray-900 dark:text-gray-100">
+                    {title}
+                </h3>
+                <span className="shrink-0 text-sm text-gray-500 dark:text-gray-400">
+                    {period}
+                </span>
+            </div>
+            <p className="text-base text-gray-500 dark:text-gray-400">
+                {subtitle}
+            </p>
+            {description && (
+                <p className="text-base leading-relaxed text-gray-700 dark:text-gray-300">
+                    {description}
+                </p>
+            )}
+        </li>
+    );
+}
+
 export default function About() {
-    const expSection = useSectionVisible();
-    const eduSection = useSectionVisible();
-    const skillsSection = useSectionVisible();
-    const contactSection = useSectionVisible();
-
-    const skillCategories: SkillCategory[] = [
-        {
-            label: 'Frontend',
-            icon: <Code className="h-4 w-4" />,
-            color: '#FFEE00',
-            skills: [
-                { name: 'React', icon: <SiReact size={16} /> },
-                { name: 'Next.js', icon: <SiNextdotjs size={16} /> },
-                { name: 'Inertia', icon: <SiInertia size={16} /> },
-                { name: 'Livewire', icon: <SiLivewire size={16} /> },
-                { name: 'Tailwind CSS', icon: <SiTailwindcss size={16} /> },
-                { name: 'Bootstrap', icon: <SiBootstrap size={16} /> },
-            ],
-        },
-        {
-            label: 'Backend',
-            icon: <Server className="h-4 w-4" />,
-            color: '#A8FF78',
-            skills: [
-                { name: 'PHP', icon: <SiPhp size={16} /> },
-                { name: 'Laravel', icon: <SiLaravel size={16} /> },
-                { name: 'CodeIgniter', icon: <SiCodeigniter size={16} /> },
-                { name: 'Golang', icon: <SiGo size={16} /> },
-                { name: 'Gin', icon: <SiGin size={16} /> },
-            ],
-        },
-        {
-            label: 'Database & Cloud',
-            icon: <Database className="h-4 w-4" />,
-            color: '#FFEE00',
-            skills: [
-                { name: 'MySQL', icon: <SiMysql size={16} /> },
-                { name: 'PostgreSQL', icon: <SiPostgresql size={16} /> },
-                { name: 'Supabase', icon: <SiSupabase size={16} /> },
-                { name: 'Firebase', icon: <SiFirebase size={16} /> },
-                { name: 'AWS', icon: <SiAmazonwebservices size={16} /> },
-            ],
-        },
-        {
-            label: 'DevOps & Tools',
-            icon: <Server className="h-4 w-4" />,
-            color: '#A8FF78',
-            skills: [
-                { name: 'Git', icon: <SiGit size={16} /> },
-                { name: 'Docker', icon: <SiDocker size={16} /> },
-            ],
-        },
-    ];
-
     return (
         <Layout>
             <SeoHead
                 title="About"
-                description="Learn more about Andi Syafiudin Musafir — a passionate engineer specializing in Laravel, React, and modern web technologies. Software Engineer at Galesong Group and Computer Science graduate of Hasanuddin University."
-                keywords="andi syafiudin musafir, about, web engineer, software engineer, galesong group, laravel, react, hasanuddin university, computer science"
+                description="Learn more about Andi Syafiudin Musafir — a passionate engineer specializing in Laravel, React, and modern web technologies. Software Engineer at Galesong Group and Informatics Engineering graduate of Hasanuddin University."
+                keywords="andi syafiudin musafir, about, web engineer, software engineer, galesong group, laravel, react, hasanuddin university, informatics engineering"
                 url="/about"
                 type="profile"
                 image="/profil.png"
             />
 
-            <div className="max-w-4xl">
-                {/* ── Hero / Intro ── */}
-                <section className="animate-fade-in py-16 md:py-28">
-                    {/* Status badge */}
-                    <div className="mb-6 inline-flex items-center gap-0 border-2 border-[#1A1A1A] shadow-[3px_3px_0px_#1A1A1A]">
-                        <div className="bg-[#FFEE00] px-3 py-1 text-[10px] font-bold tracking-widest text-[#1A1A1A] uppercase">
-                            Software Engineer
-                        </div>
-                        <div className="bg-[#1A1A1A] px-3 py-1 text-[10px] font-bold tracking-widest text-[#FFEE00] uppercase">
-                            Open for projects
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col items-start gap-8 md:flex-row md:items-start">
-                        {/* Profile Photo — neobrutalism frame */}
-                        <div className="relative flex-shrink-0">
-                            <div className="border-2 border-[#1A1A1A] shadow-[4px_4px_0px_#1A1A1A] dark:border-[#E5E7EB] dark:shadow-[4px_4px_0px_#E5E7EB]">
-                                <img
-                                    src="/profil.png"
-                                    alt="Andi Syafiudin Musafir"
-                                    className="block h-28 w-28 object-cover md:h-36 md:w-36"
-                                />
-                            </div>
-                            {/* Available dot */}
-                            <span
-                                className="absolute -right-2 -bottom-2 flex h-5 w-5 items-center justify-center border-2 border-[#1A1A1A] bg-[#A8FF78]"
-                                title="Software Engineer at Galesong Group"
-                            >
-                                <span className="h-2 w-2 rounded-full bg-[#1A1A1A]" />
-                            </span>
-                        </div>
-
-                        {/* Intro Text */}
-                        <div className="flex-1">
-                            <h1 className="mb-4 text-4xl leading-tight font-bold tracking-tight md:text-5xl dark:text-white">
-                                About Me
-                            </h1>
-
-                            <p
-                                className="mb-6 max-w-xl border-l-4 border-[#FFEE00] pl-4 text-lg leading-relaxed text-[#555] dark:text-[#999]"
-                                style={{
-                                    fontFamily:
-                                        "'Inter', system-ui, sans-serif",
-                                }}
-                            >
-                                A passionate engineer who loves creating
-                                beautiful and functional web experiences. I
-                                specialize in building scalable applications
-                                that solve real-world problems.
-                            </p>
-
-                            <p
-                                className="mb-6 max-w-xl text-sm leading-relaxed text-[#666] dark:text-[#888]"
-                                style={{
-                                    fontFamily:
-                                        "'Inter', system-ui, sans-serif",
-                                }}
-                            >
-                                My journey in web development started several
-                                years ago, and I've been continuously learning
-                                and evolving ever since.
-                            </p>
-
-                            {/* Actions */}
-                            <div className="flex flex-wrap items-center gap-4">
-                                <a
-                                    href="/cv_syafiudin-6.pdf"
-                                    download
-                                    className="nb-btn nb-btn-black px-5 py-2.5 text-sm"
-                                >
-                                    <Download className="h-4 w-4" />
-                                    <span>Download CV</span>
-                                </a>
-                                <Link
-                                    href="/contact"
-                                    className="nb-btn nb-btn-yellow px-5 py-2.5 text-sm"
-                                >
-                                    <Mail className="h-4 w-4" />
-                                    <span>Get in touch</span>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Currently Learning */}
-                    <div className="mt-10 border-2 border-[#1A1A1A] bg-[#FAFAF8] shadow-[4px_4px_0px_#1A1A1A] dark:border-[#E5E7EB] dark:bg-[#222222] dark:shadow-[4px_4px_0px_#E5E7EB]">
-                        <div className="flex items-center gap-0 border-b-2 border-[#1A1A1A] dark:border-[#E5E7EB]">
-                            <div className="border-r-2 border-[#1A1A1A] bg-[#FFEE00] px-3 py-2 text-[10px] font-bold tracking-widest text-[#1A1A1A] uppercase dark:border-[#E5E7EB]">
-                                📚
-                            </div>
-                            <span className="px-3 py-2 text-xs font-bold tracking-widest text-[#1A1A1A] uppercase dark:text-white">
-                                Currently Learning
-                            </span>
-                        </div>
-                        <div className="flex flex-wrap gap-2 p-4">
-                            {currentlyLearning.map((tech) => (
-                                <span key={tech} className="nb-tag">
-                                    {tech}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* ── Experience ── */}
-                <section
-                    ref={expSection.ref as React.RefObject<HTMLElement>}
-                    className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
-                    style={{
-                        opacity: expSection.isVisible ? 1 : 0,
-                        transform: expSection.isVisible
-                            ? 'translateY(0)'
-                            : 'translateY(20px)',
-                        transition:
-                            'opacity 0.6s ease-out, transform 0.6s ease-out',
-                    }}
-                >
-                    <div className="mb-10">
-                        <h2 className="flex items-center gap-2.5 text-2xl font-bold tracking-tight dark:text-white">
-                            <Briefcase className="h-5 w-5" />
-                            Experience
-                        </h2>
-                        <div className="mt-1 h-1 w-10 border border-[#1A1A1A] bg-[#FFEE00]" />
-                    </div>
-
-                    <div className="space-y-4">
-                        {experiences.map((exp, index) => (
-                            <div
-                                key={index}
-                                className="nb-card overflow-hidden p-0"
-                            >
-                                {/* Colored top accent */}
-                                <div
-                                    className="h-1 w-full"
-                                    style={{
-                                        backgroundColor:
-                                            index % 2 === 0
-                                                ? '#FFEE00'
-                                                : '#A8FF78',
-                                    }}
-                                />
-                                <div className="p-5">
-                                    <div className="mb-2 flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
-                                        <h3 className="text-base font-bold text-[#1A1A1A] dark:text-white">
-                                            {exp.position}
-                                        </h3>
-                                        <span className="inline-flex items-center border border-[#1A1A1A] bg-[#FAFAF8] px-2 py-0.5 text-[10px] font-bold tracking-widest uppercase dark:border-[#E5E7EB] dark:bg-[#2a2a2a] dark:text-white">
-                                            {exp.period}
-                                        </span>
-                                    </div>
-                                    <p className="mb-2 text-xs font-bold tracking-wide text-[#555] uppercase dark:text-[#999]">
-                                        {exp.company}
-                                    </p>
-                                    {exp.description && (
-                                        <p
-                                            className="text-sm leading-relaxed text-[#666] dark:text-[#aaa]"
-                                            style={{
-                                                fontFamily:
-                                                    "'Inter', system-ui, sans-serif",
-                                            }}
-                                        >
-                                            {exp.description}
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* ── Education ── */}
-                <section
-                    ref={eduSection.ref as React.RefObject<HTMLElement>}
-                    className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
-                    style={{
-                        opacity: eduSection.isVisible ? 1 : 0,
-                        transform: eduSection.isVisible
-                            ? 'translateY(0)'
-                            : 'translateY(20px)',
-                        transition:
-                            'opacity 0.6s ease-out, transform 0.6s ease-out',
-                    }}
-                >
-                    <div className="mb-10">
-                        <h2 className="flex items-center gap-2.5 text-2xl font-bold tracking-tight dark:text-white">
-                            <GraduationCap className="h-5 w-5" />
-                            Education
-                        </h2>
-                        <div className="mt-1 h-1 w-10 border border-[#1A1A1A] bg-[#A8FF78]" />
-                    </div>
-
-                    <div className="space-y-4">
-                        {education.map((edu, index) => (
-                            <div
-                                key={index}
-                                className="nb-card overflow-hidden p-0"
-                            >
-                                <div
-                                    className="h-1 w-full"
-                                    style={{
-                                        backgroundColor:
-                                            index % 2 === 0
-                                                ? '#A8FF78'
-                                                : '#FFEE00',
-                                    }}
-                                />
-                                <div className="p-5">
-                                    <div className="mb-2 flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
-                                        <h3 className="text-base font-bold text-[#1A1A1A] dark:text-white">
-                                            {edu.degree} — {edu.field}
-                                        </h3>
-                                        <span className="inline-flex items-center border border-[#1A1A1A] bg-[#FAFAF8] px-2 py-0.5 text-[10px] font-bold tracking-widest uppercase dark:border-[#E5E7EB] dark:bg-[#2a2a2a] dark:text-white">
-                                            {edu.period}
-                                        </span>
-                                    </div>
-                                    <p className="mb-2 text-xs font-bold tracking-wide text-[#555] uppercase dark:text-[#999]">
-                                        {edu.school}
-                                    </p>
-                                    {edu.description && (
-                                        <p
-                                            className="text-sm leading-relaxed text-[#666] dark:text-[#aaa]"
-                                            style={{
-                                                fontFamily:
-                                                    "'Inter', system-ui, sans-serif",
-                                            }}
-                                        >
-                                            {edu.description}
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* ── Skills ── */}
-                <section
-                    ref={skillsSection.ref as React.RefObject<HTMLElement>}
-                    className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
-                    style={{
-                        opacity: skillsSection.isVisible ? 1 : 0,
-                        transform: skillsSection.isVisible
-                            ? 'translateY(0)'
-                            : 'translateY(20px)',
-                        transition:
-                            'opacity 0.6s ease-out, transform 0.6s ease-out',
-                    }}
-                >
-                    <div className="mb-10">
-                        <h2 className="text-2xl font-bold tracking-tight dark:text-white">
-                            Skills
-                        </h2>
-                        <div className="mt-1 h-1 w-10 border border-[#1A1A1A] bg-[#FFEE00]" />
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                        {skillCategories.map((category) => (
-                            <div
-                                key={category.label}
-                                className="nb-card overflow-hidden p-0"
-                            >
-                                {/* Category header */}
-                                <div
-                                    className="flex items-center gap-2 border-b-2 border-[#1A1A1A] px-4 py-2.5 dark:border-[#E5E7EB]"
-                                    style={{ backgroundColor: category.color }}
-                                >
-                                    <span className="text-[#1A1A1A]">
-                                        {category.icon}
-                                    </span>
-                                    <h3 className="text-xs font-bold tracking-widest text-[#1A1A1A] uppercase">
-                                        {category.label}
-                                    </h3>
-                                </div>
-
-                                <div className="flex flex-wrap gap-2 p-4">
-                                    {category.skills.map((skill) => (
-                                        <div
-                                            key={skill.name}
-                                            className="inline-flex items-center gap-1.5 border border-[#1A1A1A] bg-[#FAFAF8] px-2.5 py-1 text-xs font-medium text-[#1A1A1A] transition hover:bg-[#1A1A1A] hover:text-white dark:border-[#E5E7EB] dark:bg-[#2a2a2a] dark:text-white dark:hover:bg-[#E5E7EB] dark:hover:text-[#1A1A1A]"
-                                        >
-                                            <span>{skill.icon}</span>
-                                            <span>{skill.name}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* ── Contact ── */}
-                <section
-                    ref={contactSection.ref as React.RefObject<HTMLElement>}
-                    className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
-                    style={{
-                        opacity: contactSection.isVisible ? 1 : 0,
-                        transform: contactSection.isVisible
-                            ? 'translateY(0)'
-                            : 'translateY(20px)',
-                        transition:
-                            'opacity 0.6s ease-out, transform 0.6s ease-out',
-                    }}
-                >
-                    <div className="mb-6">
-                        <h2 className="text-2xl font-bold tracking-tight dark:text-white">
-                            Get in Touch
-                        </h2>
-                        <div className="mt-1 h-1 w-10 border border-[#1A1A1A] bg-[#A8FF78]" />
-                    </div>
-
-                    <p
-                        className="mb-8 max-w-md text-sm leading-relaxed text-[#666] dark:text-[#999]"
-                        style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
-                    >
-                        I'm always open to collaborations and interesting
-                        projects. Feel free to reach out!
+            {/* ── Intro ── */}
+            <Section title="About" as="h1">
+                <div className="flex flex-col gap-4 text-lg leading-[27px] text-gray-700 dark:text-gray-300">
+                    <p>
+                        A <Highlight>software engineer</Highlight> who loves
+                        creating beautiful and functional Applications. I
+                        specialize in building{' '}
+                        <Highlight>scalable applications</Highlight> that solve
+                        real-world problems.
                     </p>
-
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                        {socials.map((social) => (
-                            <a
-                                key={social.label}
-                                href={social.href}
-                                target={social.external ? '_blank' : undefined}
-                                rel={
-                                    social.external
-                                        ? 'noopener noreferrer'
-                                        : undefined
-                                }
-                                className="group nb-card flex items-center gap-3 p-4 no-underline"
-                            >
-                                <span
-                                    className="flex h-9 w-9 flex-shrink-0 items-center justify-center border-2 border-[#1A1A1A] dark:border-[#E5E7EB]"
-                                    style={{ backgroundColor: social.color }}
-                                >
-                                    <span className="text-[#1A1A1A]">
-                                        {social.icon}
-                                    </span>
-                                </span>
-                                <span className="text-sm font-semibold text-[#1A1A1A] dark:text-white">
-                                    {social.label}
-                                </span>
-                            </a>
+                    <p>
+                        My journey in web development started several years ago,
+                        and I've been continuously learning and evolving ever
+                        since. Currently exploring{' '}
+                        {currentlyLearning.map((tech, i) => (
+                            <span key={tech}>
+                                <Highlight>{tech}</Highlight>
+                                {i < currentlyLearning.length - 2
+                                    ? ', '
+                                    : i === currentlyLearning.length - 2
+                                      ? ', and '
+                                      : '.'}
+                            </span>
                         ))}
-                    </div>
-                </section>
-            </div>
+                    </p>
+                </div>
+                <div className="flex flex-wrap gap-x-6 gap-y-2 text-lg">
+                    <a
+                        href="/cv_syafiudin-6.pdf"
+                        download
+                        className={accentLink}
+                    >
+                        Download CV
+                    </a>
+                    <Link href="/contact" className={accentLink}>
+                        Get in touch
+                    </Link>
+                </div>
+            </Section>
+
+            <Divider />
+
+            {/* ── Experience ── */}
+            <Section title="Experience">
+                <ul className="flex flex-col gap-6">
+                    {experiences.map((exp) => (
+                        <TimelineItem
+                            key={`${exp.company}-${exp.position}`}
+                            title={exp.position}
+                            subtitle={exp.company}
+                            period={exp.period}
+                            description={exp.description}
+                        />
+                    ))}
+                </ul>
+            </Section>
+
+            <Divider />
+
+            {/* ── Education ── */}
+            <Section title="Education">
+                <ul className="flex flex-col gap-6">
+                    {education.map((edu) => (
+                        <TimelineItem
+                            key={edu.school}
+                            title={edu.school}
+                            subtitle={
+                                edu.field
+                                    ? `${edu.degree} — ${edu.field}`
+                                    : edu.degree
+                            }
+                            period={edu.period}
+                            description={edu.description}
+                        />
+                    ))}
+                </ul>
+            </Section>
+
+            <Divider />
+
+            {/* ── Skills ── */}
+            <Section title="Skills">
+                <dl className="flex flex-col gap-4">
+                    {skillCategories.map((category) => (
+                        <div
+                            key={category.label}
+                            className="flex flex-col gap-2 sm:flex-row sm:gap-4"
+                        >
+                            <dt className="shrink-0 text-base text-gray-500 sm:w-40 dark:text-gray-400">
+                                {category.label}
+                            </dt>
+                            <dd className="flex flex-wrap gap-x-4 gap-y-1.5">
+                                {category.skills.map((skill) => (
+                                    <span
+                                        key={skill.name}
+                                        className="group inline-flex items-center gap-1.5 text-base text-gray-900 dark:text-gray-100"
+                                        style={
+                                            skill.color
+                                                ? ({
+                                                      '--brand': skill.color,
+                                                  } as React.CSSProperties)
+                                                : undefined
+                                        }
+                                    >
+                                        <span
+                                            className={`text-gray-400 transition-colors duration-200 dark:text-gray-500 ${
+                                                skill.color
+                                                    ? '[.group:hover_&]:text-(--brand)'
+                                                    : '[.group:hover_&]:text-gray-900 dark:[.group:hover_&]:text-white'
+                                            }`}
+                                        >
+                                            {skill.icon}
+                                        </span>
+                                        {skill.name}
+                                    </span>
+                                ))}
+                            </dd>
+                        </div>
+                    ))}
+                </dl>
+            </Section>
         </Layout>
     );
 }

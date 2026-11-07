@@ -1,84 +1,14 @@
 import BlogCard from '@/components/BlogCard';
 import Layout from '@/components/Layouts';
 import ProjectCard from '@/components/ProjectCard';
+import Section, { Divider, Highlight, accentLink } from '@/components/Section';
 import SeoHead from '@/components/SeoHead';
 import { Post, Project } from '@/types/models';
 import { Link } from '@inertiajs/react';
-import { ArrowRight, Mail } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
 
 interface Props {
     recentPosts?: Post[];
     featuredProjects?: Project[];
-}
-
-function useMultiLineTypewriter(
-    lines: string[],
-    speed = 70,
-    pauseBetween = 400,
-) {
-    const [completedLines, setCompletedLines] = useState<string[]>([]);
-    const [currentLine, setCurrentLine] = useState('');
-    const [isFinished, setIsFinished] = useState(false);
-    const lineIndexRef = useRef(0);
-    const charIndexRef = useRef(0);
-
-    useEffect(() => {
-        lineIndexRef.current = 0;
-        charIndexRef.current = 0;
-        setCompletedLines([]);
-        setCurrentLine('');
-        setIsFinished(false);
-
-        let timeout: ReturnType<typeof setTimeout>;
-
-        const tick = () => {
-            const li = lineIndexRef.current;
-            const ci = charIndexRef.current;
-            if (li >= lines.length) {
-                setIsFinished(true);
-                return;
-            }
-            const fullLine = lines[li];
-            if (ci <= fullLine.length) {
-                setCurrentLine(fullLine.slice(0, ci));
-                charIndexRef.current++;
-                timeout = setTimeout(tick, speed);
-            } else {
-                setCompletedLines((prev) => [...prev, fullLine]);
-                setCurrentLine('');
-                lineIndexRef.current++;
-                charIndexRef.current = 0;
-                timeout = setTimeout(tick, pauseBetween);
-            }
-        };
-
-        timeout = setTimeout(tick, speed);
-        return () => clearTimeout(timeout);
-    }, [lines, speed, pauseBetween]);
-
-    return { completedLines, currentLine, isFinished };
-}
-
-function useSectionVisible(rootMargin = '50px') {
-    const ref = useRef<HTMLElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.disconnect();
-                }
-            },
-            { rootMargin, threshold: 0.1 },
-        );
-        if (ref.current) observer.observe(ref.current);
-        return () => observer.disconnect();
-    }, [rootMargin]);
-
-    return { ref, isVisible };
 }
 
 // Minimum cards per loop so a single set always overflows the viewport.
@@ -92,9 +22,9 @@ function ProjectMarquee({ projects }: { projects: Project[] }) {
     const items = [...loop, ...loop];
 
     return (
-        <div className="nb-marquee -mx-2 overflow-hidden">
+        <div className="marquee -mx-4 overflow-hidden">
             <div
-                className="nb-marquee-track flex w-max py-2"
+                className="marquee-track flex w-max"
                 style={
                     {
                         '--marquee-duration': `${loop.length * MARQUEE_SECONDS_PER_ITEM}s`,
@@ -106,7 +36,7 @@ function ProjectMarquee({ projects }: { projects: Project[] }) {
                     return (
                         <div
                             key={`${project.id}-${i}`}
-                            className="grid w-[280px] shrink-0 px-3 sm:w-[340px] md:w-[380px]"
+                            className="grid w-[260px] shrink-0 px-3 sm:w-[300px]"
                             aria-hidden={isCopy || undefined}
                             inert={isCopy || undefined}
                         >
@@ -119,163 +49,71 @@ function ProjectMarquee({ projects }: { projects: Project[] }) {
     );
 }
 
-const TYPEWRITER_LINES = ["Hi, I'm Andi Syafiudin Musafir"];
+function EmptyState({ children }: { children: React.ReactNode }) {
+    return (
+        <p className="text-base text-gray-500 dark:text-gray-400">{children}</p>
+    );
+}
 
 export default function Home({ recentPosts, featuredProjects }: Props) {
-    const { completedLines, currentLine, isFinished } =
-        useMultiLineTypewriter(TYPEWRITER_LINES);
-    const projectsSection = useSectionVisible();
-    const postsSection = useSectionVisible();
-
     return (
         <Layout>
             <SeoHead
                 title="Home"
-                description="Andi Syafiudin Musafir — A passionate Software Engineer creating beautiful and functional web experiences. Specializing in Laravel, React, and modern web technologies."
+                description="Andi Syafiudin Musafir - Software Engineer creating beautiful and functional applications. Specializing in Laravel, React, and modern web technologies."
                 keywords="andi syafiudin musafir, web developer, software engineer, laravel, react, portfolio"
                 url="/"
                 type="website"
             />
 
-            <div>
-                {/* ── Hero ── */}
-                <section className="animate-fade-in py-16 md:py-28">
-                    {/* Yellow accent strip */}
-                    <div className="mb-6 inline-flex items-center gap-0 border-2 border-[#1A1A1A] shadow-[3px_3px_0px_#1A1A1A]">
-                        <div className="bg-[#FFEE00] px-3 py-1 text-[10px] font-bold tracking-widest text-[#1A1A1A] uppercase">
-                            Software Engineer
-                        </div>
-                    </div>
-
-                    {/* Typewriter headline */}
-                    <h1 className="mb-4 text-4xl leading-tight font-bold tracking-tight md:text-6xl dark:text-white">
-                        {completedLines.map((line, i) => (
-                            <span key={i} className="block">
-                                {line}
-                            </span>
-                        ))}
-                        {!isFinished && (
-                            <span className="block">
-                                {currentLine}
-                                <span className="ml-0.5 inline-block w-[3px] animate-pulse border border-[#1A1A1A] bg-[#FFEE00]">
-                                    &nbsp;
-                                </span>
-                            </span>
-                        )}
-                    </h1>
-
-                    <p
-                        className="mb-8 max-w-xl border-l-4 border-[#FFEE00] pl-4 text-lg leading-relaxed text-[#555] md:text-xl dark:text-[#999]"
-                        style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
-                    >
-                        A passionate engineer creating beautiful and functional
-                        web experiences
-                    </p>
-
-                    <div className="flex flex-wrap items-center gap-4">
-                        <Link
-                            href="/about"
-                            className="nb-btn nb-btn-black px-5 py-2.5 text-sm"
-                        >
-                            <span>More about me</span>
-                            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </Link>
-                        <Link
-                            href="/contact"
-                            className="nb-btn nb-btn-yellow px-5 py-2.5 text-sm"
-                        >
-                            <Mail className="h-4 w-4" />
-                            <span>Get in touch</span>
-                        </Link>
-                    </div>
-                </section>
-
-                {/* ── Featured Projects ── */}
-                <section
-                    ref={projectsSection.ref as React.RefObject<HTMLElement>}
-                    className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
-                    style={{
-                        opacity: projectsSection.isVisible ? 1 : 0,
-                        transform: projectsSection.isVisible
-                            ? 'translateY(0)'
-                            : 'translateY(20px)',
-                        transition:
-                            'opacity 0.6s ease-out, transform 0.6s ease-out',
-                    }}
+            {/* ── Intro ── */}
+            <section className="flex flex-col gap-2">
+                <p className="text-lg leading-[27px] text-gray-700 dark:text-gray-300">
+                    <Highlight>Software engineer</Highlight> based in Indonesia,
+                    building beautiful and functional applications with{' '}
+                    <Highlight>Laravel</Highlight>, <Highlight>React</Highlight>
+                    , and <Highlight>Go</Highlight>. Informatics Engineering graduate
+                    of Hasanuddin University.
+                </p>
+                <Link
+                    href="/contact"
+                    className={`text-lg leading-[27px] ${accentLink}`}
                 >
-                    <div className="mb-10 flex items-baseline justify-between">
-                        <div>
-                            <h2 className="text-2xl font-bold tracking-tight dark:text-white">
-                                Featured Projects
-                            </h2>
-                            <div className="mt-1 h-1 w-10 border border-[#1A1A1A] bg-[#FFEE00]" />
-                        </div>
-                        <Link
-                            href="/projects"
-                            className="text-sm font-bold text-[#1A1A1A] underline underline-offset-2 transition-colors hover:text-[#FF4F4F] dark:text-[#E5E7EB] dark:hover:text-[#FFEE00]"
-                        >
-                            View all →
-                        </Link>
-                    </div>
+                    Interested in working together? Get in touch!
+                </Link>
+            </section>
 
-                    {featuredProjects && featuredProjects.length > 0 && (
-                        <ProjectMarquee
-                            projects={featuredProjects.slice(0, 10)}
-                        />
-                    )}
+            <Divider />
 
-                    {(!featuredProjects || featuredProjects.length === 0) && (
-                        <div className="border-2 border-dashed border-[#1A1A1A] py-12 text-center dark:border-[#444]">
-                            <p className="text-sm font-medium text-[#888] dark:text-[#666]">
-                                No featured projects yet.
-                            </p>
-                        </div>
-                    )}
-                </section>
+            {/* ── Featured Projects ── */}
+            <Section
+                title="Featured projects"
+                action={{ href: '/projects', label: 'View all' }}
+            >
+                {featuredProjects && featuredProjects.length > 0 ? (
+                    <ProjectMarquee projects={featuredProjects.slice(0, 10)} />
+                ) : (
+                    <EmptyState>No featured projects yet.</EmptyState>
+                )}
+            </Section>
 
-                {/* ── Recent Posts ── */}
-                <section
-                    ref={postsSection.ref as React.RefObject<HTMLElement>}
-                    className="border-t-2 border-[#1A1A1A] py-16 dark:border-[#E5E7EB]"
-                    style={{
-                        opacity: postsSection.isVisible ? 1 : 0,
-                        transform: postsSection.isVisible
-                            ? 'translateY(0)'
-                            : 'translateY(20px)',
-                        transition:
-                            'opacity 0.6s ease-out, transform 0.6s ease-out',
-                    }}
-                >
-                    <div className="mb-10 flex items-baseline justify-between">
-                        <div>
-                            <h2 className="text-2xl font-bold tracking-tight dark:text-white">
-                                Recent Posts
-                            </h2>
-                            <div className="mt-1 h-1 w-10 border border-[#1A1A1A] bg-[#A8FF78]" />
-                        </div>
-                        <Link
-                            href="/posts"
-                            className="text-sm font-bold text-[#1A1A1A] underline underline-offset-2 transition-colors hover:text-[#FF4F4F] dark:text-[#E5E7EB] dark:hover:text-[#FFEE00]"
-                        >
-                            View all →
-                        </Link>
-                    </div>
+            <Divider />
 
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                        {recentPosts?.slice(0, 3).map((post, index) => (
-                            <BlogCard key={post.id} post={post} index={index} />
+            {/* ── Recent Posts ── */}
+            <Section
+                title="Recent writing"
+                action={{ href: '/posts', label: 'View all' }}
+            >
+                {recentPosts && recentPosts.length > 0 ? (
+                    <div className="-my-4 divide-y divide-gray-200 dark:divide-gray-800">
+                        {recentPosts.slice(0, 3).map((post) => (
+                            <BlogCard key={post.id} post={post} />
                         ))}
                     </div>
-
-                    {(!recentPosts || recentPosts.length === 0) && (
-                        <div className="border-2 border-dashed border-[#1A1A1A] py-12 text-center dark:border-[#444]">
-                            <p className="text-sm font-medium text-[#888] dark:text-[#666]">
-                                No posts yet.
-                            </p>
-                        </div>
-                    )}
-                </section>
-            </div>
+                ) : (
+                    <EmptyState>No posts yet.</EmptyState>
+                )}
+            </Section>
         </Layout>
     );
 }

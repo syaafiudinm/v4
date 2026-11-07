@@ -10,7 +10,7 @@
         <meta name="author" content="Andi Syafiudin Musafir">
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-        <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
+        <meta name="theme-color" content="#030712" media="(prefers-color-scheme: dark)">
 
         {{-- Open Graph Defaults --}}
         <meta property="og:site_name" content="{{ config('app.name', 'Syaafiudinm') }}">
@@ -44,7 +44,7 @@
                 background-color: oklch(1 0 0);
             }
             html.dark {
-                background-color: oklch(0.145 0 0);
+                background-color: oklch(0.13 0.028 261.692);
             }
         </style>
 
@@ -53,13 +53,6 @@
         {{-- Favicon --}}
         <link rel="icon" href="/profil.png" type="image/png">
         <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-        {{-- DNS Prefetch & Preconnect --}}
-        <link rel="dns-prefetch" href="https://fonts.bunny.net">
-        <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
-
-        {{-- Font with display swap for performance --}}
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600&display=swap" rel="stylesheet" />
 
         {{-- Preload critical profile image --}}
         <link rel="preload" href="/profil.png" as="image" type="image/png">

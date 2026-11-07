@@ -1,246 +1,41 @@
 @import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap');
+
+/* Committed build output would otherwise be scanned and keep stale classes alive. */
+@source not '../../public/build';
 
 @plugin '@tailwindcss/typography';
 
 @variant dark (.dark &);
 
-@theme {
-    --font-family-sans: 'Space Grotesk', system-ui, sans-serif;
-    --font-family-body: 'Inter', system-ui, sans-serif;
-}
-
-/* ─── Neobrutalism design tokens ─── */
-:root {
-    --nb-yellow: #ffee00;
-    --nb-red: #ff4f4f;
-    --nb-green: #a8ff78;
-    --nb-black: #1a1a1a;
-    --nb-white: #fafaf8;
-    --nb-border: 2px solid #1a1a1a;
-    --nb-shadow: 4px 4px 0px #1a1a1a;
-    --nb-shadow-sm: 2px 2px 0px #1a1a1a;
-    --nb-shadow-lg: 6px 6px 0px #1a1a1a;
-    --nb-radius: 4px;
-}
-
 /* ─── Base ─── */
 body {
-    background-color: var(--nb-white);
-    color: var(--nb-black);
-    font-family: 'Space Grotesk', system-ui, sans-serif;
+    background-color: #ffffff;
+    color: var(--color-gray-900);
 }
 
 .dark body {
-    background-color: var(--nb-black);
-    color: var(--nb-white);
+    background-color: var(--color-gray-950);
+    color: var(--color-gray-100);
 }
 
-/* ─── Prose (dark mode) ─── */
-.dark .prose {
-    --tw-prose-body: #e5e7eb;
-    --tw-prose-headings: #f9fafb;
-    --tw-prose-links: var(--nb-yellow);
-    --tw-prose-bold: #f9fafb;
-    --tw-prose-code: #f9fafb;
-}
-
+/* ─── Prose ─── */
 .prose {
-    font-family: 'Inter', system-ui, sans-serif;
+    --tw-prose-links: var(--color-blue-700);
 }
 
-.prose p {
-    text-align: justify;
-    margin-bottom: 1.5rem;
-}
-
-/* ─── Nav link (neobrutalism underline) ─── */
-.nav-link {
-    position: relative;
-    padding-bottom: 2px;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background-color: var(--nb-yellow);
-    transition: width 0.2s ease-in-out;
-}
-
-.dark .nav-link::after {
-    background-color: var(--nb-yellow);
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
-
-.nav-link.active::after {
-    width: 100%;
-}
-
-/* ─── Neobrutalist card ─── */
-.nb-card {
-    border: var(--nb-border);
-    box-shadow: var(--nb-shadow);
-    border-radius: var(--nb-radius);
-    background-color: var(--nb-white);
-    transition:
-        box-shadow 0.15s ease,
-        transform 0.15s ease;
-}
-
-.dark .nb-card {
-    background-color: #222222;
-    border-color: #e5e7eb;
-    box-shadow: 4px 4px 0px #e5e7eb;
-}
-
-.nb-card:hover {
-    box-shadow: 2px 2px 0px #1a1a1a;
-    transform: translate(2px, 2px);
-}
-
-.dark .nb-card:hover {
-    box-shadow: 2px 2px 0px #e5e7eb;
-}
-
-/* ─── Neobrutalist button ─── */
-.nb-btn {
-    border: var(--nb-border);
-    box-shadow: var(--nb-shadow-sm);
-    border-radius: var(--nb-radius);
-    font-weight: 600;
-    font-family: 'Space Grotesk', system-ui, sans-serif;
-    transition:
-        box-shadow 0.12s ease,
-        transform 0.12s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-}
-
-.nb-btn:hover {
-    box-shadow: none;
-    transform: translate(2px, 2px);
-}
-
-.nb-btn:active {
-    box-shadow: none;
-    transform: translate(2px, 2px);
-}
-
-.nb-btn-yellow {
-    background-color: var(--nb-yellow);
-    color: var(--nb-black);
-}
-
-.nb-btn-black {
-    background-color: var(--nb-black);
-    color: var(--nb-white);
-}
-
-.dark .nb-btn-black {
-    background-color: var(--nb-white);
-    color: var(--nb-black);
-}
-
-.nb-btn-ghost {
-    background-color: transparent;
-    color: var(--nb-black);
-}
-
-.dark .nb-btn-ghost {
-    color: var(--nb-white);
-    border-color: #e5e7eb;
-    box-shadow: 2px 2px 0px #e5e7eb;
-}
-
-/* ─── Neobrutalist input ─── */
-.nb-input {
-    border: var(--nb-border);
-    border-radius: var(--nb-radius);
-    background-color: var(--nb-white);
-    color: var(--nb-black);
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 0.875rem;
-    padding: 0.625rem 0.875rem;
-    width: 100%;
-    outline: none;
-    transition: box-shadow 0.12s ease;
-    box-shadow: none;
-}
-
-.nb-input:focus {
-    box-shadow: var(--nb-shadow-sm);
-}
-
-.dark .nb-input {
-    background-color: #2a2a2a;
-    color: var(--nb-white);
-    border-color: #e5e7eb;
-}
-
-.dark .nb-input:focus {
-    box-shadow: 2px 2px 0px #e5e7eb;
-}
-
-.nb-input::placeholder {
-    color: #888;
-    font-weight: 400;
-}
-
-/* ─── Tag / badge ─── */
-.nb-tag {
-    border: 1.5px solid var(--nb-black);
-    border-radius: 2px;
-    background-color: var(--nb-green);
-    color: var(--nb-black);
-    font-family: 'Space Grotesk', system-ui, sans-serif;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    padding: 1px 8px;
-}
-
-.dark .nb-tag {
-    border-color: #e5e7eb;
-    background-color: #2e5b1c;
-    color: var(--nb-green);
-}
-
-/* ─── Decorative accent block ─── */
-.nb-accent-bar {
-    display: inline-block;
-    width: 12px;
-    height: 100%;
-    background-color: var(--nb-yellow);
-    border-right: 2px solid var(--nb-black);
-    flex-shrink: 0;
+.dark .prose {
+    --tw-prose-body: var(--color-gray-300);
+    --tw-prose-headings: var(--color-gray-100);
+    --tw-prose-links: var(--color-blue-400);
+    --tw-prose-bold: var(--color-gray-100);
+    --tw-prose-code: var(--color-gray-100);
 }
 
 /* ─── Animations ─── */
-@keyframes fade-in {
+@keyframes page-enter {
     from {
         opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fade-in-up {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(6px);
     }
     to {
         opacity: 1;
@@ -248,29 +43,8 @@ body {
     }
 }
 
-.animate-fade-in {
-    animation: fade-in 0.5s ease-out;
-}
-
-.animate-fade-in-up {
-    animation: fade-in-up 0.5s ease-out;
-    animation-fill-mode: both;
-}
-
-.animation-delay-200 {
-    animation-delay: 200ms;
-}
-.animation-delay-300 {
-    animation-delay: 300ms;
-}
-.animation-delay-400 {
-    animation-delay: 400ms;
-}
-.animation-delay-600 {
-    animation-delay: 600ms;
-}
-.animation-delay-800 {
-    animation-delay: 800ms;
+.animate-page-enter {
+    animation: page-enter 0.3s ease-out;
 }
 
 /* ─── Infinite marquee ─── */
@@ -283,49 +57,38 @@ body {
     }
 }
 
-.nb-marquee {
+.marquee {
     mask-image: linear-gradient(
         to right,
         transparent,
-        #000 6%,
-        #000 94%,
+        #000 8%,
+        #000 92%,
         transparent
     );
 }
 
-.nb-marquee-track {
+.marquee-track {
     animation: marquee var(--marquee-duration, 40s) linear infinite;
 }
 
-.nb-marquee:hover .nb-marquee-track,
-.nb-marquee:focus-within .nb-marquee-track {
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
     animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .nb-marquee {
+    .marquee {
         overflow-x: auto;
         mask-image: none;
     }
 
-    .nb-marquee-track {
+    .marquee-track {
         animation: none;
     }
-}
 
-@keyframes page-enter {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
+    .animate-page-enter {
+        animation: none;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.animate-page-enter {
-    animation: page-enter 0.35s ease-out;
 }
 
 /* ─── NProgress bar ─── */
@@ -334,25 +97,11 @@ body {
 }
 
 #nprogress .bar {
-    background: var(--nb-yellow);
-    border-bottom: 2px solid var(--nb-black);
+    background: var(--color-blue-700);
     position: fixed;
     z-index: 9999;
     top: 0;
     left: 0;
     width: 100%;
-    height: 4px;
-}
-
-#nprogress .peg {
-    display: block;
-    position: absolute;
-    right: 0;
-    width: 100px;
-    height: 100%;
-    box-shadow:
-        0 0 10px var(--nb-yellow),
-        0 0 5px var(--nb-yellow);
-    opacity: 1;
-    transform: rotate(3deg) translate(0px, -4px);
+    height: 2px;
 }

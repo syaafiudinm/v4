@@ -1,8 +1,8 @@
 import Layout from '@/components/Layouts';
 import ProjectCard from '@/components/ProjectCard';
+import Section, { accentLink, inputClass } from '@/components/Section';
 import SeoHead from '@/components/SeoHead';
 import { Project } from '@/types/models';
-import { Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 interface Props {
@@ -33,6 +33,13 @@ export default function Projects({ projects }: Props) {
         });
     }, [projects, searchTerm, selectedTag]);
 
+    const filterClass = (active: boolean) =>
+        `cursor-pointer text-base transition-colors ${
+            active
+                ? 'font-semibold text-blue-700 dark:text-blue-400'
+                : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100'
+        }`;
+
     return (
         <Layout>
             <SeoHead
@@ -43,123 +50,85 @@ export default function Projects({ projects }: Props) {
                 type="website"
             />
 
-            <div>
-                {/* ── Header ── */}
-                <header className="animate-fade-in mb-12">
-                    <div className="mb-4 inline-flex border-2 border-[#1A1A1A] shadow-[4px_4px_0px_#1A1A1A]">
-                        <div className="bg-[#A8FF78] px-3 py-1 text-[10px] font-bold tracking-widest text-[#1A1A1A] uppercase">
-                            Portfolio
-                        </div>
-                    </div>
-                    <h1 className="mb-3 text-4xl font-bold tracking-tight md:text-5xl dark:text-[#FAFAF8]">
-                        Projects
-                    </h1>
-                    <div className="mb-3 h-1 w-14 border border-[#1A1A1A] bg-[#A8FF78]" />
-                    <p
-                        className="text-base text-[#555] dark:text-[#999]"
-                        style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+            <Section title="Projects" as="h1">
+                <p className="text-lg leading-[27px] text-gray-700 dark:text-gray-300">
+                    A collection of{' '}
+                    <span className="font-medium text-blue-700 dark:text-blue-400">
+                        {projects.length} things
+                    </span>{' '}
+                    I've built — web applications, tools, and experiments.
+                </p>
+
+                <input
+                    type="search"
+                    placeholder="Search projects..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    aria-label="Search projects"
+                    className={inputClass}
+                />
+
+                {allTags.length > 0 && (
+                    <nav
+                        className="flex flex-wrap gap-x-4 gap-y-1"
+                        aria-label="Filter projects by technology"
                     >
-                        A collection of{' '}
-                        <strong className="text-[#1A1A1A] dark:text-[#FAFAF8]">
-                            {projects.length}
-                        </strong>{' '}
-                        things I've built
-                    </p>
-                </header>
-
-                {/* ── Search & Filters ── */}
-                <div className="animate-fade-in-up animation-delay-200 mb-10 space-y-4">
-                    {/* Search */}
-                    <div className="relative max-w-md">
-                        <Search className="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-[#888]" />
-                        <input
-                            type="text"
-                            placeholder="Search projects..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            aria-label="Search projects"
-                            className="nb-input pl-10"
-                        />
-                    </div>
-
-                    {/* Tag Filters */}
-                    {allTags.length > 0 && (
-                        <nav
-                            className="flex flex-wrap gap-2"
-                            aria-label="Filter projects by technology"
+                        <button
+                            type="button"
+                            onClick={() => setSelectedTag('all')}
+                            className={filterClass(selectedTag === 'all')}
+                            aria-pressed={selectedTag === 'all'}
                         >
+                            All
+                        </button>
+                        {allTags.map((tag) => (
                             <button
-                                onClick={() => setSelectedTag('all')}
-                                className={`border-2 px-3.5 py-1.5 text-xs font-bold tracking-wide uppercase transition-all duration-150 ${
-                                    selectedTag === 'all'
-                                        ? 'border-[#1A1A1A] bg-[#FFEE00] text-[#1A1A1A] shadow-[2px_2px_0px_#1A1A1A]'
-                                        : 'border-[#1A1A1A] bg-[#FAFAF8] text-[#1A1A1A] shadow-[3px_3px_0px_#1A1A1A] hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none dark:border-[#E5E7EB] dark:bg-[#222] dark:text-[#FAFAF8]'
-                                }`}
-                                aria-pressed={selectedTag === 'all'}
+                                key={tag}
+                                type="button"
+                                onClick={() => setSelectedTag(tag)}
+                                className={filterClass(selectedTag === tag)}
+                                aria-pressed={selectedTag === tag}
                             >
-                                All
+                                {tag}
                             </button>
-                            {allTags.map((tag) => (
-                                <button
-                                    key={tag}
-                                    onClick={() => setSelectedTag(tag)}
-                                    className={`border-2 px-3.5 py-1.5 text-xs font-bold tracking-wide uppercase transition-all duration-150 ${
-                                        selectedTag === tag
-                                            ? 'border-[#1A1A1A] bg-[#A8FF78] text-[#1A1A1A] shadow-[2px_2px_0px_#1A1A1A]'
-                                            : 'border-[#1A1A1A] bg-[#FAFAF8] text-[#1A1A1A] shadow-[3px_3px_0px_#1A1A1A] hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none dark:border-[#E5E7EB] dark:bg-[#222] dark:text-[#FAFAF8]'
-                                    }`}
-                                    aria-pressed={selectedTag === tag}
-                                >
-                                    {tag}
-                                </button>
-                            ))}
-                        </nav>
-                    )}
-                </div>
-
-                {/* ── Results count ── */}
-                {(searchTerm || selectedTag !== 'all') && (
-                    <p className="mb-6 text-xs font-bold text-[#888] dark:text-[#666]">
-                        Showing{' '}
-                        <span className="text-[#1A1A1A] dark:text-[#FAFAF8]">
-                            {filteredProjects.length}
-                        </span>{' '}
-                        of {projects.length}
-                    </p>
+                        ))}
+                    </nav>
                 )}
 
-                {/* ── Projects Grid ── */}
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    {filteredProjects.map((project, index) => (
-                        <ProjectCard
-                            key={project.id}
-                            project={project}
-                            index={index}
-                        />
+                {(searchTerm || selectedTag !== 'all') &&
+                    filteredProjects.length > 0 && (
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                            Showing {filteredProjects.length} of{' '}
+                            {projects.length}
+                        </p>
+                    )}
+            </Section>
+
+            {filteredProjects.length > 0 ? (
+                <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2">
+                    {filteredProjects.map((project) => (
+                        <ProjectCard key={project.id} project={project} />
                     ))}
                 </div>
-
-                {/* ── Empty State ── */}
-                {filteredProjects.length === 0 && (
-                    <div className="border-2 border-dashed border-[#1A1A1A] py-16 text-center dark:border-[#444]">
-                        <p className="mb-3 text-sm font-medium text-[#888] dark:text-[#666]">
-                            No projects found
-                            {searchTerm && ` matching "${searchTerm}"`}
-                            {selectedTag !== 'all' &&
-                                ` with tag "${selectedTag}"`}
-                        </p>
-                        <button
-                            onClick={() => {
-                                setSearchTerm('');
-                                setSelectedTag('all');
-                            }}
-                            className="nb-btn nb-btn-yellow mx-auto px-4 py-2 text-sm"
-                        >
-                            Clear filters
-                        </button>
-                    </div>
-                )}
-            </div>
+            ) : (
+                <div className="flex flex-col items-start gap-2">
+                    <p className="text-base text-gray-500 dark:text-gray-400">
+                        No projects found
+                        {searchTerm && ` matching "${searchTerm}"`}
+                        {selectedTag !== 'all' && ` with tag "${selectedTag}"`}.
+                    </p>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setSearchTerm('');
+                            setSelectedTag('all');
+                        }}
+                        className={`cursor-pointer text-base ${accentLink}`}
+                    >
+                        Clear filters
+                    </button>
+                </div>
+            )}
         </Layout>
     );
 }

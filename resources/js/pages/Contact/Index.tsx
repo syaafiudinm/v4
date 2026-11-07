@@ -1,6 +1,6 @@
 import Layout from '@/components/Layouts';
+import Section, { accentLink, inputClass } from '@/components/Section';
 import SeoHead from '@/components/SeoHead';
-import { Mail, Send } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 import { SiWhatsapp } from 'react-icons/si';
 
@@ -65,11 +65,20 @@ export default function Contact({ whatsappNumber }: Props) {
         if (Object.keys(nextErrors).length > 0 || !whatsappNumber) return;
 
         const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(buildMessage(form))}`;
-        // Fall back to same-tab navigation when the popup is blocked.
-        const opened = window.open(url, '_blank', 'noopener,noreferrer');
-        if (!opened) window.location.href = url;
+        // `noopener` would make window.open return null, so detach manually.
+        const opened = window.open(url, '_blank');
+        if (opened) {
+            opened.opener = null;
+        } else {
+            // Popup blocked: fall back to same-tab navigation.
+            window.location.href = url;
+        }
         setSent(true);
     };
+
+    const labelClass =
+        'mb-1.5 block text-base font-semibold text-gray-900 dark:text-gray-100';
+    const errorClass = 'mt-1 text-sm text-red-600 dark:text-red-400';
 
     return (
         <Layout>
@@ -81,204 +90,148 @@ export default function Contact({ whatsappNumber }: Props) {
                 type="website"
             />
 
-            <div>
-                {/* ── Header ── */}
-                <header className="animate-fade-in mb-12">
-                    <div className="mb-4 inline-flex border-2 border-[#1A1A1A] shadow-[4px_4px_0px_#1A1A1A]">
-                        <div className="bg-[#FFEE00] px-3 py-1 text-[10px] font-bold tracking-widest text-[#1A1A1A] uppercase">
-                            Say hello
-                        </div>
+            <Section title="Contact" as="h1">
+                <p className="text-lg leading-[27px] text-gray-700 dark:text-gray-300">
+                    Have a project in mind or just want to chat? Fill in the
+                    form and it will open{' '}
+                    <span className="font-medium text-blue-700 dark:text-blue-400">
+                        WhatsApp
+                    </span>{' '}
+                    with your message ready to send. Prefer email? Write to{' '}
+                    <a
+                        href="mailto:altafpasallo12@gmail.com"
+                        className={accentLink}
+                    >
+                        altafpasallo12@gmail.com
+                    </a>
+                    .
+                </p>
+            </Section>
+
+            <form
+                onSubmit={handleSubmit}
+                noValidate
+                className="flex flex-col gap-5"
+            >
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <div>
+                        <label htmlFor="contact-name" className={labelClass}>
+                            Name
+                        </label>
+                        <input
+                            id="contact-name"
+                            type="text"
+                            autoComplete="name"
+                            value={form.name}
+                            onChange={(e) => update('name', e.target.value)}
+                            placeholder="Your name"
+                            className={inputClass}
+                            aria-invalid={!!errors.name}
+                            aria-describedby={
+                                errors.name ? 'contact-name-error' : undefined
+                            }
+                        />
+                        {errors.name && (
+                            <p id="contact-name-error" className={errorClass}>
+                                {errors.name}
+                            </p>
+                        )}
                     </div>
-                    <h1 className="mb-3 text-4xl font-bold tracking-tight md:text-5xl dark:text-[#FAFAF8]">
-                        Get in touch
-                    </h1>
-                    <div className="mb-3 h-1 w-14 border border-[#1A1A1A] bg-[#FFEE00]" />
-                    <p
-                        className="max-w-xl text-base text-[#555] dark:text-[#999]"
-                        style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
-                    >
-                        Have a project in mind or just want to chat? Fill in the
-                        form and it will open WhatsApp with your message ready
-                        to send.
-                    </p>
-                </header>
 
-                <div className="animate-fade-in-up animation-delay-200 grid grid-cols-1 gap-8 lg:grid-cols-3">
-                    {/* ── Form ── */}
-                    <form
-                        onSubmit={handleSubmit}
-                        noValidate
-                        className="nb-card space-y-6 p-6 md:p-8 lg:col-span-2"
-                    >
-                        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                            <div>
-                                <label
-                                    htmlFor="contact-name"
-                                    className="mb-2 block text-xs font-bold tracking-widest uppercase"
-                                >
-                                    Name{' '}
-                                    <span className="text-[#FF4F4F]">*</span>
-                                </label>
-                                <input
-                                    id="contact-name"
-                                    type="text"
-                                    autoComplete="name"
-                                    value={form.name}
-                                    onChange={(e) =>
-                                        update('name', e.target.value)
-                                    }
-                                    placeholder="Your name"
-                                    className="nb-input"
-                                    aria-invalid={!!errors.name}
-                                    aria-describedby={
-                                        errors.name
-                                            ? 'contact-name-error'
-                                            : undefined
-                                    }
-                                />
-                                {errors.name && (
-                                    <p
-                                        id="contact-name-error"
-                                        className="mt-1.5 text-xs font-medium text-[#FF4F4F]"
-                                    >
-                                        {errors.name}
-                                    </p>
-                                )}
-                            </div>
-
-                            <div>
-                                <label
-                                    htmlFor="contact-email"
-                                    className="mb-2 block text-xs font-bold tracking-widest uppercase"
-                                >
-                                    Email{' '}
-                                    <span className="font-medium tracking-normal text-[#888] normal-case">
-                                        (optional)
-                                    </span>
-                                </label>
-                                <input
-                                    id="contact-email"
-                                    type="email"
-                                    autoComplete="email"
-                                    value={form.email}
-                                    onChange={(e) =>
-                                        update('email', e.target.value)
-                                    }
-                                    placeholder="you@example.com"
-                                    className="nb-input"
-                                />
-                            </div>
-                        </div>
-
-                        <fieldset>
-                            <legend className="mb-2 block text-xs font-bold tracking-widest uppercase">
-                                Topic
-                            </legend>
-                            <div className="flex flex-wrap gap-2">
-                                {TOPICS.map((topic) => {
-                                    const active = form.topic === topic;
-                                    return (
-                                        <button
-                                            key={topic}
-                                            type="button"
-                                            onClick={() =>
-                                                update('topic', topic)
-                                            }
-                                            aria-pressed={active}
-                                            className={`nb-btn px-3 py-1.5 text-xs ${
-                                                active
-                                                    ? 'nb-btn-yellow'
-                                                    : 'nb-btn-ghost'
-                                            }`}
-                                        >
-                                            {topic}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </fieldset>
-
-                        <div>
-                            <div className="mb-2 flex items-baseline justify-between">
-                                <label
-                                    htmlFor="contact-message"
-                                    className="block text-xs font-bold tracking-widest uppercase"
-                                >
-                                    Message{' '}
-                                    <span className="text-[#FF4F4F]">*</span>
-                                </label>
-                                <span className="text-[10px] font-medium text-[#888]">
-                                    {form.message.length}/{MESSAGE_MAX_LENGTH}
-                                </span>
-                            </div>
-                            <textarea
-                                id="contact-message"
-                                rows={6}
-                                maxLength={MESSAGE_MAX_LENGTH}
-                                value={form.message}
-                                onChange={(e) =>
-                                    update('message', e.target.value)
-                                }
-                                placeholder="Tell me a bit about what you have in mind..."
-                                className="nb-input resize-y"
-                                aria-invalid={!!errors.message}
-                                aria-describedby={
-                                    errors.message
-                                        ? 'contact-message-error'
-                                        : undefined
-                                }
-                            />
-                            {errors.message && (
-                                <p
-                                    id="contact-message-error"
-                                    className="mt-1.5 text-xs font-medium text-[#FF4F4F]"
-                                >
-                                    {errors.message}
-                                </p>
-                            )}
-                        </div>
-
-                        <div className="flex flex-wrap items-center gap-4 border-t-2 border-dashed border-[#1A1A1A] pt-6 dark:border-[#444]">
-                            <button
-                                type="submit"
-                                disabled={!whatsappNumber}
-                                className="nb-btn nb-btn-black px-5 py-2.5 text-sm disabled:cursor-not-allowed disabled:opacity-50"
-                            >
-                                <SiWhatsapp className="h-4 w-4" />
-                                <span>Send via WhatsApp</span>
-                                <Send className="h-3.5 w-3.5" />
-                            </button>
-                            <p
-                                className="text-xs text-[#888]"
-                                role="status"
-                                aria-live="polite"
-                            >
-                                {!whatsappNumber
-                                    ? 'WhatsApp is unavailable right now — please use email instead.'
-                                    : sent
-                                      ? 'WhatsApp opened in a new tab. Just hit send there!'
-                                      : 'Opens WhatsApp with your message pre-filled.'}
-                            </p>
-                        </div>
-                    </form>
-
-                    {/* ── Side info ── */}
-                    <aside className="space-y-6">
-                        <div className="nb-card p-6">
-                            <p className="mb-3 text-xs font-bold tracking-widest uppercase">
-                                Prefer email?
-                            </p>
-                            <a
-                                href="mailto:altafpasallo12@gmail.com"
-                                className="inline-flex items-center gap-1.5 text-sm font-medium break-all text-[#1A1A1A] underline underline-offset-2 transition-colors hover:text-[#FF4F4F] dark:text-[#E5E7EB] dark:hover:text-[#FFEE00]"
-                            >
-                                <Mail className="h-4 w-4 shrink-0" />
-                                <span>altafpasallo12@gmail.com</span>
-                            </a>
-                        </div>
-                    </aside>
+                    <div>
+                        <label htmlFor="contact-email" className={labelClass}>
+                            Email{' '}
+                            <span className="font-normal text-gray-500 dark:text-gray-400">
+                                (optional)
+                            </span>
+                        </label>
+                        <input
+                            id="contact-email"
+                            type="email"
+                            autoComplete="email"
+                            value={form.email}
+                            onChange={(e) => update('email', e.target.value)}
+                            placeholder="you@example.com"
+                            className={inputClass}
+                        />
+                    </div>
                 </div>
-            </div>
+
+                <fieldset>
+                    <legend className={labelClass}>Topic</legend>
+                    <div className="flex flex-wrap gap-2">
+                        {TOPICS.map((topic) => {
+                            const active = form.topic === topic;
+                            return (
+                                <button
+                                    key={topic}
+                                    type="button"
+                                    onClick={() => update('topic', topic)}
+                                    aria-pressed={active}
+                                    className={`cursor-pointer rounded-full border px-3.5 py-1.5 text-sm transition-colors ${
+                                        active
+                                            ? 'border-blue-700 bg-blue-50 font-semibold text-blue-700 dark:border-blue-400 dark:bg-blue-950 dark:text-blue-300'
+                                            : 'border-gray-300 text-gray-700 hover:border-gray-400 dark:border-gray-700 dark:text-gray-300 dark:hover:border-gray-500'
+                                    }`}
+                                >
+                                    {topic}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </fieldset>
+
+                <div>
+                    <div className="flex items-baseline justify-between">
+                        <label htmlFor="contact-message" className={labelClass}>
+                            Message
+                        </label>
+                        <span className="text-sm text-gray-400 dark:text-gray-500">
+                            {form.message.length}/{MESSAGE_MAX_LENGTH}
+                        </span>
+                    </div>
+                    <textarea
+                        id="contact-message"
+                        rows={6}
+                        maxLength={MESSAGE_MAX_LENGTH}
+                        value={form.message}
+                        onChange={(e) => update('message', e.target.value)}
+                        placeholder="Tell me a bit about what you have in mind..."
+                        className={`${inputClass} resize-y`}
+                        aria-invalid={!!errors.message}
+                        aria-describedby={
+                            errors.message ? 'contact-message-error' : undefined
+                        }
+                    />
+                    {errors.message && (
+                        <p id="contact-message-error" className={errorClass}>
+                            {errors.message}
+                        </p>
+                    )}
+                </div>
+
+                <div className="flex flex-wrap items-center gap-4">
+                    <button
+                        type="submit"
+                        disabled={!whatsappNumber}
+                        className="inline-flex cursor-pointer items-center gap-2 rounded-md bg-gray-900 px-4 py-2 text-base font-semibold text-white transition-colors hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300"
+                    >
+                        <SiWhatsapp className="h-4 w-4" />
+                        Send via WhatsApp
+                    </button>
+                    <p
+                        className="text-sm text-gray-500 dark:text-gray-400"
+                        role="status"
+                        aria-live="polite"
+                    >
+                        {!whatsappNumber
+                            ? 'WhatsApp is unavailable right now — please use email instead.'
+                            : sent
+                              ? 'WhatsApp opened in a new tab. Just hit send there!'
+                              : 'Opens WhatsApp with your message pre-filled.'}
+                    </p>
+                </div>
+            </form>
         </Layout>
     );
 }
